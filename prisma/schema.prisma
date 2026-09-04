@@ -1,0 +1,127 @@
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  email     String   @unique
+  phone     String
+  password  String
+  role      String   // "SEEKER", "OWNER", "ADMIN"
+  gender    String   // "MALE", "FEMALE", "OTHER"
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  properties        Property[] @relation("OwnerProperties")
+  enquiries         Enquiry[]  @relation("SeekerEnquiries")
+  sentMessages      Message[]  @relation("SentMessages")
+  receivedMessages  Message[]  @relation("ReceivedMessages")
+  reviews           Review[]
+  wishlist          Wishlist[]
+}
+
+model Property {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  address     String
+  city        String
+  state       String   @default("Telangana")
+  latitude    Float
+  longitude   Float
+  genderType  String   // "BOYS", "GIRLS", "COED"
+  acType      String   // "AC", "NON_AC", "BOTH"
+  description String
+  houseRules  String   // JSON string of rules or plain text lines
+  images      String   // JSON string array of image URLs
+  amenities   String   // JSON string array of amenities
+  isVerified  Boolean  @default(false)
+  isActive    Boolean  @default(true)
+  ownerId     String   @db.ObjectId
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  owner     User       @relation("OwnerProperties", fields: [ownerId], references: [id], onDelete: Cascade)
+  rooms     Room[]
+  enquiries Enquiry[]
+  reviews   Review[]
+  wishlist  Wishlist[]
+}
+
+model Room {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  propertyId    String   @db.ObjectId
+  sharingType   String   // "SINGLE", "DOUBLE", "TRIPLE", "FOUR_SHARING"
+  price         Float
+  totalBeds     Int
+  availableBeds Int
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  // Relations
+  property Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+}
+
+model Enquiry {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  seekerId   String   @db.ObjectId
+  propertyId String   @db.ObjectId
+  message    String
+  status     String   @default("PENDING") // "PENDING", "ACCEPTED", "REJECTED"
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  // Relations
+  seeker   User      @relation("SeekerEnquiries", fields: [seekerId], references: [id], onDelete: Cascade)
+  property Property  @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  messages Message[]
+}
+
+model Message {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  enquiryId  String   @db.ObjectId
+  senderId   String   @db.ObjectId
+  receiverId String   @db.ObjectId
+  content    String
+  createdAt  DateTime @default(now())
+
+  // Relations
+  enquiry  Enquiry @relation(fields: [enquiryId], references: [id], onDelete: Cascade)
+  sender   User    @relation("SentMessages", fields: [senderId], references: [id], onDelete: Cascade)
+  receiver User    @relation("ReceivedMessages", fields: [receiverId], references: [id], onDelete: Cascade)
+}
+
+model Review {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  seekerId   String   @db.ObjectId
+  propertyId String   @db.ObjectId
+  rating     Int      // 1 to 5
+  comment    String
+  createdAt  DateTime @default(now())
+
+  // Relations
+  seeker   User     @relation(fields: [seekerId], references: [id], onDelete: Cascade)
+  property Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+
+  @@unique([seekerId, propertyId])
+}
+
+model Wishlist {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  seekerId   String   @db.ObjectId
+  propertyId String   @db.ObjectId
+  createdAt  DateTime @default(now())
+
+  // Relations
+  seeker   User     @relation(fields: [seekerId], references: [id], onDelete: Cascade)
+  property Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+
+  @@unique([seekerId, propertyId])
+}
