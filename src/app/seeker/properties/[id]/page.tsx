@@ -235,34 +235,22 @@ export default function PropertyDetailPage() {
         {/* Left 2 Columns: Media, Rooms, Details */}
         <div className="lg:col-span-2 space-y-6">
           
-          {/* Images Grid */}
-          <div className="bg-[#0e1424] rounded-2xl overflow-hidden border border-slate-800 shadow-lg">
-            <div className="grid grid-cols-3 gap-2 p-2">
-              <div className="col-span-3 md:col-span-2 h-64 md:h-96 rounded-xl overflow-hidden bg-slate-900">
-                <img
-                  src={mainImage}
-                  alt={property.name}
-                  onError={(e) => {
-                    (e.currentTarget as HTMLImageElement).src = defaultDetailFallback;
-                  }}
-                  className="w-full h-full object-cover"
-                />
+          {/* Single Image View */}
+          <div className="w-full h-72 sm:h-96 md:h-[26rem] rounded-2xl overflow-hidden bg-slate-900 border border-slate-800 shadow-xl relative">
+            <img
+              src={mainImage}
+              alt={property.name}
+              onError={(e) => {
+                (e.currentTarget as HTMLImageElement).src = defaultDetailFallback;
+              }}
+              className="w-full h-full object-cover"
+            />
+            {property.isVerified && (
+              <div className="absolute top-4 left-4 bg-emerald-950/90 border border-emerald-500/50 text-emerald-300 flex items-center gap-1.5 py-1.5 px-3 rounded-full text-xs font-bold shadow-lg backdrop-blur-md">
+                <CheckCircle2 size={15} className="text-emerald-400" />
+                <span>Verified Accommodation</span>
               </div>
-              <div className="col-span-3 md:col-span-1 grid grid-cols-2 md:grid-cols-1 gap-2">
-                {remainingImages.slice(0, 2).map((img: string, idx: number) => (
-                  <div key={idx} className="h-32 md:h-[11.7rem] rounded-xl overflow-hidden bg-slate-900">
-                    <img
-                      src={img}
-                      alt={`${property.name} ${idx + 2}`}
-                      onError={(e) => {
-                        (e.currentTarget as HTMLImageElement).src = '/images/coed/hostel-interior.jpg';
-                      }}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                ))}
-              </div>
-            </div>
+            )}
           </div>
 
           {/* Heading details card */}

@@ -17,8 +17,19 @@ export async function GET(request: NextRequest) {
             id: true,
             name: true,
             address: true,
+            city: true,
+            state: true,
+            images: true,
             isVerified: true,
             ownerId: true,
+            owner: {
+              select: {
+                id: true,
+                name: true,
+                phone: true,
+                email: true,
+              }
+            }
           }
         },
       },

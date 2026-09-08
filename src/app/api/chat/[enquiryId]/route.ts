@@ -12,7 +12,18 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
 
     const enquiry = await prisma.enquiry.findUnique({
       where: { id: enquiryId },
-      include: { property: true }
+      include: {
+        property: {
+          include: {
+            owner: {
+              select: { id: true, name: true, phone: true, email: true }
+            }
+          }
+        },
+        seeker: {
+          select: { id: true, name: true, phone: true, email: true, gender: true }
+        }
+      }
     });
 
     if (!enquiry) {

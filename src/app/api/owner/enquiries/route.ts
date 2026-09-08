@@ -30,6 +30,10 @@ export async function GET(request: NextRequest) {
             id: true,
             name: true,
             address: true,
+            city: true,
+            state: true,
+            isVerified: true,
+            images: true,
           }
         }
       },

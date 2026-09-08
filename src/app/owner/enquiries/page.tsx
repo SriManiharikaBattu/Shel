@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/components/AuthProvider';
 import Navbar from '@/components/Navbar';
-import { MessageSquare, Check, X, RefreshCw, Clock, Send } from 'lucide-react';
+import { MessageSquare, Check, X, RefreshCw, Clock, Send, MapPin } from 'lucide-react';
 
 export default function OwnerEnquiriesPage() {
   const { user, loading: authLoading } = useAuth();
@@ -119,12 +119,18 @@ export default function OwnerEnquiriesPage() {
               <div key={enq.id} className="bg-[#0e1424] rounded-2xl border border-slate-800 shadow-xl p-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
                 
                 {/* Seeker / PG Info */}
-                <div className="space-y-2.5 flex-grow">
+                <div className="space-y-2 flex-grow">
                   <div className="flex flex-wrap items-center gap-2">
                     <span className="text-sm font-extrabold text-white">{enq.seeker.name}</span>
                     <span className="text-xs text-slate-400 font-medium">({enq.seeker.gender})</span>
                     <span className="text-slate-700">|</span>
-                    <span className="text-xs text-slate-400 font-medium">PG: <strong className="text-emerald-400">{enq.property.name}</strong></span>
+                    <span className="text-xs text-slate-300 font-medium">Hostel: <strong className="text-emerald-400">{enq.property.name}</strong></span>
+                    {(enq.property.city || enq.property.state) && (
+                      <span className="text-xs text-cyan-400 font-semibold flex items-center gap-1 bg-slate-900 px-2 py-0.5 rounded-md border border-slate-800">
+                        <MapPin size={11} />
+                        <span>{enq.property.city}{enq.property.state ? `, ${enq.property.state}` : ''}</span>
+                      </span>
+                    )}
                   </div>
 
                   <p className="text-slate-300 text-sm font-medium bg-slate-900/90 p-3 rounded-xl border border-slate-800">

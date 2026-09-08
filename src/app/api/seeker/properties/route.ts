@@ -142,9 +142,11 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    // Apply Sharing Type filter
+    // Apply Sharing Type filter (strictly requires available beds > 0 for that sharing type)
     if (sharingType) {
-      results = results.filter((p) => p.rooms.some((r) => r.sharingType === sharingType));
+      results = results.filter((p) =>
+        p.rooms.some((r) => r.sharingType === sharingType && r.availableBeds > 0)
+      );
     }
 
     // Apply Amenities filter (all requested amenities must be present)
@@ -168,7 +170,13 @@ export async function GET(request: NextRequest) {
 
     // Apply Available Now filter
     if (availableNow) {
-      results = results.filter((p) => p.hasVacancy);
+      if (sharingType) {
+        results = results.filter((p) =>
+          p.rooms.some((r) => r.sharingType === sharingType && r.availableBeds > 0)
+        );
+      } else {
+        results = results.filter((p) => p.hasVacancy);
+      }
     }
 
     // Apply Sorting

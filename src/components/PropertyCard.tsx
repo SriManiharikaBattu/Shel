@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { Star, CheckCircle2, Heart, Wifi, Coffee, Shield, MapPin } from 'lucide-react';
+import { Star, CheckCircle2, Heart, Wifi, Coffee, Shield, MapPin, MessageSquare } from 'lucide-react';
 
 export interface PropertyData {
   id: string;
@@ -38,6 +38,7 @@ interface PropertyCardProps {
   isCompareChecked?: boolean;
   onToggleCompare?: (property: PropertyData) => void;
   showCompareCheckbox?: boolean;
+  onOpenChat?: (property: PropertyData) => void;
 }
 
 export default function PropertyCard({
@@ -47,6 +48,7 @@ export default function PropertyCard({
   isCompareChecked = false,
   onToggleCompare,
   showCompareCheckbox = true,
+  onOpenChat,
 }: PropertyCardProps) {
   // Parse images cleanly whether array or string
   let imageUrls: string[] = [];
@@ -179,6 +181,22 @@ export default function PropertyCard({
           </div>
 
           <div className="flex items-center gap-3">
+            {/* Direct Chat / Voice Note Button */}
+            {onOpenChat && (
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  onOpenChat(property);
+                }}
+                className="p-2 rounded-xl bg-cyan-950/70 hover:bg-cyan-900/90 text-cyan-300 hover:text-white border border-cyan-800/80 transition-all flex items-center justify-center shadow-sm"
+                title="Chat or send voice note to Owner"
+              >
+                <MessageSquare size={16} />
+              </button>
+            )}
+
             {/* Compare Checkbox */}
             {showCompareCheckbox && onToggleCompare && (
               <label className="flex items-center gap-1.5 cursor-pointer text-xs font-semibold text-slate-400 hover:text-white transition-colors select-none">

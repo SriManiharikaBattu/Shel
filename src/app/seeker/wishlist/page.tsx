@@ -57,6 +57,33 @@ export default function WishlistPage() {
     }
   };
 
+  const handleOpenChat = async (property: PropertyData) => {
+    if (!user) {
+      router.push('/auth/login');
+      return;
+    }
+    try {
+      const res = await fetch('/api/seeker/enquiries', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          propertyId: property.id,
+          message: `Hi, I am interested in ${property.name} and would like to know about bed availability and terms.`,
+        }),
+      });
+      if (res.ok) {
+        const data = await res.json();
+        const enqId = data.enquiry?.id || data.newMessage?.enquiryId;
+        if (enqId) {
+          localStorage.setItem('active_chat_enquiry_id', enqId);
+        }
+      }
+      router.push('/seeker/chat');
+    } catch (e) {
+      router.push('/seeker/chat');
+    }
+  };
+
   if (authLoading || loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#090d16]">
@@ -100,7 +127,7 @@ export default function WishlistPage() {
                 href="/seeker"
                 className="inline-flex bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold py-2.5 px-6 rounded-xl text-xs transition-all shadow-md shadow-emerald-500/20"
               >
-                Explore listings
+                Browse Listings
               </Link>
             </div>
           </div>
@@ -113,6 +140,7 @@ export default function WishlistPage() {
                 isWishlisted={true}
                 onToggleWishlist={handleToggleWishlist}
                 showCompareCheckbox={false}
+                onOpenChat={handleOpenChat}
               />
             ))}
           </div>
