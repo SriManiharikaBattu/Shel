@@ -58,7 +58,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     });
     const data = await res.json();
     if (!res.ok) throw new Error(data.error || 'Failed to send OTP');
-    return data.otp;
+    return data.message || 'Verification code sent to your registered contact.';
   };
 
   const login = async (loginMethod: 'PASSWORD' | 'OTP', identifier: string, credentials: { password?: string; otp?: string }) => {

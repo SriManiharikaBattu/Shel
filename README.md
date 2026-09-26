@@ -97,11 +97,40 @@ npm install
 ```
 
 ### 4. Configure Environment Variables
-Create a `.env` file in the root directory:
+Create a `.env` file in the root directory (refer to `.env.example`):
 ```env
 DATABASE_URL="mongodb://127.0.0.1:27018/shel_db?replicaSet=rs0&directConnection=true"
 JWT_SECRET="shel_super_secret_jwt_key_2026"
+
+# Email OTP Delivery via Resend
+RESEND_API_KEY="re_your_resend_api_key"
+RESEND_FROM_EMAIL="Shel <onboarding@resend.dev>"
+
+# SMS OTP Delivery via MSG91
+MSG91_AUTH_KEY="your_msg91_auth_key"
+MSG91_TEMPLATE_ID="your_msg91_template_id"
 ```
+
+---
+
+## 📩 OTP Delivery Setup
+
+The platform uses real, secure, multi-channel OTP delivery for passwordless authentication:
+
+1. **Email OTP via Resend**:
+   - Sign up at [Resend](https://resend.com) and create an API Key.
+   - Set `RESEND_API_KEY` in `.env`.
+   - Optionally set `RESEND_FROM_EMAIL="Shel <yourname@yourdomain.com>"` (defaults to `Shel <onboarding@resend.dev>` for sandbox testing).
+
+2. **SMS OTP via MSG91**:
+   - Sign up at [MSG91](https://msg91.com) and retrieve your **Authkey**.
+   - Create an OTP template/flow in MSG91 and copy the **Template ID**.
+   - Set `MSG91_AUTH_KEY` and `MSG91_TEMPLATE_ID` in `.env`.
+
+> [!IMPORTANT]
+> Both email and SMS providers are strictly validated. If a user attempts to log in with an email or phone number and the corresponding API credentials are not provided or delivery fails, the system will fail loudly with a descriptive error message rather than silently faking successful delivery.
+
+---
 
 ### 5. Start MongoDB with Replica Set
 Prisma MongoDB connector requires a replica set enabled:
@@ -131,14 +160,15 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ## 🔑 Demo & Test Accounts
 
-| Role | Email | Password | Quick OTP |
+| Role | Email | Password | Role Access |
 | :--- | :--- | :--- | :--- |
-| **Seeker (Female)** | `priya@pgfinder.com` | `password123` | `123456` |
-| **Seeker (Male)** | `rahul@pgfinder.com` | `password123` | `123456` |
-| **PG Owner** | `anjali@pgfinder.com` | `password123` | `123456` |
-| **Admin** | `admin@pgfinder.com` | `password123` | `123456` |
+| **Seeker (Female)** | `priya@pgfinder.com` | `password123` | Seeker Stays Directory & Chats (`/seeker`) |
+| **Seeker (Male)** | `rahul@pgfinder.com` | `password123` | Seeker Stays Directory & Chats (`/seeker`) |
+| **PG Owner** | `anjali@pgfinder.com` | `password123` | Hostels Portfolio & Inquiries (`/owner`) |
+| **Admin** | `admin@pgfinder.com` | `password123` | Verification Desk & Admin Panel (`/admin`) |
 
 ---
 
 ## 📜 License
 This project is licensed under the [MIT License](LICENSE).
+

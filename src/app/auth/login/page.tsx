@@ -1,9 +1,9 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useAuth } from '@/components/AuthProvider';
-import { Mail, Phone, KeyRound, MessageSquare } from 'lucide-react';
+import { Mail, Phone, KeyRound, MessageSquare, RefreshCw, CheckCircle2 } from 'lucide-react';
 
 export default function LoginPage() {
   const { login, sendOtp } = useAuth();
@@ -12,27 +12,49 @@ export default function LoginPage() {
   const [password, setPassword] = useState('');
   const [otp, setOtp] = useState('');
   const [otpSent, setOtpSent] = useState(false);
-  const [mockOtpMsg, setMockOtpMsg] = useState('');
+  const [resendTimer, setResendTimer] = useState(0);
   const [error, setError] = useState('');
   const [info, setInfo] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const handleSendOtp = async (e: React.FormEvent) => {
-    e.preventDefault();
+  // Resend OTP Countdown Timer (60s rate limit)
+  useEffect(() => {
+    let interval: NodeJS.Timeout | null = null;
+    if (resendTimer > 0) {
+      interval = setInterval(() => {
+        setResendTimer((prev) => prev - 1);
+      }, 1000);
+    }
+    return () => {
+      if (interval) clearInterval(interval);
+    };
+  }, [resendTimer]);
+
+  const handleSendOtp = async (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
     setError('');
     setInfo('');
-    if (!identifier) {
+
+    const trimmed = identifier.trim();
+    if (!trimmed) {
       setError('Please enter your email or phone number first.');
       return;
     }
+
     setLoading(true);
     try {
-      const generatedOtp = await sendOtp(identifier);
+      const msg = await sendOtp(trimmed);
       setOtpSent(true);
-      setMockOtpMsg(`Simulated OTP sent! Use code: ${generatedOtp}`);
-      setInfo('A verification code has been generated. See banner below.');
+      setResendTimer(60);
+      const isEmail = trimmed.includes('@');
+      setInfo(
+        msg ||
+          (isEmail
+            ? `We've sent a 6-digit code to your email (${trimmed}). Please check your inbox or spam.`
+            : `We've sent a 6-digit code to your mobile number (${trimmed}).`)
+      );
     } catch (err: any) {
-      setError(err.message || 'User not found. Please register first.');
+      setError(err.message || "Couldn't send OTP, please check your contact details or try again.");
     } finally {
       setLoading(false);
     }
@@ -41,7 +63,9 @@ export default function LoginPage() {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
-    if (!identifier) {
+    
+    const trimmed = identifier.trim();
+    if (!trimmed) {
       setError('Please enter your email or phone number.');
       return;
     }
@@ -50,7 +74,7 @@ export default function LoginPage() {
       return;
     }
     if (loginMethod === 'OTP' && !otp) {
-      setError('Please enter the OTP.');
+      setError('Please enter the 6-digit OTP code.');
       return;
     }
 
@@ -58,7 +82,7 @@ export default function LoginPage() {
     try {
       await login(
         loginMethod,
-        identifier,
+        trimmed,
         loginMethod === 'PASSWORD' ? { password } : { otp }
       );
     } catch (err: any) {
@@ -126,14 +150,9 @@ export default function LoginPage() {
         )}
 
         {info && (
-          <div className="p-3 bg-[#A9B3AA]/20 text-[#2C3E36] text-xs rounded-xl border border-[#A9B3AA]">
-            {info}
-          </div>
-        )}
-
-        {mockOtpMsg && loginMethod === 'OTP' && (
-          <div className="p-3.5 bg-[#D9D3B8]/60 text-[#2C3E36] text-xs rounded-xl border border-[#D9D3B8] font-mono text-center font-bold">
-            {mockOtpMsg}
+          <div className="p-3 bg-[#D9D3B8]/40 text-[#2C3E36] text-xs rounded-xl border border-[#D9D3B8] flex items-start gap-2">
+            <CheckCircle2 size={15} className="text-[#2C3E36] flex-shrink-0 mt-0.5" />
+            <span>{info}</span>
           </div>
         )}
 
@@ -195,9 +214,12 @@ export default function LoginPage() {
 
             {loginMethod === 'OTP' && otpSent && (
               <div>
-                <label htmlFor="otp" className="block text-xs font-semibold text-[#2A2A2A] mb-1">
-                  Enter 6-Digit OTP
-                </label>
+                <div className="flex justify-between items-center mb-1">
+                  <label htmlFor="otp" className="block text-xs font-semibold text-[#2A2A2A]">
+                    Enter 6-Digit Verification Code
+                  </label>
+                  <span className="text-[11px] text-[#6B6B63]">Expires in 5m</span>
+                </div>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-[#6B6B63]">
                     <MessageSquare size={16} />
@@ -216,6 +238,35 @@ export default function LoginPage() {
                     onChange={(e) => setOtp(e.target.value)}
                   />
                 </div>
+
+                {/* Resend OTP button & Change Contact link */}
+                <div className="flex items-center justify-between mt-2.5 text-xs">
+                  <button
+                    type="button"
+                    disabled={loading || resendTimer > 0}
+                    onClick={() => handleSendOtp()}
+                    className="font-medium text-[#2C3E36] hover:underline disabled:text-[#6B6B63] disabled:no-underline disabled:cursor-not-allowed"
+                  >
+                    {resendTimer > 0 ? (
+                      <span>Resend OTP in <strong className="font-mono font-bold text-[#2C3E36]">{resendTimer}s</strong></span>
+                    ) : (
+                      <span className="font-semibold underline">Resend OTP</span>
+                    )}
+                  </button>
+
+                  <button
+                    type="button"
+                    className="font-semibold text-[#6B6B63] hover:text-[#2C3E36] hover:underline"
+                    onClick={() => {
+                      setOtpSent(false);
+                      setOtp('');
+                      setInfo('');
+                      setError('');
+                    }}
+                  >
+                    Change Contact Info
+                  </button>
+                </div>
               </div>
             )}
           </div>
@@ -227,7 +278,10 @@ export default function LoginPage() {
               className="w-full flex justify-center py-2.5 px-4 rounded-xl text-[#F3F1E7] font-semibold bg-[#2C3E36] hover:bg-[#22312B] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#2C3E36] transition-all disabled:opacity-50 shadow-sm text-sm"
             >
               {loading ? (
-                <span>Verifying...</span>
+                <div className="flex items-center gap-2">
+                  <RefreshCw size={15} className="animate-spin text-[#F3F1E7]" />
+                  <span>Processing...</span>
+                </div>
               ) : loginMethod === 'OTP' ? (
                 otpSent ? (
                   <span>Verify & Login</span>
@@ -240,23 +294,6 @@ export default function LoginPage() {
             </button>
           </div>
         </form>
-
-        {loginMethod === 'OTP' && otpSent && (
-          <div className="text-center">
-            <button
-              type="button"
-              className="text-xs font-semibold text-[#2C3E36] hover:underline"
-              onClick={() => {
-                setOtpSent(false);
-                setOtp('');
-                setMockOtpMsg('');
-                setInfo('');
-              }}
-            >
-              Change Contact Info
-            </button>
-          </div>
-        )}
 
         <div className="text-center pt-3 border-t border-[#E4E1D6]">
           <p className="text-xs text-[#6B6B63]">
