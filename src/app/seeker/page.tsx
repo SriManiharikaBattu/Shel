@@ -334,16 +334,24 @@ export default function SeekerDashboard() {
     }
   }, [user]);
 
-  if (authLoading || !user) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-[#F3F1E7]">
-        <div className="flex items-center space-x-2 text-[#2C3E36] font-semibold">
-          <RefreshCw className="animate-spin" />
-          <span>Setting up workspace...</span>
-        </div>
-      </div>
-    );
-  }
+  // Sync compare list from localStorage on mount / focus
+  useEffect(() => {
+    const syncCompare = () => {
+      const saved = localStorage.getItem('compare_properties');
+      if (saved) {
+        try {
+          setCompareList(JSON.parse(saved));
+        } catch (e) {
+          setCompareList([]);
+        }
+      } else {
+        setCompareList([]);
+      }
+    };
+    syncCompare();
+    window.addEventListener('focus', syncCompare);
+    return () => window.removeEventListener('focus', syncCompare);
+  }, []);
 
   // Handle GPS detection
   const handleGPSDetect = () => {
@@ -449,25 +457,6 @@ export default function SeekerDashboard() {
     );
   };
 
-  // Sync compare list from localStorage on mount / focus
-  useEffect(() => {
-    const syncCompare = () => {
-      const saved = localStorage.getItem('compare_properties');
-      if (saved) {
-        try {
-          setCompareList(JSON.parse(saved));
-        } catch (e) {
-          setCompareList([]);
-        }
-      } else {
-        setCompareList([]);
-      }
-    };
-    syncCompare();
-    window.addEventListener('focus', syncCompare);
-    return () => window.removeEventListener('focus', syncCompare);
-  }, []);
-
   // Toggle Compare items immediately
   const handleToggleCompare = (property: PropertyData) => {
     setCompareList((prev) => {
@@ -529,6 +518,17 @@ export default function SeekerDashboard() {
       router.push('/seeker/chat');
     }
   };
+
+  if (authLoading || !user) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[#F3F1E7]">
+        <div className="flex items-center space-x-2 text-[#2C3E36] font-semibold">
+          <RefreshCw className="animate-spin" />
+          <span>Setting up workspace...</span>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-[#F3F1E7] text-[#2A2A2A] flex flex-col font-sans selection:bg-[#2C3E36] selection:text-[#F3F1E7]">
