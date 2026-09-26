@@ -42,15 +42,17 @@ export async function GET(request: NextRequest) {
     }
 
     // 2. Build where conditions
+    const isGPSMode = !state || state === 'GPS Location' || state === 'All' || !city || city === 'GPS Location' || city === 'All';
+
     const where: any = {
       isActive: true, // Only show active listings
     };
 
-    if (state) {
+    if (state && state !== 'GPS Location' && state !== 'All') {
       where.state = state;
     }
 
-    if (city) {
+    if (city && city !== 'GPS Location' && city !== 'All') {
       where.city = city;
     }
 
@@ -129,7 +131,7 @@ export async function GET(request: NextRequest) {
         minPrice,
         maxPrice,
         hasVacancy,
-        distance,
+        distance: Math.round(distance * 10) / 10,
       };
     });
 
@@ -162,10 +164,21 @@ export async function GET(request: NextRequest) {
       results = results.filter((p) => p.avgRating >= minR);
     }
 
-    // Apply Distance filter (Default to 10 km if coordinates are provided)
+    // Apply Distance filter
     if (latStr && lngStr) {
-      const maxD = maxDistanceStr ? parseFloat(maxDistanceStr) : 10;
-      results = results.filter((p) => p.distance <= maxD);
+      if (maxDistanceStr) {
+        const maxD = parseFloat(maxDistanceStr);
+        results = results.filter((p) => p.distance <= maxD);
+      } else if (!isGPSMode) {
+        // In city mode, keep within 35km radius of city center
+        results = results.filter((p) => p.distance <= 35);
+      } else {
+        // In GPS mode, if there are properties within 50km, prioritize those; otherwise show all sorted by closest
+        const nearby = results.filter((p) => p.distance <= 50);
+        if (nearby.length > 0) {
+          results = nearby;
+        }
+      }
     }
 
     // Apply Available Now filter
@@ -179,14 +192,14 @@ export async function GET(request: NextRequest) {
       }
     }
 
-    // Apply Sorting
+    // Apply Sorting (default to closest distance if GPS is active and no other sort specified)
     if (sort === 'price_asc') {
       results.sort((a, b) => a.minPrice - b.minPrice);
     } else if (sort === 'price_desc') {
       results.sort((a, b) => b.minPrice - a.minPrice);
     } else if (sort === 'rating_desc') {
       results.sort((a, b) => b.avgRating - a.avgRating);
-    } else if (sort === 'distance_asc' && latStr && lngStr) {
+    } else if ((sort === 'distance_asc' || (isGPSMode && !sort)) && latStr && lngStr) {
       results.sort((a, b) => a.distance - b.distance);
     }
 

@@ -6,7 +6,7 @@ import dynamic from 'next/dynamic';
 import { useAuth } from '@/components/AuthProvider';
 import Navbar from '@/components/Navbar';
 import PropertyCard, { PropertyData } from '@/components/PropertyCard';
-import { Search, MapPin, SlidersHorizontal, ArrowUpDown, HelpCircle, Columns, RefreshCw, X, Sparkles } from 'lucide-react';
+import { Search, MapPin, SlidersHorizontal, ArrowUpDown, HelpCircle, Columns, RefreshCw, X, Sparkles, LocateFixed, RotateCcw, Compass } from 'lucide-react';
 
 // Dynamically import Leaflet map to prevent SSR issues in Next.js
 const Map = dynamic(() => import('@/components/Map'), {
@@ -226,6 +226,8 @@ export default function SeekerDashboard() {
   const [activeTab, setActiveTab] = useState<'LIST' | 'MAP'>('LIST');
   const [errorMsg, setErrorMsg] = useState('');
   const [infoMsg, setInfoMsg] = useState('');
+  const [isGPSActive, setIsGPSActive] = useState(false);
+  const [gpsLoading, setGpsLoading] = useState(false);
 
   // Debouncing search query
   useEffect(() => {
@@ -315,6 +317,7 @@ export default function SeekerDashboard() {
 
   // Automatically update city and map center when state changes
   useEffect(() => {
+    if (selectedState === 'GPS Location') return;
     const cities = STATE_CITY_DATA[selectedState];
     if (cities && cities.length > 0) {
       const firstCity = cities[0];
@@ -346,22 +349,73 @@ export default function SeekerDashboard() {
   const handleGPSDetect = () => {
     setErrorMsg('');
     setInfoMsg('');
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const { latitude, longitude } = position.coords;
-          setLat(latitude);
-          setLng(longitude);
-          setSelectedState('GPS Location');
-          setSelectedCity('GPS Location');
-          setInfoMsg('Location detected using device GPS.');
-        },
-        () => {
-          setErrorMsg('Failed to detect GPS location. Please choose a state and city.');
+    if (typeof window === 'undefined' || !navigator.geolocation) {
+      setErrorMsg('GPS Geolocation is not supported by your device or browser.');
+      return;
+    }
+
+    setGpsLoading(true);
+    setInfoMsg('Connecting to GPS satellites to pinpoint device coordinates...');
+
+    navigator.geolocation.getCurrentPosition(
+      async (position) => {
+        const { latitude, longitude, accuracy } = position.coords;
+        setLat(latitude);
+        setLng(longitude);
+        setIsGPSActive(true);
+        setSelectedState('GPS Location');
+        setSelectedCity('GPS Location');
+        setSort('distance_asc');
+
+        // Reverse-geocode to get friendly locality name
+        try {
+          const res = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`);
+          if (res.ok) {
+            const data = await res.json();
+            const place = data.address?.suburb || data.address?.city || data.address?.town || data.address?.village || data.address?.county || 'Current Location';
+            const region = data.address?.state || '';
+            setInfoMsg(`GPS Radar Locked: Near ${place}${region ? ', ' + region : ''} (±${Math.round(accuracy)}m). Closest stays sorted by distance.`);
+            setGpsLoading(false);
+            return;
+          }
+        } catch (e) {
+          // fallback
         }
-      );
-    } else {
-      setErrorMsg('GPS is not supported by your browser.');
+
+        setInfoMsg(`GPS Radar Locked: (${latitude.toFixed(4)}, ${longitude.toFixed(4)}). Closest stays sorted by distance.`);
+        setGpsLoading(false);
+      },
+      (error) => {
+        setGpsLoading(false);
+        setIsGPSActive(false);
+        let msg = 'Unable to retrieve GPS coordinates.';
+        if (error.code === 1) {
+          msg = 'Permission denied: Please allow Location permissions in your browser to enable live GPS.';
+        } else if (error.code === 2) {
+          msg = 'Position unavailable: Device could not determine GPS coordinates.';
+        } else if (error.code === 3) {
+          msg = 'GPS request timed out. Please try clicking GPS Auto again.';
+        }
+        setErrorMsg(msg);
+      },
+      {
+        enableHighAccuracy: true,
+        timeout: 12000,
+        maximumAge: 0,
+      }
+    );
+  };
+
+  // Reset from GPS mode back to City Select
+  const handleClearGPS = () => {
+    setIsGPSActive(false);
+    setSelectedState('Telangana');
+    const cities = STATE_CITY_DATA['Telangana'];
+    if (cities && cities.length > 0) {
+      setSelectedCity(cities[0].name);
+      setLat(cities[0].lat);
+      setLng(cities[0].lng);
+      setInfoMsg(`Radar active for ${cities[0].name}, Telangana`);
     }
   };
 
@@ -507,65 +561,100 @@ export default function SeekerDashboard() {
           
           {/* State & City selectors */}
           <div className="flex items-center gap-2 flex-grow max-w-xl">
-            {/* State Select */}
-            <div className="relative flex-grow">
-              <select
-                className="w-full pl-8 pr-3 py-2 border border-[#E4E1D6] rounded-xl text-xs sm:text-sm text-[#2A2A2A] bg-[#FAF9F5] focus:outline-none focus:ring-2 focus:ring-[#2C3E36] font-semibold"
-                value={selectedState}
-                onChange={(e) => {
-                  setSelectedState(e.target.value);
-                  setInfoMsg('');
-                }}
-              >
-                {Object.keys(STATE_CITY_DATA).map((stateName) => (
-                  <option key={stateName} value={stateName} className="bg-white text-[#2A2A2A]">{stateName}</option>
-                ))}
-                {selectedState === 'GPS Location' && (
-                  <option value="GPS Location">GPS Detected</option>
-                )}
-              </select>
-              <div className="absolute inset-y-0 left-0 pl-2.5 flex items-center pointer-events-none text-[#2C3E36]">
-                <MapPin size={16} />
-              </div>
-            </div>
+            {isGPSActive ? (
+              <div className="flex items-center justify-between w-full bg-[#2C3E36] text-[#F3F1E7] px-3.5 py-2 rounded-xl border border-[#3D5349] shadow-sm">
+                <div className="flex items-center gap-2">
+                  <span className="relative flex h-2.5 w-2.5">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#D9D3B8] opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#D9D3B8]"></span>
+                  </span>
+                  <div className="flex flex-col">
+                    <span className="text-xs font-semibold text-[#F3F1E7] flex items-center gap-1">
+                      <LocateFixed size={13} className="text-[#D9D3B8]" />
+                      <span>GPS Live Radar</span>
+                    </span>
+                    <span className="text-[10px] text-[#D9D3B8]/90 font-mono">
+                      {lat.toFixed(4)}, {lng.toFixed(4)}
+                    </span>
+                  </div>
+                </div>
 
-            {/* City Select */}
-            <div className="relative flex-grow">
-              <select
-                className="w-full pl-8 pr-3 py-2 border border-[#E4E1D6] rounded-xl text-xs sm:text-sm text-[#2A2A2A] bg-[#FAF9F5] focus:outline-none focus:ring-2 focus:ring-[#2C3E36] font-semibold"
-                value={selectedCity}
-                onChange={(e) => {
-                  const cityVal = e.target.value;
-                  setSelectedCity(cityVal);
-                  const cities = STATE_CITY_DATA[selectedState];
-                  const match = cities?.find((c) => c.name === cityVal);
-                  if (match) {
-                    setLat(match.lat);
-                    setLng(match.lng);
-                    setInfoMsg(`Radar active for ${match.name}, ${selectedState}`);
-                  }
-                }}
-                disabled={selectedState === 'GPS Location'}
-              >
-                {selectedState === 'GPS Location' ? (
-                  <option value="GPS Location">GPS ({lat.toFixed(2)}, {lng.toFixed(2)})</option>
-                ) : (
-                  STATE_CITY_DATA[selectedState]?.map((cityObj) => (
-                    <option key={cityObj.name} value={cityObj.name} className="bg-white text-[#2A2A2A]">{cityObj.name}</option>
-                  ))
-                )}
-              </select>
-              <div className="absolute inset-y-0 left-0 pl-2.5 flex items-center pointer-events-none text-[#2C3E36]">
-                <MapPin size={16} />
+                <button
+                  onClick={handleClearGPS}
+                  className="flex items-center gap-1 text-[11px] font-semibold text-[#2C3E36] bg-[#D9D3B8] hover:bg-[#FAF9F5] px-2.5 py-1 rounded-lg transition-colors shadow-sm"
+                  title="Switch back to State & City Selection"
+                >
+                  <RotateCcw size={12} />
+                  <span>Choose City</span>
+                </button>
               </div>
-            </div>
-            
-            <button
-              onClick={handleGPSDetect}
-              className="py-2 px-3 border border-[#2C3E36] rounded-xl text-xs font-bold text-[#2C3E36] bg-[#FAF9F5] hover:bg-[#D9D3B8] flex items-center gap-1.5 transition-all whitespace-nowrap shadow-sm"
-            >
-              GPS Auto
-            </button>
+            ) : (
+              <>
+                {/* State Select */}
+                <div className="relative flex-grow">
+                  <select
+                    className="w-full pl-8 pr-3 py-2 border border-[#E4E1D6] rounded-xl text-xs sm:text-sm text-[#2A2A2A] bg-[#FAF9F5] focus:outline-none focus:ring-2 focus:ring-[#2C3E36] font-semibold"
+                    value={selectedState}
+                    onChange={(e) => {
+                      setSelectedState(e.target.value);
+                      setInfoMsg('');
+                    }}
+                  >
+                    {Object.keys(STATE_CITY_DATA).map((stateName) => (
+                      <option key={stateName} value={stateName} className="bg-white text-[#2A2A2A]">{stateName}</option>
+                    ))}
+                  </select>
+                  <div className="absolute inset-y-0 left-0 pl-2.5 flex items-center pointer-events-none text-[#2C3E36]">
+                    <MapPin size={16} />
+                  </div>
+                </div>
+
+                {/* City Select */}
+                <div className="relative flex-grow">
+                  <select
+                    className="w-full pl-8 pr-3 py-2 border border-[#E4E1D6] rounded-xl text-xs sm:text-sm text-[#2A2A2A] bg-[#FAF9F5] focus:outline-none focus:ring-2 focus:ring-[#2C3E36] font-semibold"
+                    value={selectedCity}
+                    onChange={(e) => {
+                      const cityVal = e.target.value;
+                      setSelectedCity(cityVal);
+                      const cities = STATE_CITY_DATA[selectedState];
+                      const match = cities?.find((c) => c.name === cityVal);
+                      if (match) {
+                        setLat(match.lat);
+                        setLng(match.lng);
+                        setInfoMsg(`Radar active for ${match.name}, ${selectedState}`);
+                      }
+                    }}
+                  >
+                    {STATE_CITY_DATA[selectedState]?.map((cityObj) => (
+                      <option key={cityObj.name} value={cityObj.name} className="bg-white text-[#2A2A2A]">{cityObj.name}</option>
+                    ))}
+                  </select>
+                  <div className="absolute inset-y-0 left-0 pl-2.5 flex items-center pointer-events-none text-[#2C3E36]">
+                    <MapPin size={16} />
+                  </div>
+                </div>
+
+                <button
+                  onClick={handleGPSDetect}
+                  disabled={gpsLoading}
+                  className="py-2 px-3.5 border border-[#2C3E36] rounded-xl text-xs font-bold text-[#2C3E36] bg-[#FAF9F5] hover:bg-[#D9D3B8] flex items-center gap-1.5 transition-all whitespace-nowrap shadow-sm disabled:opacity-50"
+                  title="Detect my current location with GPS"
+                >
+                  {gpsLoading ? (
+                    <>
+                      <RefreshCw size={14} className="animate-spin text-[#2C3E36]" />
+                      <span>Locating...</span>
+                    </>
+                  ) : (
+                    <>
+                      <LocateFixed size={14} className="text-[#2C3E36]" />
+                      <span>GPS Auto</span>
+                    </>
+                  )}
+                </button>
+              </>
+            )}
           </div>
 
           {/* Search bar */}
@@ -676,10 +765,24 @@ export default function SeekerDashboard() {
         >
           <div className="flex justify-between items-center">
             <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#2A2A2A] flex items-center gap-2">
-              <span>Hostels in {selectedCity}</span>
-              <span className="text-xs font-sans font-bold text-[#2C3E36] bg-[#D9D3B8] border border-[#C7BF9E] px-2.5 py-0.5 rounded-full">
-                {selectedState}
-              </span>
+              {isGPSActive ? (
+                <>
+                  <span className="flex items-center gap-2">
+                    <span className="w-2.5 h-2.5 rounded-full bg-[#2C3E36] inline-block animate-pulse"></span>
+                    <span>Stays Near Your GPS Location</span>
+                  </span>
+                  <span className="text-xs font-sans font-bold text-[#2C3E36] bg-[#D9D3B8] border border-[#C7BF9E] px-2.5 py-0.5 rounded-full">
+                    GPS Live
+                  </span>
+                </>
+              ) : (
+                <>
+                  <span>Hostels in {selectedCity}</span>
+                  <span className="text-xs font-sans font-bold text-[#2C3E36] bg-[#D9D3B8] border border-[#C7BF9E] px-2.5 py-0.5 rounded-full">
+                    {selectedState}
+                  </span>
+                </>
+              )}
             </h2>
             <span className="text-xs font-semibold text-[#6B6B63]">
               {properties.length} verified listings
@@ -689,14 +792,14 @@ export default function SeekerDashboard() {
           {loadingProperties ? (
             <div className="flex flex-col gap-4 py-16 items-center text-[#2C3E36]">
               <RefreshCw className="animate-spin" size={28} />
-              <span className="font-semibold text-xs text-[#6B6B63]">Scanning accommodations...</span>
+              <span className="font-semibold text-xs text-[#6B6B63]">Scanning accommodations via radar...</span>
             </div>
           ) : properties.length === 0 ? (
             <div className="bg-white rounded-2xl p-10 border border-[#E4E1D6] text-center space-y-3 shadow-sm">
               <HelpCircle className="mx-auto text-[#6B6B63]" size={44} />
-              <h3 className="font-serif font-bold text-lg text-[#2A2A2A]">No accommodations found</h3>
+              <h3 className="font-serif font-bold text-lg text-[#2A2A2A]">No accommodations found in this range</h3>
               <p className="text-[#6B6B63] text-xs max-w-md mx-auto leading-relaxed">
-                We couldn't find any hostels matching your exact criteria in this area. Try adjusting your price range or clearing filters.
+                We couldn't find any hostels matching your exact criteria in this radius. Try adjusting filters or expanding search distance.
               </p>
             </div>
           ) : (
@@ -725,7 +828,7 @@ export default function SeekerDashboard() {
         >
           <Map
             center={[lat, lng]}
-            zoom={13}
+            userLocation={isGPSActive ? [lat, lng] : undefined}
             properties={properties.map((p) => ({
               id: p.id,
               name: p.name,
@@ -734,6 +837,7 @@ export default function SeekerDashboard() {
               minPrice: p.minPrice,
               genderType: p.genderType,
               hasVacancy: p.hasVacancy,
+              distance: (p as any).distance,
             }))}
           />
         </div>
