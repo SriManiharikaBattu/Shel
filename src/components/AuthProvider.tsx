@@ -2,14 +2,6 @@
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import {
-  signInWithPopup,
-  signInWithPhoneNumber,
-  signOut,
-  ConfirmationResult,
-  RecaptchaVerifier,
-} from 'firebase/auth';
-import { auth, googleProvider } from '@/lib/firebase';
 
 export interface User {
   id: string;
@@ -23,9 +15,6 @@ export interface User {
 interface AuthContextType {
   user: User | null;
   loading: boolean;
-  signInWithGoogle: (role?: string) => Promise<void>;
-  sendPhoneOtp: (phoneNumber: string, appVerifier: RecaptchaVerifier) => Promise<ConfirmationResult>;
-  verifyPhoneOtp: (confirmationResult: ConfirmationResult, otp: string, role?: string) => Promise<void>;
   login: (loginMethod: 'PASSWORD' | 'OTP', identifier: string, credentials: { password?: string; otp?: string }) => Promise<void>;
   signup: (userData: any) => Promise<void>;
   logout: () => Promise<void>;
@@ -61,25 +50,20 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     refreshUser();
   }, []);
 
-  // Helper to establish JWT session with backend
-  const establishSession = async (userData: {
-    email?: string | null;
-    phone?: string | null;
-    name?: string | null;
-    role?: string;
-    gender?: string;
-  }) => {
-    const res = await fetch('/api/auth/firebase-session', {
+  // Standard Login (Password / OTP)
+  const login = async (
+    loginMethod: 'PASSWORD' | 'OTP',
+    identifier: string,
+    credentials: { password?: string; otp?: string }
+  ) => {
+    const res = await fetch('/api/auth/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(userData),
+      body: JSON.stringify({ loginMethod, identifier, ...credentials }),
     });
 
     const data = await res.json();
-    if (!res.ok) {
-      throw new Error(data.error || 'Failed to authenticate session with database');
-    }
-
+    if (!res.ok) throw new Error(data.error || 'Login failed');
     setUser(data.user);
 
     // Redirect to respective dashboard
@@ -92,64 +76,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
-  // 1. Firebase Google Sign-In
-  const signInWithGoogle = async (role = 'SEEKER') => {
-    const result = await signInWithPopup(auth, googleProvider);
-    const fbUser = result.user;
-
-    await establishSession({
-      email: fbUser.email,
-      phone: fbUser.phoneNumber,
-      name: fbUser.displayName || fbUser.email?.split('@')[0],
-      role,
-    });
-  };
-
-  // 2. Firebase Phone OTP Sign-In
-  const sendPhoneOtp = async (phoneNumber: string, appVerifier: RecaptchaVerifier) => {
-    return await signInWithPhoneNumber(auth, phoneNumber, appVerifier);
-  };
-
-  const verifyPhoneOtp = async (
-    confirmationResult: ConfirmationResult,
-    otp: string,
-    role = 'SEEKER'
-  ) => {
-    const result = await confirmationResult.confirm(otp);
-    const fbUser = result.user;
-
-    await establishSession({
-      email: fbUser.email,
-      phone: fbUser.phoneNumber,
-      name: fbUser.displayName || fbUser.phoneNumber || 'Shel Guest',
-      role,
-    });
-  };
-
-  // Legacy fallback password login
-  const login = async (
-    loginMethod: 'PASSWORD' | 'OTP',
-    identifier: string,
-    credentials: { password?: string; otp?: string }
-  ) => {
-    const res = await fetch('/api/auth/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ loginMethod, identifier, ...credentials }),
-    });
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.error || 'Login failed');
-    setUser(data.user);
-
-    if (data.user.role === 'ADMIN') {
-      router.push('/admin');
-    } else if (data.user.role === 'OWNER') {
-      router.push('/owner');
-    } else {
-      router.push('/seeker');
-    }
-  };
-
+  // Standard Registration
   const signup = async (userData: any) => {
     const res = await fetch('/api/auth/signup', {
       method: 'POST',
@@ -160,9 +87,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     if (!res.ok) throw new Error(data.error || 'Signup failed');
   };
 
+  // Standard Logout
   const logout = async () => {
     try {
-      await signOut(auth);
       await fetch('/api/auth/logout', { method: 'POST' });
     } catch (error) {
       console.error('Logout error:', error);
@@ -172,6 +99,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
+  // Profile Update
   const updateProfile = async (userData: any) => {
     const res = await fetch('/api/auth/me', {
       method: 'PUT',
@@ -188,9 +116,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       value={{
         user,
         loading,
-        signInWithGoogle,
-        sendPhoneOtp,
-        verifyPhoneOtp,
         login,
         signup,
         logout,
