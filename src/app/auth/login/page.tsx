@@ -119,12 +119,16 @@ export default function LoginPage() {
         }
       }
 
-      if (err.code === 'auth/invalid-phone-number') {
+      if (err.code === 'auth/operation-not-allowed') {
+        setError('Firebase SMS is not enabled for India (+91). Please enable "Phone" and allow India (+91) under Firebase Console > Authentication > Settings > SMS region policy, or add a test phone number in Firebase Console.');
+      } else if (err.code === 'auth/invalid-phone-number') {
         setError('Invalid phone number format. Please check and try again.');
       } else if (err.code === 'auth/too-many-requests') {
         setError('Too many attempts. Please wait a few minutes before trying again.');
       } else if (err.code === 'auth/quota-exceeded') {
         setError('SMS quota exceeded for Firebase project. Please use Google Sign-in or test numbers.');
+      } else if (err.code === 'auth/app-not-authorized') {
+        setError('This domain (localhost) is not authorized in Firebase Console. Add "localhost" under Authentication > Settings > Authorized domains.');
       } else {
         setError(err.message || 'Failed to send SMS code. Please try again.');
       }
