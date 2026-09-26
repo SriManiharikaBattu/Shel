@@ -35,8 +35,8 @@ export default function ProfilePage() {
 
   if (loading || !user) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[#090d16]">
-        <div className="flex items-center space-x-2 text-emerald-400 font-semibold">
+      <div className="min-h-screen flex items-center justify-center bg-[#F3F1E7]">
+        <div className="flex items-center space-x-2 text-[#2C3E36] font-semibold">
           <RefreshCw className="animate-spin" />
           <span>Loading profile...</span>
         </div>
@@ -80,48 +80,48 @@ export default function ProfilePage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#090d16] text-slate-100 pb-20 font-sans selection:bg-emerald-500 selection:text-black">
+    <div className="min-h-screen bg-[#F3F1E7] text-[#2A2A2A] pb-20 font-sans selection:bg-[#2C3E36] selection:text-[#F3F1E7]">
       <Navbar />
 
       <main className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 mt-10">
-        <div className="bg-[#0e1424] rounded-2xl shadow-2xl border border-slate-800 overflow-hidden">
-          <div className="bg-slate-900/90 border-b border-slate-800 px-6 py-6 text-white">
-            <h1 className="text-2xl font-black tracking-tight">Edit Profile</h1>
-            <p className="text-slate-400 text-xs mt-1">Manage your Shel personal credentials and security settings</p>
+        <div className="bg-white rounded-2xl shadow-sm border border-[#E4E1D6] overflow-hidden">
+          <div className="bg-[#FAF9F5] border-b border-[#E4E1D6] px-6 py-6 text-[#2A2A2A]">
+            <h1 className="text-2xl sm:text-3xl font-serif font-bold tracking-tight">Edit Profile</h1>
+            <p className="text-[#6B6B63] text-xs mt-1">Manage your Shel personal credentials and security settings</p>
           </div>
 
           <form onSubmit={handleSaveProfile} className="p-6 sm:p-8 space-y-6">
             {error && (
-              <div className="p-3 bg-rose-950/60 text-rose-300 text-xs rounded-xl border border-rose-800/80">
+              <div className="p-3 bg-rose-50 text-rose-800 text-xs rounded-xl border border-rose-200">
                 {error}
               </div>
             )}
             {success && (
-              <div className="p-3 bg-emerald-950/60 text-emerald-300 text-xs rounded-xl border border-emerald-800/80">
+              <div className="p-3 bg-[#A9B3AA]/20 text-[#2C3E36] text-xs rounded-xl border border-[#A9B3AA]">
                 {success}
               </div>
             )}
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Account Type (ReadOnly) */}
-              <div className="md:col-span-2 bg-slate-900/70 p-4 rounded-xl border border-slate-800">
-                <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">Account Role</span>
-                <span className="block font-black text-white text-lg mt-0.5">
-                  {user.role === 'ADMIN' ? 'Super Admin' : user.role === 'OWNER' ? 'Property Owner' : 'PG Seeker'}
+              <div className="md:col-span-2 bg-[#FAF9F5] p-4 rounded-xl border border-[#E4E1D6]">
+                <span className="block text-[10px] font-bold text-[#6B6B63] uppercase tracking-wider">Account Role</span>
+                <span className="block font-serif font-bold text-[#2C3E36] text-lg mt-0.5">
+                  {user.role === 'ADMIN' ? 'Super Admin' : user.role === 'OWNER' ? 'Property Host' : 'Accommodation Seeker'}
                 </span>
               </div>
 
               {/* Name */}
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1">Full Name</label>
+                <label className="block text-xs font-semibold text-[#2A2A2A] mb-1">Full Name</label>
                 <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-[#6B6B63]">
                     <User size={16} />
                   </div>
                   <input
                     type="text"
                     required
-                    className="block w-full pl-9 px-3 py-2 bg-slate-900 border border-slate-700/80 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm"
+                    className="block w-full pl-9 px-3 py-2 bg-[#FAF9F5] border border-[#E4E1D6] rounded-xl text-[#2A2A2A] focus:outline-none focus:ring-2 focus:ring-[#2C3E36] text-sm"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                   />
@@ -130,9 +130,9 @@ export default function ProfilePage() {
 
               {/* Gender */}
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1">Gender</label>
+                <label className="block text-xs font-semibold text-[#2A2A2A] mb-1">Gender</label>
                 <select
-                  className="block w-full px-3 py-2 border border-slate-700/80 rounded-xl text-white bg-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm"
+                  className="block w-full px-3 py-2 border border-[#E4E1D6] rounded-xl text-[#2A2A2A] bg-[#FAF9F5] focus:outline-none focus:ring-2 focus:ring-[#2C3E36] text-sm"
                   value={gender}
                   onChange={(e) => setGender(e.target.value as any)}
                 >
@@ -144,15 +144,15 @@ export default function ProfilePage() {
 
               {/* Email */}
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1">Email Address</label>
+                <label className="block text-xs font-semibold text-[#2A2A2A] mb-1">Email Address</label>
                 <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-[#6B6B63]">
                     <Mail size={16} />
                   </div>
                   <input
                     type="email"
                     required
-                    className="block w-full pl-9 px-3 py-2 bg-slate-900 border border-slate-700/80 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm"
+                    className="block w-full pl-9 px-3 py-2 bg-[#FAF9F5] border border-[#E4E1D6] rounded-xl text-[#2A2A2A] focus:outline-none focus:ring-2 focus:ring-[#2C3E36] text-sm"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                   />
@@ -161,16 +161,16 @@ export default function ProfilePage() {
 
               {/* Phone */}
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1">Phone Number</label>
+                <label className="block text-xs font-semibold text-[#2A2A2A] mb-1">Phone Number</label>
                 <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-[#6B6B63]">
                     <Phone size={16} />
                   </div>
                   <input
                     type="tel"
                     required
                     maxLength={10}
-                    className="block w-full pl-9 px-3 py-2 bg-slate-900 border border-slate-700/80 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm"
+                    className="block w-full pl-9 px-3 py-2 bg-[#FAF9F5] border border-[#E4E1D6] rounded-xl text-[#2A2A2A] focus:outline-none focus:ring-2 focus:ring-[#2C3E36] text-sm"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value.replace(/\D/g, ''))}
                   />
@@ -178,22 +178,22 @@ export default function ProfilePage() {
               </div>
             </div>
 
-            <hr className="border-slate-800" />
+            <hr className="border-[#E4E1D6]" />
 
             <div>
-              <h3 className="text-base font-bold text-white">Change Password</h3>
-              <p className="text-slate-400 text-xs mt-0.5">Leave blank if you do not want to modify your password</p>
+              <h3 className="text-base font-serif font-bold text-[#2A2A2A]">Change Password</h3>
+              <p className="text-[#6B6B63] text-xs mt-0.5">Leave blank if you do not want to modify your password</p>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
                 <div>
-                  <label className="block text-xs font-semibold text-slate-300 mb-1">Current Password</label>
+                  <label className="block text-xs font-semibold text-[#2A2A2A] mb-1">Current Password</label>
                   <div className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-[#6B6B63]">
                       <Lock size={16} />
                     </div>
                     <input
                       type="password"
-                      className="block w-full pl-9 px-3 py-2 bg-slate-900 border border-slate-700/80 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm"
+                      className="block w-full pl-9 px-3 py-2 bg-[#FAF9F5] border border-[#E4E1D6] rounded-xl text-[#2A2A2A] placeholder-[#6B6B63]/60 focus:outline-none focus:ring-2 focus:ring-[#2C3E36] text-sm"
                       placeholder="••••••••"
                       value={currentPassword}
                       onChange={(e) => setCurrentPassword(e.target.value)}
@@ -202,14 +202,14 @@ export default function ProfilePage() {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-slate-300 mb-1">New Password</label>
+                  <label className="block text-xs font-semibold text-[#2A2A2A] mb-1">New Password</label>
                   <div className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-[#6B6B63]">
                       <Lock size={16} />
                     </div>
                     <input
                       type="password"
-                      className="block w-full pl-9 px-3 py-2 bg-slate-900 border border-slate-700/80 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm"
+                      className="block w-full pl-9 px-3 py-2 bg-[#FAF9F5] border border-[#E4E1D6] rounded-xl text-[#2A2A2A] placeholder-[#6B6B63]/60 focus:outline-none focus:ring-2 focus:ring-[#2C3E36] text-sm"
                       placeholder="••••••••"
                       value={newPassword}
                       onChange={(e) => setNewPassword(e.target.value)}
@@ -218,14 +218,14 @@ export default function ProfilePage() {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-slate-300 mb-1">Confirm New Password</label>
+                  <label className="block text-xs font-semibold text-[#2A2A2A] mb-1">Confirm New Password</label>
                   <div className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-[#6B6B63]">
                       <Lock size={16} />
                     </div>
                     <input
                       type="password"
-                      className="block w-full pl-9 px-3 py-2 bg-slate-900 border border-slate-700/80 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm"
+                      className="block w-full pl-9 px-3 py-2 bg-[#FAF9F5] border border-[#E4E1D6] rounded-xl text-[#2A2A2A] placeholder-[#6B6B63]/60 focus:outline-none focus:ring-2 focus:ring-[#2C3E36] text-sm"
                       placeholder="••••••••"
                       value={confirmPassword}
                       onChange={(e) => setConfirmPassword(e.target.value)}
@@ -239,7 +239,7 @@ export default function ProfilePage() {
               <button
                 type="submit"
                 disabled={saving}
-                className="flex items-center justify-center gap-2 py-2.5 px-6 rounded-xl text-slate-950 font-bold bg-emerald-500 hover:bg-emerald-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 transition-all disabled:opacity-50 shadow-md shadow-emerald-500/20 text-sm"
+                className="flex items-center justify-center gap-2 py-2.5 px-6 rounded-xl text-[#F3F1E7] font-semibold bg-[#2C3E36] hover:bg-[#22312B] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#2C3E36] transition-all disabled:opacity-50 shadow-sm text-sm"
               >
                 <Save size={16} />
                 <span>{saving ? 'Saving changes...' : 'Save Profile'}</span>

@@ -80,10 +80,10 @@ function VoiceNoteMessage({ content, isOwn }: { content: string; isOwn: boolean 
       <audio ref={audioRef} src={audioSrc} preload="metadata" />
       <button
         onClick={togglePlay}
-        className={`w-9 h-9 rounded-full flex items-center justify-center transition-all flex-shrink-0 shadow-md ${
+        className={`w-9 h-9 rounded-full flex items-center justify-center transition-all flex-shrink-0 shadow-sm ${
           isOwn
-            ? 'bg-emerald-950 text-emerald-300 hover:bg-emerald-900 border border-emerald-400/40'
-            : 'bg-emerald-500 text-slate-950 hover:bg-emerald-400'
+            ? 'bg-[#F3F1E7] text-[#2C3E36] hover:bg-white'
+            : 'bg-[#2C3E36] text-[#F3F1E7] hover:bg-[#22312B]'
         }`}
       >
         {isPlaying ? <Pause size={16} /> : <Play size={16} className="ml-0.5" />}
@@ -92,18 +92,18 @@ function VoiceNoteMessage({ content, isOwn }: { content: string; isOwn: boolean 
       <div className="flex flex-col gap-1 min-w-[140px] sm:min-w-[180px]">
         <div className="flex items-center justify-between text-[11px] font-bold">
           <span className="flex items-center gap-1">
-            <Volume2 size={13} className={isOwn ? 'text-emerald-200' : 'text-emerald-400'} />
+            <Volume2 size={13} className={isOwn ? 'text-[#D9D3B8]' : 'text-[#2C3E36]'} />
             <span>Voice Note</span>
           </span>
-          <span className={`text-[10px] ${isOwn ? 'text-emerald-200' : 'text-slate-400'}`}>
+          <span className={`text-[10px] ${isOwn ? 'text-[#E8E4CF]' : 'text-[#6B6B63]'}`}>
             {isPlaying ? formatTime(currentTime) : (duration > 0 ? formatTime(duration) : 'Audio')}
           </span>
         </div>
 
         {/* Visual audio progress bar */}
-        <div className="w-full bg-slate-950/60 rounded-full h-1.5 overflow-hidden">
+        <div className={`w-full rounded-full h-1.5 overflow-hidden ${isOwn ? 'bg-black/20' : 'bg-[#E4E1D6]'}`}>
           <div
-            className={`h-full transition-all ${isOwn ? 'bg-white' : 'bg-emerald-400'}`}
+            className={`h-full transition-all ${isOwn ? 'bg-[#F3F1E7]' : 'bg-[#2C3E36]'}`}
             style={{ width: `${duration > 0 ? (currentTime / duration) * 100 : 0}%` }}
           />
         </div>
@@ -258,32 +258,32 @@ export default function ChatWindow({ enquiryId, currentUser, onBack }: ChatWindo
 
   if (loading) {
     return (
-      <div className="flex flex-col items-center justify-center p-12 text-emerald-400 h-96 bg-[#0e1424] rounded-2xl border border-slate-800">
+      <div className="flex flex-col items-center justify-center p-12 text-[#2C3E36] h-96 bg-white rounded-2xl border border-[#E4E1D6]">
         <RefreshCw className="animate-spin" size={24} />
-        <span className="text-xs font-semibold mt-2 text-slate-400">Loading conversation...</span>
+        <span className="text-xs font-semibold mt-2 text-[#6B6B63]">Loading conversation...</span>
       </div>
     );
   }
 
   return (
-    <div className="bg-[#0e1424] rounded-2xl border border-slate-800 shadow-xl overflow-hidden flex flex-col h-[calc(100vh-16rem)] text-slate-100">
+    <div className="bg-white rounded-2xl border border-[#E4E1D6] shadow-sm overflow-hidden flex flex-col h-[calc(100vh-16rem)] text-[#2A2A2A]">
       {/* Chat header */}
-      <div className="p-4 border-b border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-slate-900/95 flex-shrink-0">
+      <div className="p-4 border-b border-[#E4E1D6] flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-[#FAF9F5] flex-shrink-0">
         <div className="flex items-start gap-3">
           {onBack && (
-            <button onClick={onBack} className="text-slate-400 hover:text-white focus:outline-none mt-1">
+            <button onClick={onBack} className="text-[#6B6B63] hover:text-[#2A2A2A] focus:outline-none mt-1">
               <ArrowLeft size={18} />
             </button>
           )}
           <div className="space-y-0.5">
             <div className="flex items-center gap-2">
-              <h3 className="font-black text-white text-base leading-tight">
-                {enquiry?.property?.name || (currentUser.role === 'SEEKER' ? 'Hostel Owner Chat' : 'Customer Chat')}
+              <h3 className="font-serif font-bold text-[#2A2A2A] text-lg leading-tight">
+                {enquiry?.property?.name || (currentUser.role === 'SEEKER' ? 'Hostel Host Chat' : 'Resident Chat')}
               </h3>
               {enquiry?.property?.id && (
                 <Link
                   href={`/seeker/properties/${enquiry.property.id}`}
-                  className="text-slate-400 hover:text-emerald-400 inline-flex items-center transition-colors"
+                  className="text-[#6B6B63] hover:text-[#2C3E36] inline-flex items-center transition-colors"
                   title="View property details"
                 >
                   <ExternalLink size={13} />
@@ -292,7 +292,7 @@ export default function ChatWindow({ enquiryId, currentUser, onBack }: ChatWindo
             </div>
 
             {enquiry?.property?.city && (
-              <div className="flex items-center gap-1.5 text-xs text-emerald-400 font-semibold">
+              <div className="flex items-center gap-1.5 text-xs text-[#2C3E36] font-semibold">
                 <MapPin size={12} className="flex-shrink-0" />
                 <span>
                   {enquiry.property.city}{enquiry.property.state ? `, ${enquiry.property.state}` : ''}
@@ -300,21 +300,21 @@ export default function ChatWindow({ enquiryId, currentUser, onBack }: ChatWindo
               </div>
             )}
 
-            <p className="text-slate-400 text-[11px] font-medium">
+            <p className="text-[#6B6B63] text-[11px] font-medium">
               {currentUser.role === 'SEEKER'
                 ? `Owner: ${enquiry?.property?.owner?.name || 'Property Manager'}`
-                : `Customer: ${enquiry?.seeker?.name || 'Prospective Resident'} (${enquiry?.seeker?.phone || 'Direct'})`}
+                : `Seeker: ${enquiry?.seeker?.name || 'Prospective Resident'} (${enquiry?.seeker?.phone || 'Direct'})`}
             </p>
           </div>
         </div>
 
-        <span className="inline-flex items-center gap-1.5 bg-slate-950 text-emerald-400 py-1.5 px-3.5 rounded-full text-xs font-bold border border-emerald-800/60 shadow-sm self-start sm:self-center">
-          <Shield size={13} className="text-emerald-400" /> Live In-App Chat
+        <span className="inline-flex items-center gap-1.5 bg-[#D9D3B8]/60 text-[#2C3E36] py-1.5 px-3.5 rounded-full text-xs font-bold border border-[#D9D3B8] shadow-sm self-start sm:self-center">
+          <Shield size={13} className="text-[#2C3E36]" /> Direct In-App Chat
         </span>
       </div>
 
       {/* Messages body */}
-      <div className="flex-grow p-4 overflow-y-auto space-y-4 bg-[#090d16]/80">
+      <div className="flex-grow p-4 overflow-y-auto space-y-4 bg-[#FAF9F5]">
         {messages.map((msg) => {
           const isOwnMessage = msg.senderId === currentUser.id;
           const isVoiceNote = msg.content.startsWith('[VOICE_NOTE]:');
@@ -325,10 +325,10 @@ export default function ChatWindow({ enquiryId, currentUser, onBack }: ChatWindo
               className={`flex ${isOwnMessage ? 'justify-end' : 'justify-start'}`}
             >
               <div
-                className={`max-w-[80%] rounded-2xl px-4 py-2.5 shadow-md ${
+                className={`max-w-[80%] rounded-2xl px-4 py-2.5 shadow-sm ${
                   isOwnMessage
-                    ? 'bg-emerald-600 text-white rounded-tr-none'
-                    : 'bg-slate-900 border border-slate-800 text-slate-200 rounded-tl-none'
+                    ? 'bg-[#2C3E36] text-[#F3F1E7] rounded-tr-none'
+                    : 'bg-white border border-[#E4E1D6] text-[#2A2A2A] rounded-tl-none'
                 }`}
               >
                 {isVoiceNote ? (
@@ -338,7 +338,7 @@ export default function ChatWindow({ enquiryId, currentUser, onBack }: ChatWindo
                 )}
 
                 <span className={`block text-[9px] mt-1 text-right font-semibold ${
-                  isOwnMessage ? 'text-emerald-200' : 'text-slate-500'
+                  isOwnMessage ? 'text-[#D9D3B8]' : 'text-[#6B6B63]'
                 }`}>
                   {new Date(msg.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                 </span>
@@ -350,15 +350,15 @@ export default function ChatWindow({ enquiryId, currentUser, onBack }: ChatWindo
       </div>
 
       {/* Chat footer input with Voice Note Recorder */}
-      <div className="p-3 border-t border-slate-800 bg-slate-900/90 flex-shrink-0">
-        {errorMsg && <p className="text-rose-400 text-xs mb-2 font-medium">{errorMsg}</p>}
+      <div className="p-3 border-t border-[#E4E1D6] bg-white flex-shrink-0">
+        {errorMsg && <p className="text-rose-600 text-xs mb-2 font-medium">{errorMsg}</p>}
 
         {isRecording ? (
-          <div className="flex items-center justify-between gap-3 bg-slate-950 p-2 rounded-xl border border-rose-800/80 animate-pulse">
+          <div className="flex items-center justify-between gap-3 bg-rose-50 p-2 rounded-xl border border-rose-200 animate-pulse">
             <div className="flex items-center gap-2 pl-2">
               <span className="w-3 h-3 rounded-full bg-rose-500 animate-ping" />
-              <span className="text-xs font-bold text-rose-400">Recording Voice Note...</span>
-              <span className="text-xs font-mono font-bold text-white bg-slate-900 px-2 py-0.5 rounded border border-slate-800">
+              <span className="text-xs font-bold text-rose-700">Recording Voice Note...</span>
+              <span className="text-xs font-mono font-bold text-[#2A2A2A] bg-white px-2 py-0.5 rounded border border-[#E4E1D6]">
                 {formatRecordingTime(recordingSeconds)}
               </span>
             </div>
@@ -367,7 +367,7 @@ export default function ChatWindow({ enquiryId, currentUser, onBack }: ChatWindo
               <button
                 type="button"
                 onClick={cancelRecording}
-                className="p-2 text-slate-400 hover:text-rose-400 hover:bg-slate-900 rounded-lg transition-colors"
+                className="p-2 text-[#6B6B63] hover:text-rose-600 hover:bg-white rounded-lg transition-colors"
                 title="Cancel recording"
               >
                 <X size={18} />
@@ -375,7 +375,7 @@ export default function ChatWindow({ enquiryId, currentUser, onBack }: ChatWindo
               <button
                 type="button"
                 onClick={stopRecordingAndSend}
-                className="flex items-center gap-1.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold px-4 py-2 rounded-xl text-xs transition-all shadow-md"
+                className="flex items-center gap-1.5 bg-[#2C3E36] hover:bg-[#22312B] text-[#F3F1E7] font-semibold px-4 py-2 rounded-xl text-xs transition-all shadow-sm"
               >
                 <Send size={14} /> Send Voice
               </button>
@@ -387,7 +387,7 @@ export default function ChatWindow({ enquiryId, currentUser, onBack }: ChatWindo
               type="text"
               disabled={sending}
               placeholder="Type message or click mic to send voice note..."
-              className="flex-grow px-4 py-2.5 bg-slate-950 border border-slate-700/80 rounded-xl text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+              className="flex-grow px-4 py-2.5 bg-[#FAF9F5] border border-[#E4E1D6] rounded-xl text-sm text-[#2A2A2A] placeholder-[#6B6B63]/60 focus:outline-none focus:ring-2 focus:ring-[#2C3E36]"
               value={newMessage}
               onChange={(e) => setNewMessage(e.target.value)}
             />
@@ -396,7 +396,7 @@ export default function ChatWindow({ enquiryId, currentUser, onBack }: ChatWindo
             <button
               type="button"
               onClick={startRecording}
-              className="bg-slate-800 hover:bg-slate-700 text-emerald-400 hover:text-emerald-300 p-2.5 rounded-xl border border-slate-700 transition-all focus:outline-none shadow-sm flex items-center justify-center"
+              className="bg-[#FAF9F5] hover:bg-[#D9D3B8] text-[#2C3E36] p-2.5 rounded-xl border border-[#E4E1D6] transition-all focus:outline-none shadow-sm flex items-center justify-center"
               title="Record & send voice note"
             >
               <Mic size={18} />
@@ -406,7 +406,7 @@ export default function ChatWindow({ enquiryId, currentUser, onBack }: ChatWindo
             <button
               type="submit"
               disabled={sending || !newMessage.trim()}
-              className="bg-emerald-500 hover:bg-emerald-400 disabled:opacity-40 text-slate-950 font-bold p-2.5 rounded-xl transition-all shadow-md shadow-emerald-500/20 focus:outline-none flex items-center justify-center"
+              className="bg-[#2C3E36] hover:bg-[#22312B] disabled:opacity-40 text-[#F3F1E7] font-semibold p-2.5 rounded-xl transition-all shadow-sm focus:outline-none flex items-center justify-center"
               title="Send message"
             >
               <Send size={18} />

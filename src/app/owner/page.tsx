@@ -120,8 +120,8 @@ export default function OwnerDashboard() {
 
   if (authLoading || loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[#090d16]">
-        <div className="flex items-center space-x-2 text-emerald-400 font-semibold">
+      <div className="min-h-screen flex items-center justify-center bg-[#F3F1E7]">
+        <div className="flex items-center space-x-2 text-[#2C3E36] font-semibold">
           <RefreshCw className="animate-spin" />
           <span>Opening Owner Dashboard...</span>
         </div>
@@ -333,19 +333,19 @@ export default function OwnerDashboard() {
     : 0;
 
   return (
-    <div className="min-h-screen bg-[#090d16] text-slate-100 pb-20 font-sans selection:bg-emerald-500 selection:text-black">
+    <div className="min-h-screen bg-[#F3F1E7] text-[#2A2A2A] pb-20 font-sans selection:bg-[#2C3E36] selection:text-[#F3F1E7]">
       <Navbar />
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8 space-y-8">
         {/* Messages */}
         {successMsg && (
-          <div className="p-3 bg-emerald-950/70 text-emerald-300 text-sm rounded-xl border border-emerald-800 flex items-center gap-2">
+          <div className="p-3.5 bg-[#A9B3AA]/20 text-[#2C3E36] text-sm rounded-xl border border-[#A9B3AA] flex items-center gap-2">
             <Check size={16} />
             <span>{successMsg}</span>
           </div>
         )}
         {errorMsg && (
-          <div className="p-3 bg-rose-950/70 text-rose-300 text-sm rounded-xl border border-rose-800 flex items-center gap-2">
+          <div className="p-3.5 bg-rose-50 text-rose-800 text-sm rounded-xl border border-rose-200 flex items-center gap-2">
             <X size={16} />
             <span>{errorMsg}</span>
           </div>
@@ -354,25 +354,25 @@ export default function OwnerDashboard() {
         {/* Dashboard Top Header */}
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
           <div>
-            <h1 className="text-2xl font-black text-white flex items-center gap-2.5">
-              <LayoutDashboard className="text-emerald-400" />
-              <span>Owner Management Panel</span>
+            <h1 className="text-2xl sm:text-3xl font-serif font-bold text-[#2A2A2A] flex items-center gap-2.5">
+              <LayoutDashboard className="text-[#2C3E36]" />
+              <span>Owner Management Desk</span>
             </h1>
-            <p className="text-slate-400 text-xs mt-0.5">Manage your hostels, edit prices & features, adjust bed vacancies, and chat with seekers.</p>
+            <p className="text-[#6B6B63] text-xs mt-1">Manage your properties, edit prices & features, adjust vacancies, and reply to seekers.</p>
           </div>
           
           <div className="flex items-center gap-3">
             <Link
               href="/owner/enquiries"
-              className="flex items-center justify-center gap-2 py-2.5 px-5 rounded-xl text-cyan-300 font-bold bg-cyan-950/70 border border-cyan-800/80 hover:bg-cyan-900/90 transition-all shadow-md text-sm"
+              className="flex items-center justify-center gap-2 py-2.5 px-5 rounded-xl text-[#2C3E36] font-semibold bg-white border border-[#E4E1D6] hover:bg-[#FAF9F5] transition-all shadow-sm text-sm"
             >
               <MessageSquare size={17} />
-              <span>Customer Chats ({totalEnquiries})</span>
+              <span>Resident Chats ({totalEnquiries})</span>
             </Link>
 
             <button
               onClick={() => setShowAddModal(true)}
-              className="flex items-center justify-center gap-2 py-2.5 px-6 rounded-xl text-slate-950 font-bold bg-emerald-500 hover:bg-emerald-400 transition-all shadow-md shadow-emerald-500/20 text-sm"
+              className="flex items-center justify-center gap-2 py-2.5 px-6 rounded-xl text-[#F3F1E7] font-semibold bg-[#2C3E36] hover:bg-[#22312B] transition-all shadow-sm text-sm"
             >
               <Plus size={18} />
               <span>List New PG / Hostel</span>
@@ -382,24 +382,24 @@ export default function OwnerDashboard() {
 
         {/* Analytics Summary */}
         <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-          <div className="bg-[#0e1424] p-5 rounded-2xl border border-slate-800 shadow-xl">
-            <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Total Listings</span>
-            <span className="block text-3xl font-black text-white mt-1">{totalListings}</span>
+          <div className="bg-white p-6 rounded-2xl border border-[#E4E1D6] shadow-sm">
+            <span className="text-[10px] text-[#6B6B63] font-bold uppercase tracking-wider">Total Listings</span>
+            <span className="block font-serif text-3xl font-bold text-[#2A2A2A] mt-1">{totalListings}</span>
           </div>
 
-          <div className="bg-[#0e1424] p-5 rounded-2xl border border-slate-800 shadow-xl">
-            <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Active Listings</span>
-            <span className="block text-3xl font-black text-emerald-400 mt-1">{activeListings}</span>
+          <div className="bg-white p-6 rounded-2xl border border-[#E4E1D6] shadow-sm">
+            <span className="text-[10px] text-[#6B6B63] font-bold uppercase tracking-wider">Active Listings</span>
+            <span className="block font-serif text-3xl font-bold text-[#2C3E36] mt-1">{activeListings}</span>
           </div>
 
-          <div className="bg-[#0e1424] p-5 rounded-2xl border border-slate-800 shadow-xl">
-            <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Total Enquiries</span>
-            <span className="block text-3xl font-black text-cyan-400 mt-1">{totalEnquiries}</span>
+          <div className="bg-white p-6 rounded-2xl border border-[#E4E1D6] shadow-sm">
+            <span className="text-[10px] text-[#6B6B63] font-bold uppercase tracking-wider">Total Enquiries</span>
+            <span className="block font-serif text-3xl font-bold text-[#2C3E36] mt-1">{totalEnquiries}</span>
           </div>
 
-          <div className="bg-[#0e1424] p-5 rounded-2xl border border-slate-800 shadow-xl">
-            <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Occupancy Rate</span>
-            <span className="block text-3xl font-black text-amber-400 mt-1">
+          <div className="bg-white p-6 rounded-2xl border border-[#E4E1D6] shadow-sm">
+            <span className="text-[10px] text-[#6B6B63] font-bold uppercase tracking-wider">Occupancy Rate</span>
+            <span className="block font-serif text-3xl font-bold text-[#2C3E36] mt-1">
               {averageOccupancy.toFixed(0)}%
             </span>
           </div>
@@ -408,28 +408,28 @@ export default function OwnerDashboard() {
         {/* Properties Listings Grid */}
         <section className="space-y-4">
           <div className="flex justify-between items-center">
-            <h2 className="text-lg font-bold text-white">Your Listed Accommodations ({properties.length})</h2>
-            <span className="text-xs text-slate-400">Click "Edit" on any PG to change prices, room configs & features</span>
+            <h2 className="text-xl font-serif font-bold text-[#2A2A2A]">Your Listed Accommodations ({properties.length})</h2>
+            <span className="text-xs text-[#6B6B63]">Click "Edit" on any PG to change prices, room configs & features</span>
           </div>
 
           {properties.length === 0 ? (
-            <div className="bg-[#0e1424] rounded-2xl p-12 border border-slate-800 text-center shadow-xl space-y-3">
-              <ShieldAlert className="mx-auto text-slate-600" size={48} />
-              <h2 className="text-lg font-bold text-white">No properties listed yet</h2>
-              <p className="text-slate-400 text-xs max-w-sm mx-auto leading-relaxed">
+            <div className="bg-white rounded-2xl p-12 border border-[#E4E1D6] text-center shadow-sm space-y-3">
+              <ShieldAlert className="mx-auto text-[#6B6B63]" size={48} />
+              <h2 className="text-lg font-serif font-bold text-[#2A2A2A]">No properties listed yet</h2>
+              <p className="text-[#6B6B63] text-xs max-w-sm mx-auto leading-relaxed">
                 Click on the "List New PG / Hostel" button to create your first PG listing on Shel.
               </p>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {properties.map((prop) => (
-                <div key={prop.id} className="bg-[#0e1424] rounded-2xl border border-slate-800 shadow-xl p-6 space-y-4 flex flex-col justify-between hover:border-slate-700 transition-all">
+                <div key={prop.id} className="bg-white rounded-2xl border border-[#E4E1D6] shadow-sm p-6 space-y-4 flex flex-col justify-between hover:border-[#A9B3AA] transition-all">
                   <div>
                     {/* Header: Name, Location, Status Toggle */}
                     <div className="flex justify-between items-start gap-4">
                       <div>
-                        <h3 className="font-extrabold text-white text-lg leading-tight">{prop.name}</h3>
-                        <p className="text-emerald-400 text-xs font-semibold mt-1 flex items-center gap-1">
+                        <h3 className="font-serif font-bold text-[#2A2A2A] text-lg leading-tight">{prop.name}</h3>
+                        <p className="text-[#2C3E36] text-xs font-semibold mt-1 flex items-center gap-1">
                           <MapPin size={12} />
                           <span>{prop.address}, {prop.city} ({prop.state})</span>
                         </p>
@@ -439,7 +439,7 @@ export default function OwnerDashboard() {
                       <button
                         onClick={() => handleToggleActive(prop.id, prop.isActive)}
                         className={`focus:outline-none transition-colors ${
-                          prop.isActive ? 'text-emerald-400 hover:text-emerald-300' : 'text-slate-600 hover:text-slate-500'
+                          prop.isActive ? 'text-[#2C3E36] hover:text-[#1E2B25]' : 'text-[#A9B3AA] hover:text-[#6B6B63]'
                         }`}
                         title={prop.isActive ? 'Deactivate listing' : 'Activate listing'}
                       >
@@ -449,18 +449,18 @@ export default function OwnerDashboard() {
 
                     {/* Quick Info Badges */}
                     <div className="flex flex-wrap gap-2 mt-3">
-                      <span className="text-[10px] font-bold text-slate-300 bg-slate-800 border border-slate-700 px-2.5 py-0.5 rounded-md uppercase">
+                      <span className="text-[10px] font-bold text-[#2C3E36] bg-[#D9D3B8]/60 border border-[#D9D3B8] px-2.5 py-0.5 rounded-md uppercase">
                         {prop.genderType} PG
                       </span>
-                      <span className="text-[10px] font-semibold text-cyan-300 bg-cyan-950/60 border border-cyan-800/60 px-2.5 py-0.5 rounded-md uppercase">
+                      <span className="text-[10px] font-semibold text-[#2C3E36] bg-[#A9B3AA]/30 border border-[#A9B3AA]/60 px-2.5 py-0.5 rounded-md uppercase">
                         {prop.acType} Room
                       </span>
                       {prop.isVerified ? (
-                        <span className="text-[10px] font-bold text-emerald-300 bg-emerald-950/80 border border-emerald-700/80 flex items-center gap-1 py-0.5 px-2.5 rounded-md uppercase">
-                          <CheckCircle2 size={11} className="text-emerald-400" /> Verified
+                        <span className="text-[10px] font-bold text-[#F3F1E7] bg-[#2C3E36] border border-[#3D5349] flex items-center gap-1 py-0.5 px-2.5 rounded-md uppercase">
+                          <CheckCircle2 size={11} className="text-[#D9D3B8]" /> Verified
                         </span>
                       ) : (
-                        <span className="text-[10px] font-semibold text-rose-400 bg-rose-950/60 border border-rose-800/80 px-2.5 py-0.5 rounded-md uppercase">
+                        <span className="text-[10px] font-semibold text-rose-700 bg-rose-50 border border-rose-200 px-2.5 py-0.5 rounded-md uppercase">
                           Unverified
                         </span>
                       )}
@@ -468,14 +468,14 @@ export default function OwnerDashboard() {
 
                     {/* Room Summaries & Prices */}
                     <div className="space-y-1.5 mt-4">
-                      <h4 className="text-[11px] font-bold text-slate-400 uppercase tracking-wide">Room Configurations & Pricing</h4>
+                      <h4 className="text-[11px] font-bold text-[#6B6B63] uppercase tracking-wide">Room Configurations & Pricing</h4>
                       {prop.rooms && prop.rooms.map((room: any) => (
-                        <div key={room.id} className="flex justify-between items-center text-xs text-slate-300 bg-slate-900/80 p-2.5 rounded-xl border border-slate-800">
-                          <span className="font-semibold capitalize text-white">{room.sharingType.toLowerCase()} room</span>
-                          <span className="font-medium text-slate-400">
-                            Rent: <strong className="text-emerald-400">₹{room.price.toLocaleString()}/mo</strong>
+                        <div key={room.id} className="flex justify-between items-center text-xs text-[#2A2A2A] bg-[#FAF9F5] p-2.5 rounded-xl border border-[#E4E1D6]">
+                          <span className="font-semibold capitalize text-[#2A2A2A]">{room.sharingType.toLowerCase()} room</span>
+                          <span className="font-medium text-[#6B6B63]">
+                            Rent: <strong className="text-[#2C3E36]">₹{room.price.toLocaleString()}/mo</strong>
                           </span>
-                          <span className={`font-bold text-xs ${room.availableBeds === 0 ? 'text-rose-400' : 'text-emerald-400'}`}>
+                          <span className={`font-bold text-xs ${room.availableBeds === 0 ? 'text-rose-600' : 'text-[#2C3E36]'}`}>
                             {room.availableBeds} / {room.totalBeds} Beds Vacant
                           </span>
                         </div>
@@ -484,11 +484,11 @@ export default function OwnerDashboard() {
                   </div>
 
                   {/* Actions buttons */}
-                  <div className="flex flex-wrap gap-2 pt-4 border-t border-slate-800 mt-4">
+                  <div className="flex flex-wrap gap-2 pt-4 border-t border-[#E4E1D6] mt-4">
                     {/* EDIT PROPERTY BUTTON */}
                     <button
                       onClick={() => handleOpenEditModal(prop)}
-                      className="flex-grow flex items-center justify-center gap-1.5 py-2 px-3 border border-emerald-500/50 rounded-xl text-xs font-bold text-emerald-300 bg-emerald-950/40 hover:bg-emerald-900/60 transition-colors focus:outline-none shadow-sm"
+                      className="flex-grow flex items-center justify-center gap-1.5 py-2 px-3 border border-[#2C3E36] rounded-xl text-xs font-semibold text-[#2C3E36] bg-[#FAF9F5] hover:bg-[#D9D3B8] transition-colors focus:outline-none shadow-sm"
                       title="Edit property details, prices, and features"
                     >
                       <Pencil size={14} />
@@ -500,15 +500,15 @@ export default function OwnerDashboard() {
                         setSelectedProperty(prop);
                         setShowRoomsModal(true);
                       }}
-                      className="flex-grow flex items-center justify-center gap-1.5 py-2 px-3 border border-slate-700 rounded-xl text-xs font-bold text-white bg-slate-900 hover:bg-slate-800 transition-colors focus:outline-none"
+                      className="flex-grow flex items-center justify-center gap-1.5 py-2 px-3 border border-[#E4E1D6] rounded-xl text-xs font-semibold text-[#2A2A2A] bg-white hover:bg-[#FAF9F5] transition-colors focus:outline-none"
                     >
-                      <Sliders size={14} className="text-emerald-400" />
+                      <Sliders size={14} className="text-[#2C3E36]" />
                       <span>Quick Vacancy</span>
                     </button>
 
                     <Link
                       href="/owner/enquiries"
-                      className="flex items-center justify-center gap-1.5 py-2 px-3 border border-cyan-800/80 rounded-xl text-xs font-bold text-cyan-300 bg-cyan-950/60 hover:bg-cyan-900/80 transition-colors focus:outline-none shadow-sm"
+                      className="flex items-center justify-center gap-1.5 py-2 px-3 border border-[#E4E1D6] rounded-xl text-xs font-semibold text-[#2C3E36] bg-[#FAF9F5] hover:bg-[#D9D3B8] transition-colors focus:outline-none shadow-sm"
                       title="View chats & voice notes for this PG"
                     >
                       <MessageSquare size={14} />
@@ -517,7 +517,7 @@ export default function OwnerDashboard() {
                     
                     <button
                       onClick={() => handleDeleteProperty(prop.id)}
-                      className="p-2 border border-rose-900/60 rounded-xl text-rose-400 hover:bg-rose-950/40 transition-colors focus:outline-none"
+                      className="p-2 border border-rose-200 rounded-xl text-rose-600 hover:bg-rose-50 transition-colors focus:outline-none"
                       title="Delete PG listing"
                     >
                       <Trash2 size={16} />
@@ -532,20 +532,20 @@ export default function OwnerDashboard() {
 
       {/* ================= EDIT PROPERTY MODAL ================= */}
       {showEditModal && (
-        <div className="fixed inset-0 bg-black/85 backdrop-blur-md z-50 flex items-center justify-center p-4 overflow-y-auto">
-          <div className="bg-[#0e1424] rounded-2xl max-w-3xl w-full flex flex-col max-h-[92vh] shadow-2xl border border-slate-800 overflow-hidden text-slate-100 my-auto">
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 overflow-y-auto">
+          <div className="bg-white rounded-2xl max-w-3xl w-full flex flex-col max-h-[92vh] shadow-2xl border border-[#E4E1D6] overflow-hidden text-[#2A2A2A] my-auto">
             {/* Modal Header */}
-            <div className="p-5 border-b border-slate-800 flex justify-between items-center bg-slate-900/90 sticky top-0 z-10">
+            <div className="p-5 border-b border-[#E4E1D6] flex justify-between items-center bg-[#FAF9F5] sticky top-0 z-10">
               <div className="flex items-center gap-2">
-                <div className="p-2 bg-emerald-950 rounded-xl border border-emerald-800 text-emerald-400">
+                <div className="p-2 bg-[#D9D3B8] rounded-xl border border-[#C7BF9E] text-[#2C3E36]">
                   <Pencil size={18} />
                 </div>
                 <div>
-                  <h3 className="font-extrabold text-white text-base">Edit PG Hostel Details & Prices</h3>
-                  <p className="text-xs text-slate-400">Update pricing, sharing capacities, amenities, and hostel information</p>
+                  <h3 className="font-serif font-bold text-[#2A2A2A] text-lg">Edit PG Hostel Details & Prices</h3>
+                  <p className="text-xs text-[#6B6B63]">Update pricing, sharing capacities, amenities, and hostel information</p>
                 </div>
               </div>
-              <button onClick={() => setShowEditModal(false)} className="text-slate-400 hover:text-white">
+              <button onClick={() => setShowEditModal(false)} className="text-[#6B6B63] hover:text-[#2A2A2A]">
                 <X size={20} />
               </button>
             </div>
@@ -554,48 +554,48 @@ export default function OwnerDashboard() {
             <form onSubmit={handleSaveEditPropertySubmit} className="p-6 overflow-y-auto space-y-6 flex-grow">
               {/* Section 1: Basic Information */}
               <div className="space-y-4">
-                <h4 className="font-bold text-xs text-emerald-400 uppercase tracking-wide">1. Basic Information & Location</h4>
+                <h4 className="font-serif font-bold text-sm text-[#2C3E36] uppercase tracking-wide">1. Basic Information & Location</h4>
                 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="sm:col-span-2">
-                    <label className="block text-xs font-semibold text-slate-300 mb-1">Hostel / PG Name</label>
+                    <label className="block text-xs font-semibold text-[#2A2A2A] mb-1">Hostel / PG Name</label>
                     <input
                       type="text"
                       required
-                      className="w-full px-3.5 py-2.5 bg-slate-900 border border-slate-700/80 rounded-xl text-sm text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 font-bold"
+                      className="w-full px-3.5 py-2.5 bg-[#FAF9F5] border border-[#E4E1D6] rounded-xl text-sm text-[#2A2A2A] focus:outline-none focus:ring-2 focus:ring-[#2C3E36] font-bold"
                       value={editPropName}
                       onChange={(e) => setEditPropName(e.target.value)}
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-slate-300 mb-1">Locality / Address</label>
+                    <label className="block text-xs font-semibold text-[#2A2A2A] mb-1">Locality / Address</label>
                     <input
                       type="text"
                       required
-                      className="w-full px-3.5 py-2.5 bg-slate-900 border border-slate-700/80 rounded-xl text-sm text-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                      className="w-full px-3.5 py-2.5 bg-[#FAF9F5] border border-[#E4E1D6] rounded-xl text-sm text-[#2A2A2A] focus:outline-none focus:ring-2 focus:ring-[#2C3E36]"
                       value={editPropAddress}
                       onChange={(e) => setEditPropAddress(e.target.value)}
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-slate-300 mb-1">City</label>
+                    <label className="block text-xs font-semibold text-[#2A2A2A] mb-1">City</label>
                     <input
                       type="text"
                       required
-                      className="w-full px-3.5 py-2.5 bg-slate-900 border border-slate-700/80 rounded-xl text-sm text-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                      className="w-full px-3.5 py-2.5 bg-[#FAF9F5] border border-[#E4E1D6] rounded-xl text-sm text-[#2A2A2A] focus:outline-none focus:ring-2 focus:ring-[#2C3E36]"
                       value={editPropCity}
                       onChange={(e) => setEditPropCity(e.target.value)}
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-slate-300 mb-1">State / UT</label>
+                    <label className="block text-xs font-semibold text-[#2A2A2A] mb-1">State / UT</label>
                     <input
                       type="text"
                       required
-                      className="w-full px-3.5 py-2.5 bg-slate-900 border border-slate-700/80 rounded-xl text-sm text-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                      className="w-full px-3.5 py-2.5 bg-[#FAF9F5] border border-[#E4E1D6] rounded-xl text-sm text-[#2A2A2A] focus:outline-none focus:ring-2 focus:ring-[#2C3E36]"
                       value={editPropState}
                       onChange={(e) => setEditPropState(e.target.value)}
                     />
@@ -603,19 +603,19 @@ export default function OwnerDashboard() {
 
                   <div className="grid grid-cols-2 gap-2">
                     <div>
-                      <label className="block text-xs font-semibold text-slate-300 mb-1">Latitude</label>
+                      <label className="block text-xs font-semibold text-[#2A2A2A] mb-1">Latitude</label>
                       <input
                         type="text"
-                        className="w-full px-3.5 py-2.5 bg-slate-900 border border-slate-700/80 rounded-xl text-sm text-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                        className="w-full px-3.5 py-2.5 bg-[#FAF9F5] border border-[#E4E1D6] rounded-xl text-sm text-[#2A2A2A] focus:outline-none focus:ring-2 focus:ring-[#2C3E36]"
                         value={editPropLat}
                         onChange={(e) => setEditPropLat(e.target.value)}
                       />
                     </div>
                     <div>
-                      <label className="block text-xs font-semibold text-slate-300 mb-1">Longitude</label>
+                      <label className="block text-xs font-semibold text-[#2A2A2A] mb-1">Longitude</label>
                       <input
                         type="text"
-                        className="w-full px-3.5 py-2.5 bg-slate-900 border border-slate-700/80 rounded-xl text-sm text-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                        className="w-full px-3.5 py-2.5 bg-[#FAF9F5] border border-[#E4E1D6] rounded-xl text-sm text-[#2A2A2A] focus:outline-none focus:ring-2 focus:ring-[#2C3E36]"
                         value={editPropLng}
                         onChange={(e) => setEditPropLng(e.target.value)}
                       />
@@ -625,9 +625,9 @@ export default function OwnerDashboard() {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
                   <div>
-                    <label className="block text-xs font-semibold text-slate-300 mb-1">Gender Compatibility</label>
+                    <label className="block text-xs font-semibold text-[#2A2A2A] mb-1">Gender Compatibility</label>
                     <select
-                      className="w-full px-3.5 py-2.5 bg-slate-900 border border-slate-700/80 rounded-xl text-sm text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 font-semibold"
+                      className="w-full px-3.5 py-2.5 bg-[#FAF9F5] border border-[#E4E1D6] rounded-xl text-sm text-[#2A2A2A] focus:outline-none focus:ring-2 focus:ring-[#2C3E36] font-semibold"
                       value={editPropGender}
                       onChange={(e) => setEditPropGender(e.target.value)}
                     >
@@ -638,9 +638,9 @@ export default function OwnerDashboard() {
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-slate-300 mb-1">AC Option</label>
+                    <label className="block text-xs font-semibold text-[#2A2A2A] mb-1">AC Option</label>
                     <select
-                      className="w-full px-3.5 py-2.5 bg-slate-900 border border-slate-700/80 rounded-xl text-sm text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 font-semibold"
+                      className="w-full px-3.5 py-2.5 bg-[#FAF9F5] border border-[#E4E1D6] rounded-xl text-sm text-[#2A2A2A] focus:outline-none focus:ring-2 focus:ring-[#2C3E36] font-semibold"
                       value={editPropAC}
                       onChange={(e) => setEditPropAC(e.target.value)}
                     >
@@ -651,10 +651,10 @@ export default function OwnerDashboard() {
                   </div>
 
                   <div className="sm:col-span-2">
-                    <label className="block text-xs font-semibold text-slate-300 mb-1">Hostel Description</label>
+                    <label className="block text-xs font-semibold text-[#2A2A2A] mb-1">Hostel Description</label>
                     <textarea
                       rows={3}
-                      className="w-full px-3.5 py-2 bg-slate-900 border border-slate-700/80 rounded-xl text-sm text-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                      className="w-full px-3.5 py-2 bg-[#FAF9F5] border border-[#E4E1D6] rounded-xl text-sm text-[#2A2A2A] focus:outline-none focus:ring-2 focus:ring-[#2C3E36]"
                       value={editPropDesc}
                       onChange={(e) => setEditPropDesc(e.target.value)}
                     />
@@ -663,26 +663,26 @@ export default function OwnerDashboard() {
               </div>
 
               {/* Section 2: Room Configurations & Pricing */}
-              <div className="space-y-4 pt-4 border-t border-slate-800">
+              <div className="space-y-4 pt-4 border-t border-[#E4E1D6]">
                 <div className="flex justify-between items-center">
-                  <h4 className="font-bold text-xs text-emerald-400 uppercase tracking-wide">2. Room Sharing Types & Pricing (₹ / month)</h4>
-                  <span className="text-[11px] text-slate-400">Edit rent, total beds & live vacancy</span>
+                  <h4 className="font-serif font-bold text-sm text-[#2C3E36] uppercase tracking-wide">2. Room Sharing Types & Pricing (₹ / month)</h4>
+                  <span className="text-[11px] text-[#6B6B63]">Edit rent, total beds & live vacancy</span>
                 </div>
 
                 <div className="space-y-3">
                   {editRooms.map((room, idx) => (
-                    <div key={idx} className="bg-slate-900/90 p-3.5 rounded-xl border border-slate-800 grid grid-cols-1 sm:grid-cols-4 gap-3 items-center">
+                    <div key={idx} className="bg-[#FAF9F5] p-3.5 rounded-xl border border-[#E4E1D6] grid grid-cols-1 sm:grid-cols-4 gap-3 items-center">
                       <div>
-                        <span className="block text-[11px] font-bold text-slate-400 uppercase">Sharing Type</span>
-                        <span className="font-extrabold text-white text-sm capitalize">{room.sharingType.toLowerCase()}</span>
+                        <span className="block text-[11px] font-bold text-[#6B6B63] uppercase">Sharing Type</span>
+                        <span className="font-serif font-bold text-[#2A2A2A] text-sm capitalize">{room.sharingType.toLowerCase()}</span>
                       </div>
 
                       <div>
-                        <label className="block text-[10px] font-bold text-slate-400 uppercase mb-0.5">Rent (₹/month)</label>
+                        <label className="block text-[10px] font-bold text-[#6B6B63] uppercase mb-0.5">Rent (₹/month)</label>
                         <input
                           type="number"
                           required
-                          className="w-full px-3 py-1.5 bg-slate-950 border border-slate-700 rounded-lg text-sm font-bold text-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                          className="w-full px-3 py-1.5 bg-white border border-[#E4E1D6] rounded-lg text-sm font-bold text-[#2C3E36] focus:outline-none focus:ring-2 focus:ring-[#2C3E36]"
                           value={room.price}
                           onChange={(e) => {
                             const val = parseFloat(e.target.value) || 0;
@@ -694,12 +694,12 @@ export default function OwnerDashboard() {
                       </div>
 
                       <div>
-                        <label className="block text-[10px] font-bold text-slate-400 uppercase mb-0.5">Total Beds</label>
+                        <label className="block text-[10px] font-bold text-[#6B6B63] uppercase mb-0.5">Total Beds</label>
                         <input
                           type="number"
                           required
                           min="1"
-                          className="w-full px-3 py-1.5 bg-slate-950 border border-slate-700 rounded-lg text-sm text-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                          className="w-full px-3 py-1.5 bg-white border border-[#E4E1D6] rounded-lg text-sm text-[#2A2A2A] focus:outline-none focus:ring-2 focus:ring-[#2C3E36]"
                           value={room.totalBeds}
                           onChange={(e) => {
                             const val = parseInt(e.target.value) || 1;
@@ -711,13 +711,13 @@ export default function OwnerDashboard() {
                       </div>
 
                       <div>
-                        <label className="block text-[10px] font-bold text-slate-400 uppercase mb-0.5">Available Beds</label>
+                        <label className="block text-[10px] font-bold text-[#6B6B63] uppercase mb-0.5">Available Beds</label>
                         <input
                           type="number"
                           required
                           min="0"
                           max={room.totalBeds}
-                          className="w-full px-3 py-1.5 bg-slate-950 border border-slate-700 rounded-lg text-sm font-bold text-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                          className="w-full px-3 py-1.5 bg-white border border-[#E4E1D6] rounded-lg text-sm font-bold text-[#2C3E36] focus:outline-none focus:ring-2 focus:ring-[#2C3E36]"
                           value={room.availableBeds}
                           onChange={(e) => {
                             const val = parseInt(e.target.value) || 0;
@@ -733,14 +733,14 @@ export default function OwnerDashboard() {
               </div>
 
               {/* Section 3: Amenities */}
-              <div className="space-y-3 pt-4 border-t border-slate-800">
-                <h4 className="font-bold text-xs text-emerald-400 uppercase tracking-wide">3. Amenities & Facilities</h4>
+              <div className="space-y-3 pt-4 border-t border-[#E4E1D6]">
+                <h4 className="font-serif font-bold text-sm text-[#2C3E36] uppercase tracking-wide">3. Amenities & Facilities</h4>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
                   {AMENITIES_LIST.map((amenity) => (
-                    <label key={amenity} className="flex items-center gap-2 cursor-pointer text-xs font-semibold text-slate-300 select-none p-2 rounded-xl bg-slate-900/60 border border-slate-800/80 hover:border-slate-700">
+                    <label key={amenity} className="flex items-center gap-2 cursor-pointer text-xs font-semibold text-[#2A2A2A] select-none p-2 rounded-xl bg-[#FAF9F5] border border-[#E4E1D6] hover:bg-[#F3F1E7]">
                       <input
                         type="checkbox"
-                        className="rounded border-slate-700 bg-slate-900 text-emerald-500 focus:ring-emerald-500"
+                        className="rounded border-[#E4E1D6] text-[#2C3E36] focus:ring-[#2C3E36]"
                         checked={editPropAmenities.includes(amenity)}
                         onChange={() => {
                           setEditPropAmenities((prev) =>
@@ -757,13 +757,13 @@ export default function OwnerDashboard() {
               </div>
 
               {/* Section 4: House Rules */}
-              <div className="space-y-3 pt-4 border-t border-slate-800">
-                <h4 className="font-bold text-xs text-emerald-400 uppercase tracking-wide">4. House Rules & Policies</h4>
+              <div className="space-y-3 pt-4 border-t border-[#E4E1D6]">
+                <h4 className="font-serif font-bold text-sm text-[#2C3E36] uppercase tracking-wide">4. House Rules & Policies</h4>
                 <div className="flex gap-2">
                   <input
                     type="text"
                     placeholder="e.g. Visitors to be registered at gate"
-                    className="flex-grow px-3 py-2 bg-slate-900 border border-slate-700 rounded-xl text-sm text-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                    className="flex-grow px-3 py-2 bg-[#FAF9F5] border border-[#E4E1D6] rounded-xl text-sm text-[#2A2A2A] focus:outline-none focus:ring-2 focus:ring-[#2C3E36]"
                     value={editRuleInput}
                     onChange={(e) => setEditRuleInput(e.target.value)}
                   />
@@ -775,7 +775,7 @@ export default function OwnerDashboard() {
                         setEditRuleInput('');
                       }
                     }}
-                    className="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-emerald-400 font-bold text-xs rounded-xl border border-slate-700"
+                    className="px-4 py-2 bg-[#FAF9F5] hover:bg-[#D9D3B8] text-[#2C3E36] font-bold text-xs rounded-xl border border-[#E4E1D6]"
                   >
                     Add Rule
                   </button>
@@ -783,12 +783,12 @@ export default function OwnerDashboard() {
 
                 <div className="space-y-1.5">
                   {editPropRules.map((rule, idx) => (
-                    <div key={idx} className="flex justify-between items-center text-xs text-slate-300 bg-slate-900/90 px-3 py-2 rounded-xl border border-slate-800">
+                    <div key={idx} className="flex justify-between items-center text-xs text-[#2A2A2A] bg-[#FAF9F5] px-3 py-2 rounded-xl border border-[#E4E1D6]">
                       <span>• {rule}</span>
                       <button
                         type="button"
                         onClick={() => setEditPropRules((prev) => prev.filter((_, i) => i !== idx))}
-                        className="text-slate-500 hover:text-rose-400"
+                        className="text-[#6B6B63] hover:text-rose-600"
                       >
                         <X size={14} />
                       </button>
@@ -798,10 +798,10 @@ export default function OwnerDashboard() {
               </div>
 
               {/* Section 5: Photos */}
-              <div className="space-y-3 pt-4 border-t border-slate-800">
+              <div className="space-y-3 pt-4 border-t border-[#E4E1D6]">
                 <div className="flex justify-between items-center">
-                  <h4 className="font-bold text-xs text-emerald-400 uppercase tracking-wide">5. Photo Gallery Selection</h4>
-                  <span className="text-[11px] text-slate-400">({editPropImages.length} selected)</span>
+                  <h4 className="font-serif font-bold text-sm text-[#2C3E36] uppercase tracking-wide">5. Photo Gallery Selection</h4>
+                  <span className="text-[11px] text-[#6B6B63]">({editPropImages.length} selected)</span>
                 </div>
 
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
@@ -816,13 +816,13 @@ export default function OwnerDashboard() {
                           );
                         }}
                         className={`relative cursor-pointer rounded-xl overflow-hidden border p-1 transition-all ${
-                          isSelected ? 'border-emerald-500 bg-emerald-950/40 ring-2 ring-emerald-500/40' : 'border-slate-800 bg-slate-900/60 hover:border-slate-700'
+                          isSelected ? 'border-[#2C3E36] bg-[#D9D3B8]/40 ring-2 ring-[#2C3E36]/30' : 'border-[#E4E1D6] bg-[#FAF9F5] hover:border-[#A9B3AA]'
                         }`}
                       >
                         <img src={imgItem.path} alt={imgItem.label} className="w-full h-16 object-cover rounded-lg" />
                         <div className="mt-1 flex items-center justify-between text-[10px]">
-                          <span className="text-slate-300 font-medium truncate">{imgItem.label}</span>
-                          <span className={isSelected ? 'text-emerald-400 font-bold' : 'text-slate-600'}>
+                          <span className="text-[#2A2A2A] font-medium truncate">{imgItem.label}</span>
+                          <span className={isSelected ? 'text-[#2C3E36] font-bold' : 'text-[#6B6B63]'}>
                             {isSelected ? '✓' : '+'}
                           </span>
                         </div>
@@ -833,18 +833,18 @@ export default function OwnerDashboard() {
               </div>
 
               {/* Footer Save / Cancel */}
-              <div className="pt-4 border-t border-slate-800 flex justify-end gap-3 sticky bottom-0 bg-slate-900/95 py-3 -mb-6 -mx-6 px-6">
+              <div className="pt-4 border-t border-[#E4E1D6] flex justify-end gap-3 sticky bottom-0 bg-white py-3 -mb-6 -mx-6 px-6">
                 <button
                   type="button"
                   onClick={() => setShowEditModal(false)}
-                  className="px-4 py-2 text-xs font-bold text-slate-400 hover:text-white"
+                  className="px-4 py-2 text-xs font-bold text-[#6B6B63] hover:text-[#2A2A2A]"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={savingEdit}
-                  className="bg-emerald-500 hover:bg-emerald-400 disabled:opacity-50 text-slate-950 font-bold py-2.5 px-6 rounded-xl text-xs transition-all shadow-md shadow-emerald-500/20 flex items-center gap-1.5"
+                  className="bg-[#2C3E36] hover:bg-[#22312B] disabled:opacity-50 text-[#F3F1E7] font-semibold py-2.5 px-6 rounded-xl text-xs transition-all shadow-sm flex items-center gap-1.5"
                 >
                   {savingEdit ? <RefreshCw className="animate-spin" size={14} /> : <Check size={14} />}
                   <span>Save All Changes</span>
@@ -857,43 +857,43 @@ export default function OwnerDashboard() {
 
       {/* ================= QUICK VACANCY MODAL ================= */}
       {showRoomsModal && selectedProperty && (
-        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-[#0e1424] rounded-2xl max-w-lg w-full shadow-2xl border border-slate-800 overflow-hidden text-slate-100">
-            <div className="p-5 border-b border-slate-800 flex justify-between items-center bg-slate-900/60">
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl max-w-lg w-full shadow-2xl border border-[#E4E1D6] overflow-hidden text-[#2A2A2A]">
+            <div className="p-5 border-b border-[#E4E1D6] flex justify-between items-center bg-[#FAF9F5]">
               <div>
-                <h3 className="font-bold text-white text-base">Quick Vacancy Control</h3>
-                <p className="text-xs text-slate-400">{selectedProperty.name}</p>
+                <h3 className="font-serif font-bold text-[#2A2A2A] text-lg">Quick Vacancy Control</h3>
+                <p className="text-xs text-[#6B6B63]">{selectedProperty.name}</p>
               </div>
-              <button onClick={() => setShowRoomsModal(false)} className="text-slate-400 hover:text-white">
+              <button onClick={() => setShowRoomsModal(false)} className="text-[#6B6B63] hover:text-[#2A2A2A]">
                 <X size={18} />
               </button>
             </div>
 
             <div className="p-6 space-y-4 max-h-[70vh] overflow-y-auto">
-              <p className="text-xs text-slate-400">Instantly increment or decrement available beds when seekers check in or vacate.</p>
+              <p className="text-xs text-[#6B6B63]">Instantly increment or decrement available beds when seekers check in or vacate.</p>
               {selectedProperty.rooms.map((room: any) => (
-                <div key={room.id} className="bg-slate-900 p-4 rounded-xl border border-slate-800 flex justify-between items-center">
+                <div key={room.id} className="bg-[#FAF9F5] p-4 rounded-xl border border-[#E4E1D6] flex justify-between items-center">
                   <div>
-                    <h4 className="font-bold text-white text-sm capitalize">{room.sharingType.toLowerCase()} room</h4>
-                    <span className="text-xs text-slate-400">
-                      Rent: <strong className="text-emerald-400">₹{room.price}/mo</strong>
+                    <h4 className="font-serif font-bold text-[#2A2A2A] text-sm capitalize">{room.sharingType.toLowerCase()} room</h4>
+                    <span className="text-xs text-[#6B6B63]">
+                      Rent: <strong className="text-[#2C3E36]">₹{room.price}/mo</strong>
                     </span>
-                    <span className="block text-[11px] text-slate-500">Total capacity: {room.totalBeds} beds</span>
+                    <span className="block text-[11px] text-[#6B6B63]">Total capacity: {room.totalBeds} beds</span>
                   </div>
 
                   <div className="flex items-center gap-3">
                     <button
                       onClick={() => handleAdjustVacancy(room.id, room.availableBeds, -1, room.totalBeds)}
                       disabled={room.availableBeds <= 0}
-                      className="w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 disabled:opacity-30 text-white font-bold flex items-center justify-center border border-slate-700"
+                      className="w-8 h-8 rounded-lg bg-white hover:bg-[#FAF9F5] disabled:opacity-30 text-[#2A2A2A] font-bold flex items-center justify-center border border-[#E4E1D6]"
                     >
                       -
                     </button>
-                    <span className="font-bold text-white text-base w-6 text-center">{room.availableBeds}</span>
+                    <span className="font-bold text-[#2A2A2A] text-base w-6 text-center">{room.availableBeds}</span>
                     <button
                       onClick={() => handleAdjustVacancy(room.id, room.availableBeds, 1, room.totalBeds)}
                       disabled={room.availableBeds >= room.totalBeds}
-                      className="w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 disabled:opacity-30 text-white font-bold flex items-center justify-center border border-slate-700"
+                      className="w-8 h-8 rounded-lg bg-white hover:bg-[#FAF9F5] disabled:opacity-30 text-[#2A2A2A] font-bold flex items-center justify-center border border-[#E4E1D6]"
                     >
                       +
                     </button>
@@ -902,10 +902,10 @@ export default function OwnerDashboard() {
               ))}
             </div>
 
-            <div className="p-4 border-t border-slate-800 flex justify-end bg-slate-900/60">
+            <div className="p-4 border-t border-[#E4E1D6] flex justify-end bg-[#FAF9F5]">
               <button
                 onClick={() => setShowRoomsModal(false)}
-                className="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold py-2 px-6 rounded-xl text-xs transition-all shadow-md shadow-emerald-500/20"
+                className="bg-[#2C3E36] hover:bg-[#22312B] text-[#F3F1E7] font-semibold py-2 px-6 rounded-xl text-xs transition-all shadow-sm"
               >
                 Done
               </button>
@@ -916,26 +916,26 @@ export default function OwnerDashboard() {
 
       {/* ================= ADD NEW PROPERTY MODAL ================= */}
       {showAddModal && (
-        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-[#0e1424] rounded-2xl max-w-2xl w-full flex flex-col max-h-[90vh] shadow-2xl border border-slate-800 overflow-hidden text-slate-100">
-            <div className="p-5 border-b border-slate-800 flex justify-between items-center bg-slate-900/60">
-              <h3 className="font-bold text-white text-base">List New Hostel / PG</h3>
-              <button onClick={() => setShowAddModal(false)} className="text-slate-400 hover:text-white">
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl max-w-2xl w-full flex flex-col max-h-[90vh] shadow-2xl border border-[#E4E1D6] overflow-hidden text-[#2A2A2A]">
+            <div className="p-5 border-b border-[#E4E1D6] flex justify-between items-center bg-[#FAF9F5]">
+              <h3 className="font-serif font-bold text-[#2A2A2A] text-lg">List New Hostel / PG</h3>
+              <button onClick={() => setShowAddModal(false)} className="text-[#6B6B63] hover:text-[#2A2A2A]">
                 <X size={18} />
               </button>
             </div>
 
             <form onSubmit={handleAddPropertySubmit} className="p-6 overflow-y-auto space-y-5 flex-grow">
               <div className="space-y-4">
-                <h4 className="font-bold text-xs text-emerald-400 uppercase tracking-wide">1. Property Overview</h4>
+                <h4 className="font-serif font-bold text-sm text-[#2C3E36] uppercase tracking-wide">1. Property Overview</h4>
                 
                 <div>
-                  <label className="block text-xs font-semibold text-slate-300 mb-1">Property Name</label>
+                  <label className="block text-xs font-semibold text-[#2A2A2A] mb-1">Property Name</label>
                   <input
                     type="text"
                     required
                     placeholder="e.g. Stanza Living Austin House"
-                    className="w-full px-3 py-2 bg-slate-900 border border-slate-700/80 rounded-xl text-sm text-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                    className="w-full px-3 py-2 bg-[#FAF9F5] border border-[#E4E1D6] rounded-xl text-sm text-[#2A2A2A] focus:outline-none focus:ring-2 focus:ring-[#2C3E36]"
                     value={newPropName}
                     onChange={(e) => setNewPropName(e.target.value)}
                   />
@@ -943,24 +943,24 @@ export default function OwnerDashboard() {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-xs font-semibold text-slate-300 mb-1">Locality / Address</label>
+                    <label className="block text-xs font-semibold text-[#2A2A2A] mb-1">Locality / Address</label>
                     <input
                       type="text"
                       required
                       placeholder="e.g. Madhapur Near Metro"
-                      className="w-full px-3 py-2 bg-slate-900 border border-slate-700/80 rounded-xl text-sm text-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                      className="w-full px-3 py-2 bg-[#FAF9F5] border border-[#E4E1D6] rounded-xl text-sm text-[#2A2A2A] focus:outline-none focus:ring-2 focus:ring-[#2C3E36]"
                       value={newPropAddress}
                       onChange={(e) => setNewPropAddress(e.target.value)}
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-slate-300 mb-1">City</label>
+                    <label className="block text-xs font-semibold text-[#2A2A2A] mb-1">City</label>
                     <input
                       type="text"
                       required
                       placeholder="e.g. Hyderabad"
-                      className="w-full px-3 py-2 bg-slate-900 border border-slate-700/80 rounded-xl text-sm text-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                      className="w-full px-3 py-2 bg-[#FAF9F5] border border-[#E4E1D6] rounded-xl text-sm text-[#2A2A2A] focus:outline-none focus:ring-2 focus:ring-[#2C3E36]"
                       value={newPropCity}
                       onChange={(e) => setNewPropCity(e.target.value)}
                     />
@@ -969,9 +969,9 @@ export default function OwnerDashboard() {
 
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-xs font-semibold text-slate-300 mb-1">Gender Compatibility</label>
+                    <label className="block text-xs font-semibold text-[#2A2A2A] mb-1">Gender Compatibility</label>
                     <select
-                      className="w-full px-3 py-2 bg-slate-900 border border-slate-700/80 rounded-xl text-sm text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 font-semibold"
+                      className="w-full px-3 py-2 bg-[#FAF9F5] border border-[#E4E1D6] rounded-xl text-sm text-[#2A2A2A] focus:outline-none focus:ring-2 focus:ring-[#2C3E36] font-semibold"
                       value={newPropGender}
                       onChange={(e) => setNewPropGender(e.target.value)}
                     >
@@ -982,9 +982,9 @@ export default function OwnerDashboard() {
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-slate-300 mb-1">AC Option</label>
+                    <label className="block text-xs font-semibold text-[#2A2A2A] mb-1">AC Option</label>
                     <select
-                      className="w-full px-3 py-2 bg-slate-900 border border-slate-700/80 rounded-xl text-sm text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 font-semibold"
+                      className="w-full px-3 py-2 bg-[#FAF9F5] border border-[#E4E1D6] rounded-xl text-sm text-[#2A2A2A] focus:outline-none focus:ring-2 focus:ring-[#2C3E36] font-semibold"
                       value={newPropAC}
                       onChange={(e) => setNewPropAC(e.target.value)}
                     >
@@ -996,10 +996,10 @@ export default function OwnerDashboard() {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-slate-300 mb-1">Description</label>
+                  <label className="block text-xs font-semibold text-[#2A2A2A] mb-1">Description</label>
                   <textarea
                     rows={2}
-                    className="w-full px-3 py-2 bg-slate-900 border border-slate-700/80 rounded-xl text-sm text-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                    className="w-full px-3 py-2 bg-[#FAF9F5] border border-[#E4E1D6] rounded-xl text-sm text-[#2A2A2A] focus:outline-none focus:ring-2 focus:ring-[#2C3E36]"
                     value={newPropDesc}
                     onChange={(e) => setNewPropDesc(e.target.value)}
                   />
@@ -1007,18 +1007,18 @@ export default function OwnerDashboard() {
               </div>
 
               {/* Step 2: Room Configurations */}
-              <div className="space-y-3 pt-4 border-t border-slate-800">
-                <h4 className="font-bold text-xs text-emerald-400 uppercase tracking-wide">2. Room Configurations & Rent</h4>
+              <div className="space-y-3 pt-4 border-t border-[#E4E1D6]">
+                <h4 className="font-serif font-bold text-sm text-[#2C3E36] uppercase tracking-wide">2. Room Configurations & Rent</h4>
                 <div className="space-y-2.5">
                   {newRooms.map((room, idx) => (
-                    <div key={idx} className="bg-slate-900 p-3 rounded-xl border border-slate-800 grid grid-cols-3 gap-2.5 items-center">
-                      <span className="font-bold text-xs capitalize text-white">{room.sharingType.toLowerCase()} sharing</span>
+                    <div key={idx} className="bg-[#FAF9F5] p-3 rounded-xl border border-[#E4E1D6] grid grid-cols-3 gap-2.5 items-center">
+                      <span className="font-serif font-bold text-xs capitalize text-[#2A2A2A]">{room.sharingType.toLowerCase()} sharing</span>
                       <div>
-                        <label className="block text-[10px] text-slate-400">Rent (₹/mo)</label>
+                        <label className="block text-[10px] text-[#6B6B63]">Rent (₹/mo)</label>
                         <input
                           type="number"
                           required
-                          className="w-full px-2.5 py-1 bg-slate-950 border border-slate-700 rounded-lg text-xs font-bold text-emerald-400"
+                          className="w-full px-2.5 py-1 bg-white border border-[#E4E1D6] rounded-lg text-xs font-bold text-[#2C3E36]"
                           value={room.price}
                           onChange={(e) => {
                             const val = parseFloat(e.target.value) || 0;
@@ -1029,11 +1029,11 @@ export default function OwnerDashboard() {
                         />
                       </div>
                       <div>
-                        <label className="block text-[10px] text-slate-400">Total Beds</label>
+                        <label className="block text-[10px] text-[#6B6B63]">Total Beds</label>
                         <input
                           type="number"
                           required
-                          className="w-full px-2.5 py-1 bg-slate-950 border border-slate-700 rounded-lg text-xs text-white"
+                          className="w-full px-2.5 py-1 bg-white border border-[#E4E1D6] rounded-lg text-xs text-[#2A2A2A]"
                           value={room.totalBeds}
                           onChange={(e) => {
                             const val = parseInt(e.target.value) || 0;
@@ -1049,14 +1049,14 @@ export default function OwnerDashboard() {
               </div>
 
               {/* Step 3: Amenities */}
-              <div className="space-y-3 pt-4 border-t border-slate-800">
-                <h4 className="font-bold text-xs text-emerald-400 uppercase tracking-wide">3. Amenities</h4>
+              <div className="space-y-3 pt-4 border-t border-[#E4E1D6]">
+                <h4 className="font-serif font-bold text-sm text-[#2C3E36] uppercase tracking-wide">3. Amenities</h4>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
                   {AMENITIES_LIST.map((amenity) => (
-                    <label key={amenity} className="flex items-center gap-2 cursor-pointer text-xs font-semibold text-slate-300 select-none">
+                    <label key={amenity} className="flex items-center gap-2 cursor-pointer text-xs font-semibold text-[#2A2A2A] select-none">
                       <input
                         type="checkbox"
-                        className="rounded border-slate-700 bg-slate-900 text-emerald-500 focus:ring-emerald-500"
+                        className="rounded border-[#E4E1D6] text-[#2C3E36] focus:ring-[#2C3E36]"
                         checked={newPropAmenities.includes(amenity)}
                         onChange={() => {
                           setNewPropAmenities((prev) =>
@@ -1073,10 +1073,10 @@ export default function OwnerDashboard() {
               </div>
 
               {/* Step 4: Photos */}
-              <div className="space-y-3 pt-4 border-t border-slate-800">
+              <div className="space-y-3 pt-4 border-t border-[#E4E1D6]">
                 <div className="flex justify-between items-center">
-                  <h4 className="font-bold text-xs text-emerald-400 uppercase tracking-wide">4. Select Photos from Folders</h4>
-                  <span className="text-[11px] text-slate-400">({newPropImages.length} selected)</span>
+                  <h4 className="font-serif font-bold text-sm text-[#2C3E36] uppercase tracking-wide">4. Select Photos</h4>
+                  <span className="text-[11px] text-[#6B6B63]">({newPropImages.length} selected)</span>
                 </div>
 
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
@@ -1091,13 +1091,13 @@ export default function OwnerDashboard() {
                           );
                         }}
                         className={`relative cursor-pointer rounded-xl overflow-hidden border p-1 transition-all ${
-                          isSelected ? 'border-emerald-500 bg-emerald-950/40 ring-2 ring-emerald-500/40' : 'border-slate-800 bg-slate-900/60 hover:border-slate-700'
+                          isSelected ? 'border-[#2C3E36] bg-[#D9D3B8]/40 ring-2 ring-[#2C3E36]/30' : 'border-[#E4E1D6] bg-[#FAF9F5] hover:border-[#A9B3AA]'
                         }`}
                       >
                         <img src={imgItem.path} alt={imgItem.label} className="w-full h-16 object-cover rounded-lg" />
                         <div className="mt-1 flex items-center justify-between text-[10px]">
-                          <span className="text-slate-300 font-medium truncate">{imgItem.label}</span>
-                          <span className={isSelected ? 'text-emerald-400 font-bold' : 'text-slate-600'}>
+                          <span className="text-[#2A2A2A] font-medium truncate">{imgItem.label}</span>
+                          <span className={isSelected ? 'text-[#2C3E36] font-bold' : 'text-[#6B6B63]'}>
                             {isSelected ? '✓' : '+'}
                           </span>
                         </div>
@@ -1107,17 +1107,17 @@ export default function OwnerDashboard() {
                 </div>
               </div>
 
-              <div className="pt-4 border-t border-slate-800 flex justify-end gap-3">
+              <div className="pt-4 border-t border-[#E4E1D6] flex justify-end gap-3">
                 <button
                   type="button"
                   onClick={() => setShowAddModal(false)}
-                  className="px-4 py-2 text-xs font-bold text-slate-400 hover:text-white"
+                  className="px-4 py-2 text-xs font-bold text-[#6B6B63] hover:text-[#2A2A2A]"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold py-2 px-6 rounded-xl text-xs transition-all shadow-md shadow-emerald-500/20"
+                  className="bg-[#2C3E36] hover:bg-[#22312B] text-[#F3F1E7] font-semibold py-2 px-6 rounded-xl text-xs transition-all shadow-sm"
                 >
                   Create Listing
                 </button>

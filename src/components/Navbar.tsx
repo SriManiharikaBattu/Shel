@@ -17,7 +17,7 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="bg-[#0b0f19]/90 backdrop-blur-md border-b border-slate-800/80 sticky top-0 z-50 text-slate-100">
+    <nav className="bg-[#2C3E36] border-b border-[#3D5349] sticky top-0 z-50 text-[#F3F1E7] shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex items-center space-x-6">
@@ -25,49 +25,49 @@ export default function Navbar() {
               <img
                 src="/logo.png"
                 alt="Shel Logo"
-                className="w-9 h-9 rounded-full object-cover bg-white p-0.5 border border-slate-700 shadow-md shadow-emerald-950/20 group-hover:scale-105 transition-transform"
+                className="w-9 h-9 rounded-full object-cover bg-white p-0.5 border border-[#A9B3AA]/40 shadow-sm group-hover:scale-105 transition-transform"
               />
               <div className="flex flex-col">
-                <span className="text-xl font-black tracking-tight text-white group-hover:text-emerald-400 transition-colors">
+                <span className="text-xl font-serif font-bold tracking-tight text-[#F3F1E7] group-hover:text-[#D9D3B8] transition-colors">
                   Shel
                 </span>
-                <span className="text-[9px] font-bold tracking-widest text-emerald-400 uppercase -mt-1">
-                  SEARCH
+                <span className="text-[9px] font-sans font-semibold tracking-widest text-[#A9B3AA] uppercase -mt-1">
+                  COLLECTION
                 </span>
               </div>
             </Link>
 
             {/* Role specific navigation */}
-            <div className="hidden sm:ml-4 sm:flex sm:space-x-3">
+            <div className="hidden sm:ml-4 sm:flex sm:space-x-1">
               {user.role === 'SEEKER' && (
                 <>
                   <Link
                     href="/seeker"
-                    className="text-slate-300 hover:text-white hover:bg-slate-800/60 inline-flex items-center px-3 py-1.5 rounded-lg text-sm font-medium transition-all gap-1.5"
+                    className="text-[#E8E4CF] hover:text-white hover:bg-[#3D5349]/70 inline-flex items-center px-3.5 py-1.5 rounded-lg text-sm font-medium transition-all gap-1.5"
                   >
-                    <Search size={15} className="text-emerald-400" />
-                    <span>Explore</span>
+                    <Search size={15} className="text-[#D9D3B8]" />
+                    <span>Explore Stays</span>
                   </Link>
                   <Link
                     href="/seeker/wishlist"
-                    className="text-slate-300 hover:text-white hover:bg-slate-800/60 inline-flex items-center px-3 py-1.5 rounded-lg text-sm font-medium transition-all gap-1.5"
+                    className="text-[#E8E4CF] hover:text-white hover:bg-[#3D5349]/70 inline-flex items-center px-3.5 py-1.5 rounded-lg text-sm font-medium transition-all gap-1.5"
                   >
-                    <Heart size={15} className="text-rose-400" />
-                    <span>Wishlist</span>
+                    <Heart size={15} className="text-[#D9D3B8]" />
+                    <span>Saved</span>
                   </Link>
                   <Link
                     href="/seeker/compare"
-                    className="text-slate-300 hover:text-white hover:bg-slate-800/60 inline-flex items-center px-3 py-1.5 rounded-lg text-sm font-medium transition-all gap-1.5"
+                    className="text-[#E8E4CF] hover:text-white hover:bg-[#3D5349]/70 inline-flex items-center px-3.5 py-1.5 rounded-lg text-sm font-medium transition-all gap-1.5"
                   >
-                    <Columns size={15} className="text-cyan-400" />
+                    <Columns size={15} className="text-[#A9B3AA]" />
                     <span>Compare</span>
                   </Link>
                   <Link
                     href="/seeker/chat"
-                    className="text-slate-300 hover:text-white hover:bg-slate-800/60 inline-flex items-center px-3 py-1.5 rounded-lg text-sm font-medium transition-all gap-1.5"
+                    className="text-[#E8E4CF] hover:text-white hover:bg-[#3D5349]/70 inline-flex items-center px-3.5 py-1.5 rounded-lg text-sm font-medium transition-all gap-1.5"
                   >
-                    <MessageSquare size={15} className="text-amber-400" />
-                    <span>Chats</span>
+                    <MessageSquare size={15} className="text-[#D9D3B8]" />
+                    <span>Messages</span>
                   </Link>
                 </>
               )}
@@ -76,16 +76,16 @@ export default function Navbar() {
                 <>
                   <Link
                     href="/owner"
-                    className="text-slate-300 hover:text-white hover:bg-slate-800/60 inline-flex items-center px-3 py-1.5 rounded-lg text-sm font-medium transition-all gap-1.5"
+                    className="text-[#E8E4CF] hover:text-white hover:bg-[#3D5349]/70 inline-flex items-center px-3.5 py-1.5 rounded-lg text-sm font-medium transition-all gap-1.5"
                   >
-                    <Building2 size={15} className="text-emerald-400" />
+                    <Building2 size={15} className="text-[#D9D3B8]" />
                     <span>My Properties</span>
                   </Link>
                   <Link
                     href="/owner/enquiries"
-                    className="text-slate-300 hover:text-white hover:bg-slate-800/60 inline-flex items-center px-3 py-1.5 rounded-lg text-sm font-medium transition-all gap-1.5"
+                    className="text-[#E8E4CF] hover:text-white hover:bg-[#3D5349]/70 inline-flex items-center px-3.5 py-1.5 rounded-lg text-sm font-medium transition-all gap-1.5"
                   >
-                    <MessageSquare size={15} className="text-amber-400" />
+                    <MessageSquare size={15} className="text-[#A9B3AA]" />
                     <span>Enquiries & Chats</span>
                   </Link>
                 </>
@@ -95,10 +95,10 @@ export default function Navbar() {
                 <>
                   <Link
                     href="/admin"
-                    className="text-slate-300 hover:text-white hover:bg-slate-800/60 inline-flex items-center px-3 py-1.5 rounded-lg text-sm font-medium transition-all gap-1.5"
+                    className="text-[#E8E4CF] hover:text-white hover:bg-[#3D5349]/70 inline-flex items-center px-3.5 py-1.5 rounded-lg text-sm font-medium transition-all gap-1.5"
                   >
-                    <ShieldCheck size={15} className="text-emerald-400" />
-                    <span>Admin Approvals</span>
+                    <ShieldCheck size={15} className="text-[#D9D3B8]" />
+                    <span>Verification Desk</span>
                   </Link>
                 </>
               )}
@@ -108,9 +108,9 @@ export default function Navbar() {
           <div className="flex items-center space-x-3">
             <Link
               href="/profile"
-              className="flex items-center space-x-2 text-slate-300 hover:text-white bg-slate-800/60 hover:bg-slate-800 border border-slate-700/60 px-3 py-1.5 rounded-xl text-sm font-medium transition-all"
+              className="flex items-center space-x-2 text-[#F3F1E7] bg-[#3D5349]/70 hover:bg-[#3D5349] border border-[#A9B3AA]/30 px-3 py-1.5 rounded-xl text-sm font-medium transition-all"
             >
-              <div className="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-xs">
+              <div className="w-6 h-6 rounded-full bg-[#D9D3B8] text-[#2C3E36] flex items-center justify-center font-bold text-xs">
                 <User size={14} />
               </div>
               <span className="hidden md:inline font-semibold">{user.name}</span>
@@ -118,7 +118,7 @@ export default function Navbar() {
 
             <button
               onClick={logout}
-              className="flex items-center space-x-1.5 text-slate-400 hover:text-rose-400 bg-slate-900 hover:bg-rose-950/40 border border-slate-800 hover:border-rose-900/50 text-xs font-semibold py-1.5 px-3 rounded-xl transition-all"
+              className="flex items-center space-x-1.5 text-[#E8E4CF] hover:text-white bg-[#1E2B25] hover:bg-[#15201B] border border-[#3D5349] text-xs font-semibold py-1.5 px-3 rounded-xl transition-all"
               title="Logout"
             >
               <LogOut size={15} />

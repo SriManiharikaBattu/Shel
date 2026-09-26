@@ -1,21 +1,23 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Playfair_Display, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "@/components/AuthProvider";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const playfairDisplay = Playfair_Display({
+  variable: "--font-serif",
   subsets: ["latin"],
+  display: "swap",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const jakartaSans = Plus_Jakarta_Sans({
+  variable: "--font-sans",
   subsets: ["latin"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Shel - Find & Book Verified Hostels & PGs",
-  description: "Shel Search helps you discover premium, verified student & professional paying guest accommodations with real-time bed vacancies across India.",
+  title: "Shel - Verified Hostels & Boutique Living",
+  description: "Shel helps you discover handpicked, verified student & professional paying guest accommodations with real-time bed vacancies across India.",
   icons: {
     icon: "/logo.png",
   },
@@ -27,9 +29,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#090d16] text-slate-100 min-h-screen selection:bg-emerald-500 selection:text-black`}
+        className={`${playfairDisplay.variable} ${jakartaSans.variable} antialiased bg-[#F3F1E7] text-[#2A2A2A] min-h-screen selection:bg-[#2C3E36] selection:text-[#F3F1E7]`}
       >
         <AuthProvider>
           {children}

@@ -53,8 +53,8 @@ export default function SeekerChatPage() {
 
   if (authLoading || loading || !user) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[#090d16]">
-        <div className="flex items-center space-x-2 text-emerald-400 font-semibold">
+      <div className="min-h-screen flex items-center justify-center bg-[#F3F1E7]">
+        <div className="flex items-center space-x-2 text-[#2C3E36] font-semibold">
           <RefreshCw className="animate-spin" />
           <span>Opening Chat Panel...</span>
         </div>
@@ -65,27 +65,27 @@ export default function SeekerChatPage() {
   const activeEnquiry = enquiries.find((e) => e.id === selectedEnquiryId);
 
   return (
-    <div className="min-h-screen bg-[#090d16] text-slate-100 flex flex-col font-sans selection:bg-emerald-500 selection:text-black">
+    <div className="min-h-screen bg-[#F3F1E7] text-[#2A2A2A] flex flex-col font-sans selection:bg-[#2C3E36] selection:text-[#F3F1E7]">
       <Navbar />
 
       <main className="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col md:flex-row gap-6 flex-grow overflow-hidden">
         {/* Sidebar Left: Enquiries list */}
-        <div className="w-full md:w-1/3 bg-[#0e1424] rounded-2xl border border-slate-800 shadow-xl p-4 flex flex-col overflow-y-auto h-[calc(100vh-16rem)]">
+        <div className="w-full md:w-1/3 bg-white rounded-2xl border border-[#E4E1D6] shadow-sm p-4 flex flex-col overflow-y-auto h-[calc(100vh-16rem)]">
           <div className="flex items-center justify-between mb-4 px-2">
-            <h2 className="text-base font-bold text-white flex items-center gap-2">
-              <MessageSquare size={18} className="text-emerald-400" />
+            <h2 className="text-base font-serif font-bold text-[#2A2A2A] flex items-center gap-2">
+              <MessageSquare size={18} className="text-[#2C3E36]" />
               <span>Hostel Conversations</span>
             </h2>
-            <span className="text-[10px] font-bold text-slate-400 bg-slate-900 border border-slate-800 px-2 py-0.5 rounded-full">
+            <span className="text-[10px] font-bold text-[#2C3E36] bg-[#D9D3B8] border border-[#C7BF9E] px-2 py-0.5 rounded-full">
               {enquiries.length}
             </span>
           </div>
 
           {enquiries.length === 0 ? (
-            <div className="flex-grow flex flex-col items-center justify-center p-6 text-slate-500">
+            <div className="flex-grow flex flex-col items-center justify-center p-6 text-[#6B6B63]">
               <Inbox size={36} />
               <span className="text-xs font-semibold mt-2">No active chats</span>
-              <p className="text-[11px] text-slate-500 text-center mt-1">Click the chat icon on any hostel card to talk with the owner.</p>
+              <p className="text-[11px] text-[#6B6B63] text-center mt-1">Click the chat icon on any hostel card to talk with the host.</p>
             </div>
           ) : (
             <div className="space-y-2 flex-grow overflow-y-auto">
@@ -100,43 +100,43 @@ export default function SeekerChatPage() {
                     onClick={() => setSelectedEnquiryId(enq.id)}
                     className={`w-full text-left p-3.5 rounded-xl transition-all border flex items-center justify-between focus:outline-none ${
                       isSelected
-                        ? 'bg-emerald-950/70 border-emerald-500/80 text-emerald-300 shadow-sm'
-                        : 'bg-slate-900/60 border-slate-800/80 hover:bg-slate-800/80 text-slate-300'
+                        ? 'bg-[#D9D3B8]/60 border-[#D9D3B8] text-[#2A2A2A] shadow-sm'
+                        : 'bg-[#FAF9F5] border-[#E4E1D6] hover:bg-[#F3F1E7] text-[#2A2A2A]'
                     }`}
                   >
                     <div className="truncate pr-2 space-y-1 w-full">
                       <div className="flex items-center justify-between gap-1">
-                        <span className="font-extrabold text-sm block truncate text-white">
+                        <span className="font-serif font-bold text-sm block truncate text-[#2A2A2A]">
                           {prop.name}
                         </span>
                         {prop.isVerified && (
-                          <ShieldCheck size={14} className="text-emerald-400 flex-shrink-0" title="Verified Hostel" />
+                          <ShieldCheck size={14} className="text-[#2C3E36] flex-shrink-0" title="Verified Hostel" />
                         )}
                       </div>
 
                       {cityStateText && (
-                        <span className="text-xs text-emerald-400 font-semibold flex items-center gap-1 truncate">
+                        <span className="text-xs text-[#2C3E36] font-semibold flex items-center gap-1 truncate">
                           <MapPin size={12} className="flex-shrink-0" />
                           <span>{cityStateText}</span>
                         </span>
                       )}
 
                       {prop.owner?.name && (
-                        <span className="text-[11px] text-slate-400 block truncate">
-                          Owner: <strong className="text-slate-300">{prop.owner.name}</strong>
+                        <span className="text-[11px] text-[#6B6B63] block truncate">
+                          Host: <strong className="text-[#2A2A2A]">{prop.owner.name}</strong>
                         </span>
                       )}
 
-                      <div className="flex items-center justify-between pt-1 border-t border-slate-800/60 mt-1">
-                        <span className="text-[10px] text-slate-400 truncate max-w-[140px]">
+                      <div className="flex items-center justify-between pt-1 border-t border-[#E4E1D6] mt-1">
+                        <span className="text-[10px] text-[#6B6B63] truncate max-w-[140px]">
                           {enq.message}
                         </span>
-                        <span className="text-[10px] font-bold text-slate-500">
+                        <span className="text-[10px] font-medium text-[#6B6B63]">
                           {new Date(enq.createdAt).toLocaleDateString()}
                         </span>
                       </div>
                     </div>
-                    <ChevronRight size={16} className={`flex-shrink-0 ml-1 ${isSelected ? 'text-emerald-400' : 'text-slate-600'}`} />
+                    <ChevronRight size={16} className={`flex-shrink-0 ml-1 ${isSelected ? 'text-[#2C3E36]' : 'text-[#6B6B63]'}`} />
                   </button>
                 );
               })}
@@ -152,11 +152,11 @@ export default function SeekerChatPage() {
               currentUser={{ id: user.id, name: user.name, role: user.role }}
             />
           ) : (
-            <div className="bg-[#0e1424] rounded-2xl border border-slate-800 shadow-xl flex flex-col items-center justify-center text-center p-12 h-[calc(100vh-16rem)]">
-              <MessageSquare size={48} className="text-slate-600 stroke-[1.5]" />
-              <h3 className="font-bold text-white text-base mt-4">Select a conversation</h3>
-              <p className="text-slate-400 text-xs mt-1 max-w-sm font-medium">
-                Pick a thread from the left panel to message or send voice notes to the hostel owner.
+            <div className="bg-white rounded-2xl border border-[#E4E1D6] shadow-sm flex flex-col items-center justify-center text-center p-12 h-[calc(100vh-16rem)]">
+              <MessageSquare size={48} className="text-[#6B6B63] stroke-[1.5]" />
+              <h3 className="font-serif font-bold text-[#2A2A2A] text-lg mt-4">Select a conversation</h3>
+              <p className="text-[#6B6B63] text-xs mt-1 max-w-sm font-medium">
+                Pick a thread from the left panel to message or send voice notes to the hostel manager.
               </p>
             </div>
           )}

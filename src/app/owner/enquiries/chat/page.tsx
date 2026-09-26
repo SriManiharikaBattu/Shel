@@ -30,8 +30,8 @@ export default function OwnerChatPage() {
 
   if (authLoading || !user || !enquiryId) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[#090d16]">
-        <div className="flex items-center space-x-2 text-emerald-400 font-semibold">
+      <div className="min-h-screen flex items-center justify-center bg-[#F3F1E7]">
+        <div className="flex items-center space-x-2 text-[#2C3E36] font-semibold">
           <RefreshCw className="animate-spin" />
           <span>Opening Chat Window...</span>
         </div>
@@ -40,14 +40,14 @@ export default function OwnerChatPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#090d16] text-slate-100 flex flex-col font-sans selection:bg-emerald-500 selection:text-black">
+    <div className="min-h-screen bg-[#F3F1E7] text-[#2A2A2A] flex flex-col font-sans selection:bg-[#2C3E36] selection:text-[#F3F1E7]">
       <Navbar />
 
       <main className="max-w-3xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow">
         <div className="mb-4">
           <Link
             href="/owner/enquiries"
-            className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-400 hover:text-white bg-slate-900 border border-slate-800 px-3 py-1.5 rounded-xl transition-colors"
+            className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#2C3E36] hover:text-[#1E2B25] bg-white border border-[#E4E1D6] px-3.5 py-2 rounded-xl transition-colors shadow-sm"
           >
             <ArrowLeft size={14} /> Back to Enquiries
           </Link>

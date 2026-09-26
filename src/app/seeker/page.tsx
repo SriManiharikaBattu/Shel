@@ -12,10 +12,10 @@ import { Search, MapPin, SlidersHorizontal, ArrowUpDown, HelpCircle, Columns, Re
 const Map = dynamic(() => import('@/components/Map'), {
   ssr: false,
   loading: () => (
-    <div className="w-full h-full bg-slate-900/80 flex items-center justify-center rounded-2xl border border-slate-800">
-      <div className="flex flex-col items-center gap-2 text-emerald-400">
+    <div className="w-full h-full bg-[#FAF9F5] flex items-center justify-center rounded-2xl border border-[#E4E1D6]">
+      <div className="flex flex-col items-center gap-2 text-[#2C3E36]">
         <RefreshCw className="animate-spin" />
-        <span className="text-xs font-semibold text-slate-400">Loading map radar...</span>
+        <span className="text-xs font-semibold text-[#6B6B63]">Loading map radar...</span>
       </div>
     </div>
   ),
@@ -223,7 +223,7 @@ export default function SeekerDashboard() {
   const [compareList, setCompareList] = useState<PropertyData[]>([]);
   const [loadingProperties, setLoadingProperties] = useState(true);
   const [showFiltersModal, setShowFiltersModal] = useState(false);
-  const [activeTab, setActiveTab] = useState<'LIST' | 'MAP'>('LIST'); // for mobile toggling
+  const [activeTab, setActiveTab] = useState<'LIST' | 'MAP'>('LIST');
   const [errorMsg, setErrorMsg] = useState('');
   const [infoMsg, setInfoMsg] = useState('');
 
@@ -333,8 +333,8 @@ export default function SeekerDashboard() {
 
   if (authLoading || !user) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[#090d16]">
-        <div className="flex items-center space-x-2 text-emerald-400 font-semibold">
+      <div className="min-h-screen flex items-center justify-center bg-[#F3F1E7]">
+        <div className="flex items-center space-x-2 text-[#2C3E36] font-semibold">
           <RefreshCw className="animate-spin" />
           <span>Setting up workspace...</span>
         </div>
@@ -477,32 +477,32 @@ export default function SeekerDashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-[#090d16] text-slate-100 flex flex-col font-sans selection:bg-emerald-500 selection:text-black">
+    <div className="min-h-screen bg-[#F3F1E7] text-[#2A2A2A] flex flex-col font-sans selection:bg-[#2C3E36] selection:text-[#F3F1E7]">
       <Navbar />
 
       {/* Info & Error Messages */}
       {(errorMsg || infoMsg) && (
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4 w-full">
           {errorMsg && (
-            <div className="p-3 bg-rose-950/70 text-rose-300 text-xs rounded-xl border border-rose-800 flex justify-between items-center">
+            <div className="p-3 bg-rose-50 text-rose-800 text-xs rounded-xl border border-rose-200 flex justify-between items-center">
               <span>{errorMsg}</span>
-              <button onClick={() => setErrorMsg('')} className="text-rose-400 hover:text-rose-200"><X size={15} /></button>
+              <button onClick={() => setErrorMsg('')} className="text-rose-600 hover:text-rose-900"><X size={15} /></button>
             </div>
           )}
           {infoMsg && (
-            <div className="p-3 bg-cyan-950/70 text-cyan-300 text-xs rounded-xl border border-cyan-800 flex justify-between items-center">
+            <div className="p-3 bg-[#A9B3AA]/20 text-[#2C3E36] text-xs rounded-xl border border-[#A9B3AA] flex justify-between items-center">
               <div className="flex items-center gap-1.5">
-                <Sparkles size={14} className="text-cyan-400" />
+                <Sparkles size={14} className="text-[#2C3E36]" />
                 <span>{infoMsg}</span>
               </div>
-              <button onClick={() => setInfoMsg('')} className="text-cyan-400 hover:text-cyan-200"><X size={15} /></button>
+              <button onClick={() => setInfoMsg('')} className="text-[#2C3E36] hover:text-[#1E2B25]"><X size={15} /></button>
             </div>
           )}
         </div>
       )}
 
       {/* Main Filter & Search Area */}
-      <section className="bg-[#0b0f19]/90 backdrop-blur-md border-b border-slate-800/80 py-3.5 shadow-xl sticky top-16 z-40">
+      <section className="bg-white border-b border-[#E4E1D6] py-3.5 shadow-sm sticky top-16 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row gap-3 items-stretch md:items-center justify-between">
           
           {/* State & City selectors */}
@@ -510,7 +510,7 @@ export default function SeekerDashboard() {
             {/* State Select */}
             <div className="relative flex-grow">
               <select
-                className="w-full pl-8 pr-3 py-2 border border-slate-700/80 rounded-xl text-xs sm:text-sm text-white bg-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 font-semibold"
+                className="w-full pl-8 pr-3 py-2 border border-[#E4E1D6] rounded-xl text-xs sm:text-sm text-[#2A2A2A] bg-[#FAF9F5] focus:outline-none focus:ring-2 focus:ring-[#2C3E36] font-semibold"
                 value={selectedState}
                 onChange={(e) => {
                   setSelectedState(e.target.value);
@@ -518,13 +518,13 @@ export default function SeekerDashboard() {
                 }}
               >
                 {Object.keys(STATE_CITY_DATA).map((stateName) => (
-                  <option key={stateName} value={stateName} className="bg-slate-900 text-white">{stateName}</option>
+                  <option key={stateName} value={stateName} className="bg-white text-[#2A2A2A]">{stateName}</option>
                 ))}
                 {selectedState === 'GPS Location' && (
                   <option value="GPS Location">GPS Detected</option>
                 )}
               </select>
-              <div className="absolute inset-y-0 left-0 pl-2.5 flex items-center pointer-events-none text-emerald-400">
+              <div className="absolute inset-y-0 left-0 pl-2.5 flex items-center pointer-events-none text-[#2C3E36]">
                 <MapPin size={16} />
               </div>
             </div>
@@ -532,7 +532,7 @@ export default function SeekerDashboard() {
             {/* City Select */}
             <div className="relative flex-grow">
               <select
-                className="w-full pl-8 pr-3 py-2 border border-slate-700/80 rounded-xl text-xs sm:text-sm text-white bg-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 font-semibold"
+                className="w-full pl-8 pr-3 py-2 border border-[#E4E1D6] rounded-xl text-xs sm:text-sm text-[#2A2A2A] bg-[#FAF9F5] focus:outline-none focus:ring-2 focus:ring-[#2C3E36] font-semibold"
                 value={selectedCity}
                 onChange={(e) => {
                   const cityVal = e.target.value;
@@ -551,18 +551,18 @@ export default function SeekerDashboard() {
                   <option value="GPS Location">GPS ({lat.toFixed(2)}, {lng.toFixed(2)})</option>
                 ) : (
                   STATE_CITY_DATA[selectedState]?.map((cityObj) => (
-                    <option key={cityObj.name} value={cityObj.name} className="bg-slate-900 text-white">{cityObj.name}</option>
+                    <option key={cityObj.name} value={cityObj.name} className="bg-white text-[#2A2A2A]">{cityObj.name}</option>
                   ))
                 )}
               </select>
-              <div className="absolute inset-y-0 left-0 pl-2.5 flex items-center pointer-events-none text-cyan-400">
+              <div className="absolute inset-y-0 left-0 pl-2.5 flex items-center pointer-events-none text-[#2C3E36]">
                 <MapPin size={16} />
               </div>
             </div>
             
             <button
               onClick={handleGPSDetect}
-              className="py-2 px-3 border border-emerald-500/40 rounded-xl text-xs font-bold text-emerald-300 bg-emerald-950/60 hover:bg-emerald-900/60 flex items-center gap-1.5 transition-all whitespace-nowrap shadow-sm shadow-emerald-950/50"
+              className="py-2 px-3 border border-[#2C3E36] rounded-xl text-xs font-bold text-[#2C3E36] bg-[#FAF9F5] hover:bg-[#D9D3B8] flex items-center gap-1.5 transition-all whitespace-nowrap shadow-sm"
             >
               GPS Auto
             </button>
@@ -573,11 +573,11 @@ export default function SeekerDashboard() {
             <input
               type="text"
               placeholder="Search by PG name, landmarks..."
-              className="w-full pl-9 pr-4 py-2 border border-slate-700/80 rounded-xl text-xs sm:text-sm text-white bg-slate-900 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+              className="w-full pl-9 pr-4 py-2 border border-[#E4E1D6] rounded-xl text-xs sm:text-sm text-[#2A2A2A] bg-[#FAF9F5] placeholder-[#6B6B63]/70 focus:outline-none focus:ring-2 focus:ring-[#2C3E36]"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
-            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-[#6B6B63]">
               <Search size={16} />
             </div>
           </div>
@@ -586,24 +586,24 @@ export default function SeekerDashboard() {
           <div className="flex gap-2 items-center flex-wrap">
             <button
               onClick={() => setShowFiltersModal(true)}
-              className="py-2 px-3.5 border border-slate-700 rounded-xl text-xs font-bold text-slate-200 bg-slate-900 hover:bg-slate-800 flex items-center gap-1.5 transition-all shadow-sm"
+              className="py-2 px-3.5 border border-[#E4E1D6] rounded-xl text-xs font-bold text-[#2A2A2A] bg-[#FAF9F5] hover:bg-[#D9D3B8] flex items-center gap-1.5 transition-all shadow-sm"
             >
-              <SlidersHorizontal size={14} className="text-emerald-400" />
+              <SlidersHorizontal size={14} className="text-[#2C3E36]" />
               <span>Filters</span>
             </button>
 
             <div className="relative">
               <select
-                className="pl-8 pr-3 py-2 border border-slate-700 rounded-xl text-xs font-semibold text-slate-200 bg-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 hover:bg-slate-800 cursor-pointer"
+                className="pl-8 pr-3 py-2 border border-[#E4E1D6] rounded-xl text-xs font-semibold text-[#2A2A2A] bg-[#FAF9F5] focus:outline-none focus:ring-2 focus:ring-[#2C3E36] hover:bg-[#D9D3B8] cursor-pointer"
                 value={sort}
                 onChange={(e) => setSort(e.target.value)}
               >
-                <option value="price_asc" className="bg-slate-900 text-white">Price: Low to High</option>
-                <option value="price_desc" className="bg-slate-900 text-white">Price: High to Low</option>
-                <option value="rating_desc" className="bg-slate-900 text-white">Top Rated</option>
-                <option value="distance_asc" className="bg-slate-900 text-white">Nearest First</option>
+                <option value="price_asc" className="bg-white text-[#2A2A2A]">Price: Low to High</option>
+                <option value="price_desc" className="bg-white text-[#2A2A2A]">Price: High to Low</option>
+                <option value="rating_desc" className="bg-white text-[#2A2A2A]">Top Rated</option>
+                <option value="distance_asc" className="bg-white text-[#2A2A2A]">Nearest First</option>
               </select>
-              <div className="absolute inset-y-0 left-0 pl-2.5 flex items-center pointer-events-none text-slate-400">
+              <div className="absolute inset-y-0 left-0 pl-2.5 flex items-center pointer-events-none text-[#6B6B63]">
                 <ArrowUpDown size={13} />
               </div>
             </div>
@@ -613,14 +613,14 @@ export default function SeekerDashboard() {
 
       {/* Auto-Gender filter Banner */}
       {!disableGenderFilter && user.gender !== 'OTHER' && (
-        <div className="bg-emerald-950/60 border-b border-emerald-900/60 py-2.5 px-4 sm:px-6 lg:px-8">
-          <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-start sm:center text-xs text-emerald-300 gap-2">
+        <div className="bg-[#D9D3B8]/40 border-b border-[#D9D3B8] py-2.5 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-start sm:center text-xs text-[#2C3E36] gap-2">
             <span>
-              ℹ️ Auto-Filtered listings matching your profile gender (<strong>{user.gender === 'MALE' ? 'Boys/Co-ed' : 'Girls/Co-ed'} PGs</strong>).
+              ℹ️ Auto-Filtered listings matching your profile gender (<strong>{user.gender === 'MALE' ? 'Boys/Co-ed' : 'Girls/Co-ed'} Stays</strong>).
             </span>
             <button
               onClick={() => setDisableGenderFilter(true)}
-              className="underline font-bold text-emerald-400 hover:text-emerald-200 focus:outline-none"
+              className="underline font-bold text-[#2C3E36] hover:text-[#1E2B25] focus:outline-none"
             >
               Show all gender listings
             </button>
@@ -629,12 +629,12 @@ export default function SeekerDashboard() {
       )}
 
       {disableGenderFilter && (
-        <div className="bg-slate-900/60 border-b border-slate-800 py-2.5 px-4 sm:px-6 lg:px-8">
-          <div className="max-w-7xl mx-auto flex justify-between items-center text-xs text-slate-400">
+        <div className="bg-[#FAF9F5] border-b border-[#E4E1D6] py-2.5 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto flex justify-between items-center text-xs text-[#6B6B63]">
             <span>Showing all gender listings (Boys, Girls, and Co-ed).</span>
             <button
               onClick={() => setDisableGenderFilter(false)}
-              className="underline font-bold text-slate-300 hover:text-white focus:outline-none"
+              className="underline font-bold text-[#2C3E36] hover:text-[#1E2B25] focus:outline-none"
             >
               Restore auto gender filter
             </button>
@@ -643,12 +643,12 @@ export default function SeekerDashboard() {
       )}
 
       {/* Mobile Tab Switcher (List vs Map) */}
-      <div className="md:hidden flex border-b border-slate-800 bg-[#0b0f19]">
+      <div className="md:hidden flex border-b border-[#E4E1D6] bg-white">
         <button
           className={`w-1/2 py-3 text-xs font-bold text-center focus:outline-none border-b-2 ${
             activeTab === 'LIST'
-              ? 'border-emerald-400 text-emerald-400'
-              : 'border-transparent text-slate-400'
+              ? 'border-[#2C3E36] text-[#2C3E36]'
+              : 'border-transparent text-[#6B6B63]'
           }`}
           onClick={() => setActiveTab('LIST')}
         >
@@ -657,8 +657,8 @@ export default function SeekerDashboard() {
         <button
           className={`w-1/2 py-3 text-xs font-bold text-center focus:outline-none border-b-2 ${
             activeTab === 'MAP'
-              ? 'border-emerald-400 text-emerald-400'
-              : 'border-transparent text-slate-400'
+              ? 'border-[#2C3E36] text-[#2C3E36]'
+              : 'border-transparent text-[#6B6B63]'
           }`}
           onClick={() => setActiveTab('MAP')}
         >
@@ -675,27 +675,27 @@ export default function SeekerDashboard() {
           }`}
         >
           <div className="flex justify-between items-center">
-            <h2 className="text-lg sm:text-xl font-black text-white flex items-center gap-2">
+            <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#2A2A2A] flex items-center gap-2">
               <span>Hostels in {selectedCity}</span>
-              <span className="text-xs font-bold text-emerald-400 bg-emerald-950/80 border border-emerald-800 px-2 py-0.5 rounded-full">
+              <span className="text-xs font-sans font-bold text-[#2C3E36] bg-[#D9D3B8] border border-[#C7BF9E] px-2.5 py-0.5 rounded-full">
                 {selectedState}
               </span>
             </h2>
-            <span className="text-xs font-semibold text-slate-400">
+            <span className="text-xs font-semibold text-[#6B6B63]">
               {properties.length} verified listings
             </span>
           </div>
 
           {loadingProperties ? (
-            <div className="flex flex-col gap-4 py-16 items-center text-emerald-400">
+            <div className="flex flex-col gap-4 py-16 items-center text-[#2C3E36]">
               <RefreshCw className="animate-spin" size={28} />
-              <span className="font-semibold text-xs text-slate-400">Scanning accommodations...</span>
+              <span className="font-semibold text-xs text-[#6B6B63]">Scanning accommodations...</span>
             </div>
           ) : properties.length === 0 ? (
-            <div className="bg-[#0e1424] rounded-2xl p-10 border border-slate-800 text-center space-y-3">
-              <HelpCircle className="mx-auto text-slate-600" size={44} />
-              <h3 className="font-bold text-base text-white">No accommodations found</h3>
-              <p className="text-slate-400 text-xs max-w-md mx-auto leading-relaxed">
+            <div className="bg-white rounded-2xl p-10 border border-[#E4E1D6] text-center space-y-3 shadow-sm">
+              <HelpCircle className="mx-auto text-[#6B6B63]" size={44} />
+              <h3 className="font-serif font-bold text-lg text-[#2A2A2A]">No accommodations found</h3>
+              <p className="text-[#6B6B63] text-xs max-w-md mx-auto leading-relaxed">
                 We couldn't find any hostels matching your exact criteria in this area. Try adjusting your price range or clearing filters.
               </p>
             </div>
@@ -719,7 +719,7 @@ export default function SeekerDashboard() {
 
         {/* Map column */}
         <div
-          className={`w-full md:w-2/5 lg:w-3/7 h-[calc(100vh-160px)] sticky top-36 rounded-2xl overflow-hidden border border-slate-800 shadow-2xl ${
+          className={`w-full md:w-2/5 lg:w-3/7 h-[calc(100vh-160px)] sticky top-36 rounded-2xl overflow-hidden border border-[#E4E1D6] shadow-sm ${
             activeTab === 'MAP' ? 'block' : 'hidden md:block'
           }`}
         >
@@ -741,17 +741,17 @@ export default function SeekerDashboard() {
 
       {/* Floating Compare Tray */}
       {compareList.length > 0 && (
-        <div className="fixed bottom-4 left-1/2 -translate-x-1/2 bg-[#0e1424]/95 backdrop-blur-xl border border-slate-700/80 rounded-2xl p-4 shadow-2xl z-50 max-w-xl w-full mx-4 flex flex-col sm:flex-row items-center justify-between gap-3 text-white">
+        <div className="fixed bottom-5 left-1/2 -translate-x-1/2 bg-[#2C3E36] text-[#F3F1E7] border border-[#3D5349] rounded-2xl p-4 shadow-xl z-50 max-w-xl w-full mx-4 flex flex-col sm:flex-row items-center justify-between gap-3">
           <div className="flex items-center gap-3">
-            <div className="flex items-center gap-1.5 text-xs font-bold text-emerald-400">
+            <div className="flex items-center gap-1.5 text-xs font-bold text-[#D9D3B8]">
               <Columns size={16} />
               <span>Compare ({compareList.length}/3)</span>
             </div>
             <div className="flex gap-2">
               {compareList.map((item) => (
-                <div key={item.id} className="flex items-center gap-1 bg-slate-800 py-1 px-2.5 rounded-lg text-xs font-semibold text-slate-200 border border-slate-700">
+                <div key={item.id} className="flex items-center gap-1 bg-[#3D5349] py-1 px-2.5 rounded-lg text-xs font-semibold text-[#F3F1E7] border border-[#A9B3AA]/40">
                   <span className="truncate max-w-[100px]">{item.name}</span>
-                  <button onClick={() => handleToggleCompare(item)} className="text-slate-400 hover:text-white">
+                  <button onClick={() => handleToggleCompare(item)} className="text-[#D9D3B8] hover:text-white">
                     <X size={12} />
                   </button>
                 </div>
@@ -761,14 +761,14 @@ export default function SeekerDashboard() {
           <div className="flex items-center gap-2">
             <button
               onClick={handleClearCompare}
-              className="text-xs font-bold text-slate-400 hover:text-white px-2.5 py-1.5"
+              className="text-xs font-bold text-[#D9D3B8] hover:text-white px-2.5 py-1.5"
             >
               Clear
             </button>
             <button
               onClick={handleNavigateToCompare}
               disabled={compareList.length < 2}
-              className="bg-emerald-500 hover:bg-emerald-400 disabled:opacity-40 text-slate-950 font-bold py-1.5 px-4 rounded-xl text-xs transition-all shadow-md shadow-emerald-500/20"
+              className="bg-[#D9D3B8] hover:bg-[#C7BF9E] disabled:opacity-40 text-[#2C3E36] font-bold py-1.5 px-4 rounded-xl text-xs transition-all shadow-sm"
             >
               Compare
             </button>
@@ -778,16 +778,16 @@ export default function SeekerDashboard() {
 
       {/* Filters Modal */}
       {showFiltersModal && (
-        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-[#0e1424] rounded-2xl max-w-lg w-full flex flex-col max-h-[90vh] shadow-2xl border border-slate-800 overflow-hidden text-slate-100">
-            <div className="p-5 border-b border-slate-800 flex justify-between items-center bg-slate-900/60">
-              <h3 className="font-bold text-white text-base flex items-center gap-2">
-                <SlidersHorizontal size={16} className="text-emerald-400" />
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl max-w-lg w-full flex flex-col max-h-[90vh] shadow-xl border border-[#E4E1D6] overflow-hidden text-[#2A2A2A]">
+            <div className="p-5 border-b border-[#E4E1D6] flex justify-between items-center bg-[#FAF9F5]">
+              <h3 className="font-serif font-bold text-[#2A2A2A] text-lg flex items-center gap-2">
+                <SlidersHorizontal size={16} className="text-[#2C3E36]" />
                 <span>Filter Accommodations</span>
               </h3>
               <button
                 onClick={() => setShowFiltersModal(false)}
-                className="text-slate-400 hover:text-white"
+                className="text-[#6B6B63] hover:text-[#2A2A2A]"
               >
                 <X size={18} />
               </button>
@@ -796,24 +796,24 @@ export default function SeekerDashboard() {
             <div className="p-6 overflow-y-auto space-y-6 flex-grow">
               {/* Price Range */}
               <div>
-                <h4 className="font-bold text-xs text-slate-300 uppercase tracking-wider mb-2.5">Price Range (Monthly Rent)</h4>
+                <h4 className="font-bold text-xs text-[#2A2A2A] uppercase tracking-wider mb-2.5">Price Range (Monthly Rent)</h4>
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-[11px] text-slate-400 mb-1">Min Price (₹)</label>
+                    <label className="block text-[11px] text-[#6B6B63] mb-1">Min Price (₹)</label>
                     <input
                       type="number"
                       placeholder="e.g. 3000"
-                      className="w-full px-3 py-2 bg-slate-900 border border-slate-700/80 rounded-xl text-sm text-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                      className="w-full px-3 py-2 bg-[#FAF9F5] border border-[#E4E1D6] rounded-xl text-sm text-[#2A2A2A] focus:outline-none focus:ring-2 focus:ring-[#2C3E36]"
                       value={minPrice}
                       onChange={(e) => setMinPrice(e.target.value)}
                     />
                   </div>
                   <div>
-                    <label className="block text-[11px] text-slate-400 mb-1">Max Price (₹)</label>
+                    <label className="block text-[11px] text-[#6B6B63] mb-1">Max Price (₹)</label>
                     <input
                       type="number"
                       placeholder="e.g. 15000"
-                      className="w-full px-3 py-2 bg-slate-900 border border-slate-700/80 rounded-xl text-sm text-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                      className="w-full px-3 py-2 bg-[#FAF9F5] border border-[#E4E1D6] rounded-xl text-sm text-[#2A2A2A] focus:outline-none focus:ring-2 focus:ring-[#2C3E36]"
                       value={maxPrice}
                       onChange={(e) => setMaxPrice(e.target.value)}
                     />
@@ -823,7 +823,7 @@ export default function SeekerDashboard() {
 
               {/* Room Sharing Type */}
               <div>
-                <h4 className="font-bold text-xs text-slate-300 uppercase tracking-wider mb-2.5">Sharing Type</h4>
+                <h4 className="font-bold text-xs text-[#2A2A2A] uppercase tracking-wider mb-2.5">Sharing Type</h4>
                 <div className="grid grid-cols-2 gap-2">
                   {[
                     { label: 'Single Room', value: 'SINGLE' },
@@ -835,8 +835,8 @@ export default function SeekerDashboard() {
                       key={item.value}
                       className={`py-2 px-3 text-xs font-bold rounded-xl border text-center transition-all ${
                         sharingType === item.value
-                          ? 'bg-emerald-950/80 border-emerald-500 text-emerald-300 shadow-sm shadow-emerald-500/20'
-                          : 'bg-slate-900 border-slate-800 text-slate-400 hover:text-white hover:bg-slate-800'
+                          ? 'bg-[#2C3E36] border-[#2C3E36] text-[#F3F1E7] shadow-sm'
+                          : 'bg-[#FAF9F5] border-[#E4E1D6] text-[#6B6B63] hover:text-[#2A2A2A] hover:bg-[#F3F1E7]'
                       }`}
                       onClick={() => setSharingType(sharingType === item.value ? '' : item.value)}
                     >
@@ -848,13 +848,13 @@ export default function SeekerDashboard() {
 
               {/* AC type */}
               <div>
-                <h4 className="font-bold text-xs text-slate-300 uppercase tracking-wider mb-2.5">AC Option</h4>
+                <h4 className="font-bold text-xs text-[#2A2A2A] uppercase tracking-wider mb-2.5">AC Option</h4>
                 <div className="grid grid-cols-2 gap-2.5">
                   <button
                     className={`py-2 px-3 text-xs font-bold rounded-xl border text-center transition-all ${
                       acType === 'AC'
-                        ? 'bg-emerald-950/80 border-emerald-500 text-emerald-300 shadow-sm'
-                        : 'bg-slate-900 border-slate-800 text-slate-400 hover:text-white hover:bg-slate-800'
+                        ? 'bg-[#2C3E36] border-[#2C3E36] text-[#F3F1E7] shadow-sm'
+                        : 'bg-[#FAF9F5] border-[#E4E1D6] text-[#6B6B63] hover:text-[#2A2A2A] hover:bg-[#F3F1E7]'
                     }`}
                     onClick={() => setAcType(acType === 'AC' ? '' : 'AC')}
                   >
@@ -863,8 +863,8 @@ export default function SeekerDashboard() {
                   <button
                     className={`py-2 px-3 text-xs font-bold rounded-xl border text-center transition-all ${
                       acType === 'NON_AC'
-                        ? 'bg-emerald-950/80 border-emerald-500 text-emerald-300 shadow-sm'
-                        : 'bg-slate-900 border-slate-800 text-slate-400 hover:text-white hover:bg-slate-800'
+                        ? 'bg-[#2C3E36] border-[#2C3E36] text-[#F3F1E7] shadow-sm'
+                        : 'bg-[#FAF9F5] border-[#E4E1D6] text-[#6B6B63] hover:text-[#2A2A2A] hover:bg-[#F3F1E7]'
                     }`}
                     onClick={() => setAcType(acType === 'NON_AC' ? '' : 'NON_AC')}
                   >
@@ -875,24 +875,24 @@ export default function SeekerDashboard() {
 
               {/* Distance Range */}
               <div>
-                <h4 className="font-bold text-xs text-slate-300 uppercase tracking-wider mb-2.5">Maximum Distance</h4>
+                <h4 className="font-bold text-xs text-[#2A2A2A] uppercase tracking-wider mb-2.5">Maximum Distance</h4>
                 <select
-                  className="block w-full px-3 py-2 border border-slate-700/80 rounded-xl text-sm text-white bg-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                  className="block w-full px-3 py-2 border border-[#E4E1D6] rounded-xl text-sm text-[#2A2A2A] bg-[#FAF9F5] focus:outline-none focus:ring-2 focus:ring-[#2C3E36]"
                   value={maxDistance}
                   onChange={(e) => setMaxDistance(e.target.value)}
                 >
-                  <option value="" className="bg-slate-900 text-white">Any distance (up to 10 km default)</option>
-                  <option value="2" className="bg-slate-900 text-white">Within 2 km</option>
-                  <option value="5" className="bg-slate-900 text-white">Within 5 km</option>
-                  <option value="8" className="bg-slate-900 text-white">Within 8 km</option>
-                  <option value="12" className="bg-slate-900 text-white">Within 12 km</option>
-                  <option value="15" className="bg-slate-900 text-white">Within 15 km</option>
+                  <option value="" className="bg-white text-[#2A2A2A]">Any distance (up to 10 km default)</option>
+                  <option value="2" className="bg-white text-[#2A2A2A]">Within 2 km</option>
+                  <option value="5" className="bg-white text-[#2A2A2A]">Within 5 km</option>
+                  <option value="8" className="bg-white text-[#2A2A2A]">Within 8 km</option>
+                  <option value="12" className="bg-white text-[#2A2A2A]">Within 12 km</option>
+                  <option value="15" className="bg-white text-[#2A2A2A]">Within 15 km</option>
                 </select>
               </div>
 
               {/* Minimum Rating */}
               <div>
-                <h4 className="font-bold text-xs text-slate-300 uppercase tracking-wider mb-2.5">Minimum Rating</h4>
+                <h4 className="font-bold text-xs text-[#2A2A2A] uppercase tracking-wider mb-2.5">Minimum Rating</h4>
                 <div className="flex gap-2">
                   {[
                     { label: 'Any', value: '' },
@@ -905,8 +905,8 @@ export default function SeekerDashboard() {
                       type="button"
                       className={`flex-grow py-2 px-3 text-xs font-bold rounded-xl border text-center transition-all ${
                         minRating === rate.value
-                          ? 'bg-amber-950/80 border-amber-500 text-amber-300 shadow-sm'
-                          : 'bg-slate-900 border-slate-800 text-slate-400 hover:text-white hover:bg-slate-800'
+                          ? 'bg-[#2C3E36] border-[#2C3E36] text-[#F3F1E7] shadow-sm'
+                          : 'bg-[#FAF9F5] border-[#E4E1D6] text-[#6B6B63] hover:text-[#2A2A2A] hover:bg-[#F3F1E7]'
                       }`}
                       onClick={() => setMinRating(rate.value)}
                     >
@@ -918,13 +918,13 @@ export default function SeekerDashboard() {
 
               {/* Amenities */}
               <div>
-                <h4 className="font-bold text-xs text-slate-300 uppercase tracking-wider mb-2.5">Amenities</h4>
+                <h4 className="font-bold text-xs text-[#2A2A2A] uppercase tracking-wider mb-2.5">Amenities</h4>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
                   {AMENITIES_LIST.map((amenity) => (
-                    <label key={amenity} className="flex items-center gap-2 cursor-pointer text-xs font-semibold text-slate-300 select-none">
+                    <label key={amenity} className="flex items-center gap-2 cursor-pointer text-xs font-semibold text-[#2A2A2A] select-none">
                       <input
                         type="checkbox"
-                        className="rounded border-slate-700 bg-slate-900 text-emerald-500 focus:ring-emerald-500"
+                        className="rounded border-[#E4E1D6] text-[#2C3E36] focus:ring-[#2C3E36]"
                         checked={selectedAmenities.includes(amenity)}
                         onChange={() => handleAmenityCheck(amenity)}
                       />
@@ -936,10 +936,10 @@ export default function SeekerDashboard() {
 
               {/* Additional Options */}
               <div className="pt-2">
-                <label className="flex items-center gap-2 cursor-pointer text-xs font-semibold text-emerald-300 select-none">
+                <label className="flex items-center gap-2 cursor-pointer text-xs font-semibold text-[#2C3E36] select-none">
                   <input
                     type="checkbox"
-                    className="rounded border-slate-700 bg-slate-900 text-emerald-500 focus:ring-emerald-500"
+                    className="rounded border-[#E4E1D6] text-[#2C3E36] focus:ring-[#2C3E36]"
                     checked={availableNow}
                     onChange={(e) => setAvailableNow(e.target.checked)}
                   />
@@ -948,7 +948,7 @@ export default function SeekerDashboard() {
               </div>
             </div>
 
-            <div className="p-4 border-t border-slate-800 flex justify-between items-center bg-slate-900/60">
+            <div className="p-4 border-t border-[#E4E1D6] flex justify-between items-center bg-[#FAF9F5]">
               <button
                 onClick={() => {
                   setMinPrice('');
@@ -960,13 +960,13 @@ export default function SeekerDashboard() {
                   setMinRating('');
                   setMaxDistance('');
                 }}
-                className="text-xs font-bold text-slate-400 hover:text-white focus:outline-none"
+                className="text-xs font-bold text-[#6B6B63] hover:text-[#2A2A2A] focus:outline-none"
               >
                 Reset All
               </button>
               <button
                 onClick={() => setShowFiltersModal(false)}
-                className="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold py-2 px-5 rounded-xl text-xs transition-all shadow-md shadow-emerald-500/20"
+                className="bg-[#2C3E36] hover:bg-[#22312B] text-[#F3F1E7] font-semibold py-2 px-5 rounded-xl text-xs transition-all shadow-sm"
               >
                 Apply Filters
               </button>

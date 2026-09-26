@@ -45,25 +45,22 @@ export default function SignupPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#090d16] py-12 px-4 sm:px-6 lg:px-8 selection:bg-emerald-500 selection:text-black">
-      {/* Background ambient lighting */}
-      <div className="fixed top-1/4 left-1/2 -translate-x-1/2 w-[450px] h-[350px] bg-emerald-500/10 blur-[120px] rounded-full pointer-events-none" />
-
-      <div className="max-w-md w-full space-y-6 bg-[#0e1424]/90 backdrop-blur-xl p-8 rounded-2xl shadow-2xl border border-slate-800 text-slate-100 relative z-10">
+    <div className="min-h-screen flex items-center justify-center bg-[#F3F1E7] py-12 px-4 sm:px-6 lg:px-8 selection:bg-[#2C3E36] selection:text-[#F3F1E7]">
+      <div className="max-w-md w-full space-y-6 bg-white p-8 sm:p-10 rounded-2xl shadow-sm border border-[#E4E1D6] text-[#2A2A2A] relative z-10">
         <div className="text-center">
           <Link href="/" className="inline-block group mb-3">
             <img
               src="/logo.png"
               alt="Shel Logo"
-              className="w-16 h-16 rounded-full mx-auto p-1 bg-white border-2 border-slate-700 shadow-lg group-hover:scale-105 transition-transform"
+              className="w-14 h-14 rounded-full mx-auto p-1 bg-white border border-[#E4E1D6] shadow-sm group-hover:scale-105 transition-transform"
             />
           </Link>
-          <h2 className="text-2xl font-black text-white tracking-tight">Create Account</h2>
-          <p className="mt-1 text-xs text-slate-400">Join Shel to find or list verified hostels across India</p>
+          <h2 className="text-2xl sm:text-3xl font-serif font-bold text-[#2A2A2A] tracking-tight">Create Account</h2>
+          <p className="mt-1.5 text-xs text-[#6B6B63]">Join Shel to find or list verified hostels across India</p>
         </div>
 
         {error && (
-          <div className="p-3 bg-rose-950/60 text-rose-300 text-xs rounded-xl border border-rose-800/80">
+          <div className="p-3 bg-rose-50 text-rose-800 text-xs rounded-xl border border-rose-200">
             {error}
           </div>
         )}
@@ -71,30 +68,30 @@ export default function SignupPage() {
         <form className="mt-6 space-y-4" onSubmit={handleSubmit}>
           {/* Role selection toggle */}
           <div>
-            <span className="block text-xs font-semibold text-slate-300 mb-1.5">I want to register as:</span>
+            <span className="block text-xs font-semibold text-[#2A2A2A] mb-1.5">I want to register as:</span>
             <div className="grid grid-cols-2 gap-2.5">
               <button
                 type="button"
                 className={`py-2 px-3 text-xs font-bold rounded-xl border flex items-center justify-center gap-1.5 transition-all ${
                   role === 'SEEKER'
-                    ? 'bg-emerald-950/80 border-emerald-500 text-emerald-300 shadow-sm shadow-emerald-500/20'
-                    : 'bg-slate-900 border-slate-800 text-slate-400 hover:text-slate-200 hover:bg-slate-800'
+                    ? 'bg-[#2C3E36] border-[#2C3E36] text-[#F3F1E7] shadow-sm'
+                    : 'bg-[#FAF9F5] border-[#E4E1D6] text-[#6B6B63] hover:text-[#2A2A2A] hover:bg-[#F3F1E7]'
                 }`}
                 onClick={() => setRole('SEEKER')}
               >
-                <Search size={14} className={role === 'SEEKER' ? 'text-emerald-400' : 'text-slate-500'} />
+                <Search size={14} className={role === 'SEEKER' ? 'text-[#D9D3B8]' : 'text-[#6B6B63]'} />
                 <span>Seeker (Find PG)</span>
               </button>
               <button
                 type="button"
                 className={`py-2 px-3 text-xs font-bold rounded-xl border flex items-center justify-center gap-1.5 transition-all ${
                   role === 'OWNER'
-                    ? 'bg-emerald-950/80 border-emerald-500 text-emerald-300 shadow-sm shadow-emerald-500/20'
-                    : 'bg-slate-900 border-slate-800 text-slate-400 hover:text-slate-200 hover:bg-slate-800'
+                    ? 'bg-[#2C3E36] border-[#2C3E36] text-[#F3F1E7] shadow-sm'
+                    : 'bg-[#FAF9F5] border-[#E4E1D6] text-[#6B6B63] hover:text-[#2A2A2A] hover:bg-[#F3F1E7]'
                 }`}
                 onClick={() => setRole('OWNER')}
               >
-                <Building2 size={14} className={role === 'OWNER' ? 'text-emerald-400' : 'text-slate-500'} />
+                <Building2 size={14} className={role === 'OWNER' ? 'text-[#D9D3B8]' : 'text-[#6B6B63]'} />
                 <span>Owner (List PG)</span>
               </button>
             </div>
@@ -102,11 +99,11 @@ export default function SignupPage() {
 
           {/* Full Name */}
           <div>
-            <label htmlFor="name" className="block text-xs font-semibold text-slate-300 mb-1">
+            <label htmlFor="name" className="block text-xs font-semibold text-[#2A2A2A] mb-1">
               Full Name
             </label>
             <div className="relative">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-[#6B6B63]">
                 <User size={16} />
               </div>
               <input
@@ -115,7 +112,7 @@ export default function SignupPage() {
                 type="text"
                 required
                 disabled={loading}
-                className="rounded-xl block w-full pl-9 pr-3 py-2 bg-slate-900/90 border border-slate-700/80 placeholder-slate-500 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-sm transition-all"
+                className="rounded-xl block w-full pl-9 pr-3 py-2 bg-[#FAF9F5] border border-[#E4E1D6] placeholder-[#6B6B63]/60 text-[#2A2A2A] focus:outline-none focus:ring-2 focus:ring-[#2C3E36] focus:border-transparent text-sm transition-all"
                 placeholder="John Doe"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
@@ -125,9 +122,9 @@ export default function SignupPage() {
 
           {/* Gender selection */}
           <div>
-            <label className="block text-xs font-semibold text-slate-300 mb-1">Gender</label>
+            <label className="block text-xs font-semibold text-[#2A2A2A] mb-1">Gender</label>
             <select
-              className="block w-full px-3 py-2 border border-slate-700/80 rounded-xl text-white bg-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-sm transition-all"
+              className="block w-full px-3 py-2 border border-[#E4E1D6] rounded-xl text-[#2A2A2A] bg-[#FAF9F5] focus:outline-none focus:ring-2 focus:ring-[#2C3E36] focus:border-transparent text-sm transition-all"
               value={gender}
               onChange={(e) => setGender(e.target.value as any)}
               disabled={loading}
@@ -140,11 +137,11 @@ export default function SignupPage() {
 
           {/* Email */}
           <div>
-            <label htmlFor="email" className="block text-xs font-semibold text-slate-300 mb-1">
+            <label htmlFor="email" className="block text-xs font-semibold text-[#2A2A2A] mb-1">
               Email Address
             </label>
             <div className="relative">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-[#6B6B63]">
                 <Mail size={16} />
               </div>
               <input
@@ -153,7 +150,7 @@ export default function SignupPage() {
                 type="email"
                 required
                 disabled={loading}
-                className="rounded-xl block w-full pl-9 pr-3 py-2 bg-slate-900/90 border border-slate-700/80 placeholder-slate-500 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-sm transition-all"
+                className="rounded-xl block w-full pl-9 pr-3 py-2 bg-[#FAF9F5] border border-[#E4E1D6] placeholder-[#6B6B63]/60 text-[#2A2A2A] focus:outline-none focus:ring-2 focus:ring-[#2C3E36] focus:border-transparent text-sm transition-all"
                 placeholder="john@example.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -163,11 +160,11 @@ export default function SignupPage() {
 
           {/* Phone */}
           <div>
-            <label htmlFor="phone" className="block text-xs font-semibold text-slate-300 mb-1">
+            <label htmlFor="phone" className="block text-xs font-semibold text-[#2A2A2A] mb-1">
               Phone Number
             </label>
             <div className="relative">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-[#6B6B63]">
                 <Phone size={16} />
               </div>
               <input
@@ -178,7 +175,7 @@ export default function SignupPage() {
                 maxLength={10}
                 required
                 disabled={loading}
-                className="rounded-xl block w-full pl-9 pr-3 py-2 bg-slate-900/90 border border-slate-700/80 placeholder-slate-500 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-sm transition-all"
+                className="rounded-xl block w-full pl-9 pr-3 py-2 bg-[#FAF9F5] border border-[#E4E1D6] placeholder-[#6B6B63]/60 text-[#2A2A2A] focus:outline-none focus:ring-2 focus:ring-[#2C3E36] focus:border-transparent text-sm transition-all"
                 placeholder="10-digit mobile number"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value.replace(/\D/g, ''))}
@@ -188,11 +185,11 @@ export default function SignupPage() {
 
           {/* Password */}
           <div>
-            <label htmlFor="password" className="block text-xs font-semibold text-slate-300 mb-1">
+            <label htmlFor="password" className="block text-xs font-semibold text-[#2A2A2A] mb-1">
               Password
             </label>
             <div className="relative">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-[#6B6B63]">
                 <Lock size={16} />
               </div>
               <input
@@ -201,14 +198,14 @@ export default function SignupPage() {
                 type={showPassword ? 'text' : 'password'}
                 required
                 disabled={loading}
-                className="rounded-xl block w-full pl-9 pr-10 py-2 bg-slate-900/90 border border-slate-700/80 placeholder-slate-500 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-sm transition-all"
+                className="rounded-xl block w-full pl-9 pr-10 py-2 bg-[#FAF9F5] border border-[#E4E1D6] placeholder-[#6B6B63]/60 text-[#2A2A2A] focus:outline-none focus:ring-2 focus:ring-[#2C3E36] focus:border-transparent text-sm transition-all"
                 placeholder="••••••••"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
               <button
                 type="button"
-                className="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-200 focus:outline-none"
+                className="absolute inset-y-0 right-0 pr-3 flex items-center text-[#6B6B63] hover:text-[#2A2A2A] focus:outline-none"
                 onClick={() => setShowPassword(!showPassword)}
               >
                 {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
@@ -220,19 +217,19 @@ export default function SignupPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full flex justify-center py-2.5 px-4 rounded-xl text-slate-950 font-bold bg-emerald-500 hover:bg-emerald-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 transition-all disabled:opacity-50 shadow-md shadow-emerald-500/20 text-sm"
+              className="w-full flex justify-center py-2.5 px-4 rounded-xl text-[#F3F1E7] font-semibold bg-[#2C3E36] hover:bg-[#22312B] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#2C3E36] transition-all disabled:opacity-50 shadow-sm text-sm"
             >
               {loading ? 'Creating Account...' : 'Register'}
             </button>
           </div>
         </form>
 
-        <div className="text-center pt-2 border-t border-slate-800/80">
-          <p className="text-xs text-slate-400">
+        <div className="text-center pt-3 border-t border-[#E4E1D6]">
+          <p className="text-xs text-[#6B6B63]">
             Already have an account?{' '}
             <Link
               href="/auth/login"
-              className="font-bold text-emerald-400 hover:text-emerald-300 transition-colors"
+              className="font-bold text-[#2C3E36] hover:underline"
             >
               Sign In
             </Link>

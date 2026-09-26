@@ -9,7 +9,7 @@ import { Star, ShieldAlert, CheckCircle2, ChevronLeft, MapPin, Heart, Wifi, Coff
 
 const LeafletMap = dynamic(() => import('@/components/Map'), {
   ssr: false,
-  loading: () => <div className="h-full w-full bg-slate-900 flex items-center justify-center rounded-xl text-slate-400 text-xs font-semibold animate-pulse">Loading Map...</div>
+  loading: () => <div className="h-full w-full bg-[#FAF9F5] flex items-center justify-center rounded-xl text-[#6B6B63] text-xs font-semibold animate-pulse">Loading Map...</div>
 });
 
 const AMENITIES_LIST = [
@@ -151,8 +151,8 @@ export default function PropertyDetailPage() {
 
   if (authLoading || loading || !user) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[#090d16]">
-        <div className="flex items-center space-x-2 text-emerald-400 font-semibold">
+      <div className="min-h-screen flex items-center justify-center bg-[#F3F1E7]">
+        <div className="flex items-center space-x-2 text-[#2C3E36] font-semibold">
           <RefreshCw className="animate-spin" />
           <span>Loading property details...</span>
         </div>
@@ -162,13 +162,13 @@ export default function PropertyDetailPage() {
 
   if (errorMsg && !property) {
     return (
-      <div className="min-h-screen bg-[#090d16] text-white">
+      <div className="min-h-screen bg-[#F3F1E7] text-[#2A2A2A]">
         <Navbar />
-        <div className="max-w-xl mx-auto mt-20 text-center p-8 bg-[#0e1424] border border-slate-800 rounded-2xl shadow-xl">
+        <div className="max-w-xl mx-auto mt-20 text-center p-8 bg-white border border-[#E4E1D6] rounded-2xl shadow-sm">
           <ShieldAlert className="mx-auto text-rose-500" size={48} />
-          <h2 className="text-xl font-bold text-white mt-4">Error loading page</h2>
-          <p className="text-slate-400 text-sm mt-1">{errorMsg}</p>
-          <button onClick={() => router.push('/seeker')} className="mt-6 inline-flex items-center gap-1 text-sm font-semibold text-emerald-400 underline">
+          <h2 className="text-xl font-serif font-bold text-[#2A2A2A] mt-4">Error loading page</h2>
+          <p className="text-[#6B6B63] text-sm mt-1">{errorMsg}</p>
+          <button onClick={() => router.push('/seeker')} className="mt-6 inline-flex items-center gap-1 text-sm font-semibold text-[#2C3E36] underline">
             Back to listings
           </button>
         </div>
@@ -194,20 +194,16 @@ export default function PropertyDetailPage() {
     : '/images/boys/hostel-building-main.jpg';
 
   const mainImage = (parsedImages && parsedImages.length > 0 && parsedImages[0]) ? parsedImages[0] : defaultDetailFallback;
-  const remainingImages = (parsedImages && parsedImages.length > 1) ? parsedImages.slice(1) : [
-    '/images/rooms/room1.png',
-    '/images/coed/hostel-interior.jpg'
-  ];
 
   return (
-    <div className="min-h-screen bg-[#090d16] text-slate-100 pb-20 font-sans selection:bg-emerald-500 selection:text-black">
+    <div className="min-h-screen bg-[#F3F1E7] text-[#2A2A2A] pb-20 font-sans selection:bg-[#2C3E36] selection:text-[#F3F1E7]">
       <Navbar />
 
       {/* Breadcrumb / Top Bar */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
         <button
           onClick={() => router.push('/seeker')}
-          className="flex items-center gap-1 text-slate-400 hover:text-white font-semibold text-sm transition-colors focus:outline-none"
+          className="flex items-center gap-1 text-[#6B6B63] hover:text-[#2A2A2A] font-semibold text-sm transition-colors focus:outline-none"
         >
           <ChevronLeft size={16} /> Back to Search
         </button>
@@ -215,7 +211,7 @@ export default function PropertyDetailPage() {
 
       {successMsg && (
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-4">
-          <div className="p-3.5 bg-emerald-950/70 text-emerald-300 text-sm rounded-xl border border-emerald-800">
+          <div className="p-3.5 bg-[#A9B3AA]/20 text-[#2C3E36] text-sm rounded-xl border border-[#A9B3AA]">
             {successMsg}
           </div>
         </div>
@@ -223,7 +219,7 @@ export default function PropertyDetailPage() {
 
       {errorMsg && (
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-4">
-          <div className="p-3.5 bg-rose-950/70 text-rose-300 text-sm rounded-xl border border-rose-800">
+          <div className="p-3.5 bg-rose-50 text-rose-800 text-sm rounded-xl border border-rose-200">
             {errorMsg}
           </div>
         </div>
@@ -235,8 +231,8 @@ export default function PropertyDetailPage() {
         {/* Left 2 Columns: Media, Rooms, Details */}
         <div className="lg:col-span-2 space-y-6">
           
-          {/* Single Image View */}
-          <div className="w-full h-72 sm:h-96 md:h-[26rem] rounded-2xl overflow-hidden bg-slate-900 border border-slate-800 shadow-xl relative">
+          {/* Main Hero Image */}
+          <div className="w-full h-72 sm:h-96 md:h-[26rem] rounded-2xl overflow-hidden bg-white border border-[#E4E1D6] shadow-sm relative">
             <img
               src={mainImage}
               alt={property.name}
@@ -246,34 +242,34 @@ export default function PropertyDetailPage() {
               className="w-full h-full object-cover"
             />
             {property.isVerified && (
-              <div className="absolute top-4 left-4 bg-emerald-950/90 border border-emerald-500/50 text-emerald-300 flex items-center gap-1.5 py-1.5 px-3 rounded-full text-xs font-bold shadow-lg backdrop-blur-md">
-                <CheckCircle2 size={15} className="text-emerald-400" />
+              <div className="absolute top-4 left-4 bg-[#2C3E36]/90 border border-[#A9B3AA]/50 text-[#F3F1E7] flex items-center gap-1.5 py-1.5 px-3.5 rounded-full text-xs font-semibold shadow-md backdrop-blur-md">
+                <CheckCircle2 size={15} className="text-[#D9D3B8]" />
                 <span>Verified Accommodation</span>
               </div>
             )}
           </div>
 
           {/* Heading details card */}
-          <div className="bg-[#0e1424] rounded-2xl border border-slate-800 p-6 shadow-lg space-y-4">
+          <div className="bg-white rounded-2xl border border-[#E4E1D6] p-6 sm:p-7 shadow-sm space-y-4">
             <div className="flex justify-between items-start gap-4">
               <div>
                 <div className="flex flex-wrap gap-2 items-center">
-                  <span className="px-2.5 py-0.5 rounded-md text-[11px] font-bold text-slate-200 bg-slate-800 border border-slate-700 uppercase">
+                  <span className="px-2.5 py-0.5 rounded-md text-[11px] font-bold text-[#2C3E36] bg-[#D9D3B8]/60 border border-[#D9D3B8] uppercase">
                     {property.genderType === 'BOYS' ? 'Boys PG Only' :
                      property.genderType === 'GIRLS' ? 'Girls PG Only' : 'Co-ed Accommodation'}
                   </span>
-                  <span className="text-xs text-cyan-300 bg-cyan-950/60 border border-cyan-800/60 px-2.5 py-0.5 rounded-md font-semibold uppercase">
+                  <span className="text-xs text-[#2C3E36] bg-[#A9B3AA]/30 border border-[#A9B3AA]/60 px-2.5 py-0.5 rounded-md font-semibold uppercase">
                     {property.acType === 'BOTH' ? 'AC & Non-AC Available' : `${property.acType} Only`}
                   </span>
                   {property.isVerified && (
-                    <span className="bg-emerald-950/80 text-emerald-300 border border-emerald-700/70 flex items-center gap-1 py-0.5 px-2.5 rounded-md text-[11px] font-bold uppercase">
-                      <CheckCircle2 size={12} className="text-emerald-400" /> Verified listing
+                    <span className="bg-[#2C3E36] text-[#F3F1E7] border border-[#3D5349] flex items-center gap-1 py-0.5 px-2.5 rounded-md text-[11px] font-bold uppercase">
+                      <CheckCircle2 size={12} className="text-[#D9D3B8]" /> Verified listing
                     </span>
                   )}
                 </div>
-                <h1 className="text-2xl font-black text-white mt-2.5">{property.name}</h1>
-                <div className="flex items-center text-slate-400 text-sm mt-1.5 gap-1.5">
-                  <MapPin size={16} className="text-emerald-400 flex-shrink-0" />
+                <h1 className="text-2xl sm:text-3xl font-serif font-bold text-[#2A2A2A] mt-3">{property.name}</h1>
+                <div className="flex items-center text-[#6B6B63] text-sm mt-1.5 gap-1.5">
+                  <MapPin size={16} className="text-[#2C3E36] flex-shrink-0" />
                   <span>{property.address}, {property.city}</span>
                 </div>
               </div>
@@ -281,53 +277,53 @@ export default function PropertyDetailPage() {
               {/* Wishlist toggle */}
               <button
                 onClick={handleToggleWishlist}
-                className={`p-3 rounded-full border border-slate-700 hover:bg-slate-800 text-slate-400 hover:text-rose-400 transition-colors shadow-sm focus:outline-none ${
-                  property.isWishlisted ? 'text-rose-400 bg-rose-950/40 border-rose-800' : 'bg-slate-900'
+                className={`p-3 rounded-full border border-[#E4E1D6] hover:bg-[#FAF9F5] text-[#6B6B63] hover:text-rose-600 transition-colors shadow-sm focus:outline-none ${
+                  property.isWishlisted ? 'text-rose-500 bg-rose-50 border-rose-200' : 'bg-white'
                 }`}
               >
                 <Heart size={20} className={property.isWishlisted ? 'fill-rose-500 text-rose-500' : ''} />
               </button>
             </div>
 
-            <hr className="border-slate-800" />
+            <hr className="border-[#E4E1D6]" />
             <div>
-              <h3 className="font-bold text-white text-sm">Description</h3>
-              <p className="text-slate-300 text-sm leading-relaxed mt-1.5">{property.description}</p>
+              <h3 className="font-serif font-bold text-[#2A2A2A] text-base">About this Stay</h3>
+              <p className="text-[#6B6B63] text-sm leading-relaxed mt-2">{property.description}</p>
             </div>
           </div>
 
           {/* Room Pricing & Live Vacancy Table */}
-          <div className="bg-[#0e1424] rounded-2xl border border-slate-800 p-6 shadow-lg">
-            <h2 className="text-lg font-bold text-white mb-4">Room Pricing & Bed Vacancy</h2>
+          <div className="bg-white rounded-2xl border border-[#E4E1D6] p-6 sm:p-7 shadow-sm">
+            <h2 className="text-lg font-serif font-bold text-[#2A2A2A] mb-4">Room Pricing & Bed Vacancy</h2>
             <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-slate-800">
-                <thead className="bg-slate-900/80">
+              <table className="min-w-full divide-y divide-[#E4E1D6]">
+                <thead className="bg-[#FAF9F5]">
                   <tr>
-                    <th className="px-6 py-3 text-left text-xs font-semibold text-slate-400 uppercase tracking-wider">Sharing Type</th>
-                    <th className="px-6 py-3 text-left text-xs font-semibold text-slate-400 uppercase tracking-wider">Monthly Rent</th>
-                    <th className="px-6 py-3 text-left text-xs font-semibold text-slate-400 uppercase tracking-wider">Total Beds</th>
-                    <th className="px-6 py-3 text-left text-xs font-semibold text-slate-400 uppercase tracking-wider">Live Vacancy Status</th>
+                    <th className="px-6 py-3 text-left text-xs font-semibold text-[#6B6B63] uppercase tracking-wider">Sharing Type</th>
+                    <th className="px-6 py-3 text-left text-xs font-semibold text-[#6B6B63] uppercase tracking-wider">Monthly Rent</th>
+                    <th className="px-6 py-3 text-left text-xs font-semibold text-[#6B6B63] uppercase tracking-wider">Total Beds</th>
+                    <th className="px-6 py-3 text-left text-xs font-semibold text-[#6B6B63] uppercase tracking-wider">Live Vacancy Status</th>
                   </tr>
                 </thead>
-                <tbody className="bg-[#0e1424] divide-y divide-slate-800/80">
+                <tbody className="bg-white divide-y divide-[#E4E1D6]">
                   {property.rooms.map((room: any) => (
-                    <tr key={room.id} className="hover:bg-slate-900/40">
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-semibold text-white capitalize">
+                    <tr key={room.id} className="hover:bg-[#FAF9F5]/70">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-semibold text-[#2A2A2A] capitalize">
                         {room.sharingType.toLowerCase()} sharing
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-emerald-400 font-bold">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-[#2C3E36] font-bold">
                         ₹{room.price.toLocaleString()}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-400">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-[#6B6B63]">
                         {room.totalBeds} beds
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm">
                         {room.availableBeds > 0 ? (
-                          <span className="px-2.5 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-emerald-950/80 border border-emerald-700 text-emerald-300">
+                          <span className="px-2.5 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-[#D9D3B8]/70 border border-[#D9D3B8] text-[#2C3E36]">
                             {room.availableBeds} beds left (Available)
                           </span>
                         ) : (
-                          <span className="px-2.5 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-rose-950/80 border border-rose-800 text-rose-300">
+                          <span className="px-2.5 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-rose-50 border border-rose-200 text-rose-700">
                             No beds available (Full)
                           </span>
                         )}
@@ -343,14 +339,14 @@ export default function PropertyDetailPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             
             {/* Amenities Card */}
-            <div className="bg-[#0e1424] rounded-2xl border border-slate-800 p-6 shadow-lg">
-              <h3 className="font-bold text-white text-base mb-3">Amenities Included</h3>
+            <div className="bg-white rounded-2xl border border-[#E4E1D6] p-6 shadow-sm">
+              <h3 className="font-serif font-bold text-[#2A2A2A] text-base mb-3">Amenities Included</h3>
               <div className="grid grid-cols-2 gap-3.5">
                 {property.amenities.map((amenity: string, idx: number) => {
                   const preset = AMENITIES_LIST.find((a) => a.name.toLowerCase() === amenity.toLowerCase());
                   return (
-                    <div key={idx} className="flex items-center gap-2.5 text-slate-300 text-sm font-medium">
-                      <span className="text-emerald-400 bg-emerald-950/60 p-1.5 rounded-lg border border-emerald-800/60">{preset?.icon || <Sparkles size={16} />}</span>
+                    <div key={idx} className="flex items-center gap-2.5 text-[#2A2A2A] text-sm font-medium">
+                      <span className="text-[#2C3E36] bg-[#D9D3B8]/50 p-1.5 rounded-lg border border-[#D9D3B8]">{preset?.icon || <Sparkles size={16} />}</span>
                       <span>{amenity}</span>
                     </div>
                   );
@@ -359,9 +355,9 @@ export default function PropertyDetailPage() {
             </div>
 
             {/* Rules Card */}
-            <div className="bg-[#0e1424] rounded-2xl border border-slate-800 p-6 shadow-lg">
-              <h3 className="font-bold text-white text-base mb-3">House Rules</h3>
-              <ul className="space-y-2 text-slate-300 text-sm list-disc pl-4 font-medium">
+            <div className="bg-white rounded-2xl border border-[#E4E1D6] p-6 shadow-sm">
+              <h3 className="font-serif font-bold text-[#2A2A2A] text-base mb-3">House Rules</h3>
+              <ul className="space-y-2 text-[#6B6B63] text-sm list-disc pl-4 font-medium">
                 {property.houseRules.map((rule: string, idx: number) => (
                   <li key={idx}>{rule}</li>
                 ))}
@@ -370,9 +366,9 @@ export default function PropertyDetailPage() {
           </div>
 
           {/* Location Map Pin */}
-          <div className="bg-[#0e1424] rounded-2xl border border-slate-800 p-6 shadow-lg space-y-3">
-            <h3 className="font-bold text-white text-base">Location Map</h3>
-            <div className="h-64 bg-slate-900 rounded-xl overflow-hidden border border-slate-800">
+          <div className="bg-white rounded-2xl border border-[#E4E1D6] p-6 shadow-sm space-y-3">
+            <h3 className="font-serif font-bold text-[#2A2A2A] text-base">Location Map</h3>
+            <div className="h-64 bg-[#FAF9F5] rounded-xl overflow-hidden border border-[#E4E1D6]">
               <LeafletMap
                 properties={[{
                   id: property.id,
@@ -388,34 +384,34 @@ export default function PropertyDetailPage() {
           </div>
 
           {/* Reviews Section */}
-          <div className="bg-[#0e1424] rounded-2xl border border-slate-800 p-6 shadow-lg space-y-6">
+          <div className="bg-white rounded-2xl border border-[#E4E1D6] p-6 shadow-sm space-y-6">
             <div className="flex justify-between items-center">
-              <h3 className="font-bold text-white text-lg">Reviews & Ratings</h3>
-              <div className="flex items-center text-sm font-bold bg-amber-950/60 border border-amber-700/60 text-amber-300 px-3 py-1 rounded-xl">
-                <Star size={16} className="fill-amber-400 text-amber-400 mr-1.5" />
+              <h3 className="font-serif font-bold text-[#2A2A2A] text-lg">Reviews & Ratings</h3>
+              <div className="flex items-center text-sm font-bold bg-[#D9D3B8]/60 border border-[#D9D3B8] text-[#2C3E36] px-3 py-1 rounded-xl">
+                <Star size={16} className="fill-[#2C3E36] text-[#2C3E36] mr-1.5" />
                 <span>{property.avgRating > 0 ? property.avgRating.toFixed(1) : 'No Ratings'}</span>
                 {property.totalReviews > 0 && (
-                  <span className="text-amber-400/60 font-normal text-xs ml-1">({property.totalReviews} reviews)</span>
+                  <span className="text-[#6B6B63] font-normal text-xs ml-1">({property.totalReviews} reviews)</span>
                 )}
               </div>
             </div>
 
             {/* Review form */}
             {hasEnquired ? (
-              <form onSubmit={handleSubmitReview} className="bg-slate-900/80 p-4 rounded-xl border border-slate-800 space-y-3">
-                <h4 className="font-bold text-sm text-white">Write a Review (Verified Seeker)</h4>
+              <form onSubmit={handleSubmitReview} className="bg-[#FAF9F5] p-4 rounded-xl border border-[#E4E1D6] space-y-3">
+                <h4 className="font-semibold text-sm text-[#2A2A2A]">Write a Review (Verified Seeker)</h4>
                 
                 {/* Star rating selector */}
                 <div className="flex items-center gap-1">
-                  <span className="text-xs text-slate-400 font-semibold mr-2">Rating:</span>
+                  <span className="text-xs text-[#6B6B63] font-semibold mr-2">Rating:</span>
                   {[1, 2, 3, 4, 5].map((val) => (
                     <button
                       key={val}
                       type="button"
                       onClick={() => setRating(val)}
-                      className="text-amber-400 hover:scale-110 transition-transform"
+                      className="text-[#2C3E36] hover:scale-110 transition-transform"
                     >
-                      <Star size={20} className={val <= rating ? 'fill-amber-400' : 'text-slate-700'} />
+                      <Star size={20} className={val <= rating ? 'fill-[#2C3E36]' : 'text-[#E4E1D6]'} />
                     </button>
                   ))}
                 </div>
@@ -424,7 +420,7 @@ export default function PropertyDetailPage() {
                 <textarea
                   required
                   placeholder="Share your stay experience, food quality, rooms condition..."
-                  className="w-full p-2.5 bg-slate-950 border border-slate-700/80 rounded-xl text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                  className="w-full p-2.5 bg-white border border-[#E4E1D6] rounded-xl text-sm text-[#2A2A2A] placeholder-[#6B6B63]/60 focus:outline-none focus:ring-2 focus:ring-[#2C3E36]"
                   rows={3}
                   value={comment}
                   onChange={(e) => setComment(e.target.value)}
@@ -434,35 +430,35 @@ export default function PropertyDetailPage() {
                   <button
                     type="submit"
                     disabled={submittingReview}
-                    className="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold py-1.5 px-4 rounded-xl text-xs transition-all shadow-md shadow-emerald-500/20"
+                    className="bg-[#2C3E36] hover:bg-[#22312B] text-[#F3F1E7] font-semibold py-1.5 px-4 rounded-xl text-xs transition-all shadow-sm"
                   >
                     {submittingReview ? 'Submitting...' : 'Post Review'}
                   </button>
                 </div>
               </form>
             ) : (
-              <div className="bg-slate-900/60 p-3 rounded-xl border border-slate-800 text-xs text-slate-400 text-center font-medium">
+              <div className="bg-[#FAF9F5] p-3 rounded-xl border border-[#E4E1D6] text-xs text-[#6B6B63] text-center font-medium">
                 ℹ️ Reviews can only be submitted by seekers who have sent inquiries for this PG.
               </div>
             )}
 
             {/* Reviews List */}
-            <div className="divide-y divide-slate-800/80">
+            <div className="divide-y divide-[#E4E1D6]">
               {property.reviews.length === 0 ? (
-                <p className="text-slate-500 text-xs text-center py-6 font-medium">No reviews written yet. Be the first to enquired and write one!</p>
+                <p className="text-[#6B6B63] text-xs text-center py-6 font-medium">No reviews written yet. Be the first to enquire and write one!</p>
               ) : (
                 property.reviews.map((rev: any) => (
                   <div key={rev.id} className="py-4 first:pt-0 last:pb-0 space-y-1">
                     <div className="flex justify-between items-center">
-                      <span className="font-semibold text-white text-sm">{rev.seeker.name}</span>
-                      <div className="flex items-center text-amber-400">
+                      <span className="font-semibold text-[#2A2A2A] text-sm">{rev.seeker.name}</span>
+                      <div className="flex items-center text-[#2C3E36]">
                         {[1, 2, 3, 4, 5].map((val) => (
-                          <Star key={val} size={13} className={val <= rev.rating ? 'fill-amber-400' : 'text-slate-700'} />
+                          <Star key={val} size={13} className={val <= rev.rating ? 'fill-[#2C3E36]' : 'text-[#E4E1D6]'} />
                         ))}
                       </div>
                     </div>
-                    <span className="text-slate-500 text-[10px]">{new Date(rev.createdAt).toLocaleDateString()}</span>
-                    <p className="text-slate-300 text-sm mt-1">{rev.comment}</p>
+                    <span className="text-[#6B6B63] text-[10px]">{new Date(rev.createdAt).toLocaleDateString()}</span>
+                    <p className="text-[#6B6B63] text-sm mt-1">{rev.comment}</p>
                   </div>
                 ))
               )}
@@ -472,44 +468,44 @@ export default function PropertyDetailPage() {
 
         {/* Right 1 Column: Enquiry / Booking Sticky Card */}
         <div className="lg:col-span-1">
-          <div className="bg-[#0e1424] rounded-2xl border border-slate-800 p-6 shadow-xl sticky top-24 space-y-6">
+          <div className="bg-white rounded-2xl border border-[#E4E1D6] p-6 shadow-sm sticky top-24 space-y-6">
             <div>
-              <span className="text-slate-400 text-xs block uppercase font-bold tracking-wider">Rent starts from</span>
+              <span className="text-[#6B6B63] text-xs block uppercase font-bold tracking-wider">Rent starts from</span>
               <div className="flex items-baseline gap-1 mt-1">
-                <span className="text-white font-black text-3xl">₹{property.rooms[0]?.price.toLocaleString() || '0'}</span>
-                <span className="text-slate-400 text-sm">/month</span>
+                <span className="text-[#2C3E36] font-serif font-bold text-3xl">₹{property.rooms[0]?.price.toLocaleString() || '0'}</span>
+                <span className="text-[#6B6B63] text-sm">/month</span>
               </div>
             </div>
 
-            <hr className="border-slate-800" />
+            <hr className="border-[#E4E1D6]" />
 
             <div className="space-y-3.5">
               <div className="flex items-center justify-between text-sm">
-                <span className="text-slate-400 font-semibold">Verification badge:</span>
+                <span className="text-[#6B6B63] font-semibold">Verification badge:</span>
                 {property.isVerified ? (
-                  <span className="text-emerald-400 font-bold flex items-center gap-1"><CheckCircle2 size={15} /> Verified</span>
+                  <span className="text-[#2C3E36] font-bold flex items-center gap-1"><CheckCircle2 size={15} /> Verified</span>
                 ) : (
-                  <span className="text-slate-500 font-medium">Under Review</span>
+                  <span className="text-[#6B6B63] font-medium">Under Review</span>
                 )}
               </div>
 
               <div className="flex items-center justify-between text-sm">
-                <span className="text-slate-400 font-semibold">Available beds:</span>
-                <span className="font-bold text-white">
+                <span className="text-[#6B6B63] font-semibold">Available beds:</span>
+                <span className="font-bold text-[#2A2A2A]">
                   {property.rooms.reduce((acc: number, r: any) => acc + r.availableBeds, 0)} vacancies
                 </span>
               </div>
 
               <div className="flex items-center justify-between text-sm">
-                <span className="text-slate-400 font-semibold">PG Manager:</span>
-                <span className="font-bold text-white">{property.owner.name}</span>
+                <span className="text-[#6B6B63] font-semibold">PG Host:</span>
+                <span className="font-bold text-[#2A2A2A]">{property.owner.name}</span>
               </div>
             </div>
 
             {hasEnquired ? (
               <button
                 onClick={() => router.push('/seeker/chat')}
-                className="w-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold py-3 rounded-xl transition-all shadow-lg shadow-emerald-500/20 flex items-center justify-center gap-2 focus:outline-none"
+                className="w-full bg-[#2C3E36] hover:bg-[#22312B] text-[#F3F1E7] font-semibold py-3 rounded-xl transition-all shadow-sm flex items-center justify-center gap-2 focus:outline-none"
               >
                 <Send size={18} />
                 <span>Open In-App Chat</span>
@@ -517,13 +513,13 @@ export default function PropertyDetailPage() {
             ) : (
               <button
                 onClick={() => setShowEnquiryModal(true)}
-                className="w-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold py-3 rounded-xl transition-all shadow-lg shadow-emerald-500/20 flex items-center justify-center gap-2 focus:outline-none"
+                className="w-full bg-[#2C3E36] hover:bg-[#22312B] text-[#F3F1E7] font-semibold py-3 rounded-xl transition-all shadow-sm flex items-center justify-center gap-2 focus:outline-none"
               >
                 <span>Send Booking Enquiry</span>
               </button>
             )}
 
-            <p className="text-slate-500 text-[10px] text-center mt-2 leading-relaxed">
+            <p className="text-[#6B6B63] text-[10px] text-center mt-2 leading-relaxed">
               Zero brokerage fee! Connect directly with the verified property manager.
             </p>
           </div>
@@ -532,26 +528,26 @@ export default function PropertyDetailPage() {
 
       {/* Enquiry Modal */}
       {showEnquiryModal && (
-        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-[#0e1424] rounded-2xl max-w-md w-full shadow-2xl border border-slate-800 overflow-hidden text-slate-100">
-            <div className="p-5 border-b border-slate-800 flex justify-between items-center bg-slate-900/60">
-              <h3 className="font-bold text-white text-base">Booking Enquiry</h3>
-              <button onClick={() => setShowEnquiryModal(false)} className="text-slate-400 hover:text-white">
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl max-w-md w-full shadow-xl border border-[#E4E1D6] overflow-hidden text-[#2A2A2A]">
+            <div className="p-5 border-b border-[#E4E1D6] flex justify-between items-center bg-[#FAF9F5]">
+              <h3 className="font-serif font-bold text-[#2A2A2A] text-lg">Booking Enquiry</h3>
+              <button onClick={() => setShowEnquiryModal(false)} className="text-[#6B6B63] hover:text-[#2A2A2A]">
                 <X size={20} />
               </button>
             </div>
 
             <form onSubmit={handleSubmitEnquiry} className="p-6 space-y-4">
-              <p className="text-xs text-slate-400 font-medium">
-                Sending this enquiry starts a private in-app conversation with the owner.
+              <p className="text-xs text-[#6B6B63] font-medium">
+                Sending this enquiry starts a private in-app conversation with the host.
               </p>
               
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1">Enquiry Message</label>
+                <label className="block text-xs font-semibold text-[#2A2A2A] mb-1">Enquiry Message</label>
                 <textarea
                   required
                   rows={4}
-                  className="w-full p-2.5 bg-slate-900 border border-slate-700/80 rounded-xl text-sm text-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                  className="w-full p-2.5 bg-[#FAF9F5] border border-[#E4E1D6] rounded-xl text-sm text-[#2A2A2A] focus:outline-none focus:ring-2 focus:ring-[#2C3E36]"
                   value={enquiryMessage}
                   onChange={(e) => setEnquiryMessage(e.target.value)}
                 />
@@ -561,14 +557,14 @@ export default function PropertyDetailPage() {
                 <button
                   type="button"
                   onClick={() => setShowEnquiryModal(false)}
-                  className="px-4 py-2 text-sm font-semibold text-slate-400 hover:text-white"
+                  className="px-4 py-2 text-sm font-semibold text-[#6B6B63] hover:text-[#2A2A2A]"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={submittingEnquiry}
-                  className="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold py-2 px-5 rounded-xl text-sm transition-all shadow-md shadow-emerald-500/20 flex items-center gap-1.5"
+                  className="bg-[#2C3E36] hover:bg-[#22312B] text-[#F3F1E7] font-semibold py-2 px-5 rounded-xl text-sm transition-all shadow-sm flex items-center gap-1.5"
                 >
                   {submittingEnquiry ? 'Sending...' : 'Send Message'}
                 </button>

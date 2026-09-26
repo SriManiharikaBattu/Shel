@@ -86,8 +86,8 @@ export default function WishlistPage() {
 
   if (authLoading || loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[#090d16]">
-        <div className="flex items-center space-x-2 text-emerald-400 font-semibold">
+      <div className="min-h-screen flex items-center justify-center bg-[#F3F1E7]">
+        <div className="flex items-center space-x-2 text-[#2C3E36] font-semibold">
           <RefreshCw className="animate-spin" />
           <span>Loading wishlist...</span>
         </div>
@@ -96,38 +96,38 @@ export default function WishlistPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#090d16] text-slate-100 pb-20 font-sans selection:bg-emerald-500 selection:text-black">
+    <div className="min-h-screen bg-[#F3F1E7] text-[#2A2A2A] pb-20 font-sans selection:bg-[#2C3E36] selection:text-[#F3F1E7]">
       <Navbar />
 
       <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mt-10">
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-2.5">
-            <div className="p-2 rounded-xl bg-rose-950/60 border border-rose-800/80 text-rose-400">
+            <div className="p-2.5 rounded-xl bg-white border border-[#E4E1D6] text-rose-500 shadow-sm">
               <Heart className="fill-rose-500 text-rose-500" size={20} />
             </div>
             <div>
-              <h1 className="text-2xl font-black text-white tracking-tight">Saved Hostels</h1>
-              <p className="text-xs text-slate-400">Accommodations you marked for later</p>
+              <h1 className="text-2xl sm:text-3xl font-serif font-bold text-[#2A2A2A] tracking-tight">Saved Accommodations</h1>
+              <p className="text-xs text-[#6B6B63]">Properties you bookmarked for later</p>
             </div>
           </div>
-          <span className="text-xs font-bold text-slate-400 bg-slate-900 border border-slate-800 px-3 py-1 rounded-full">
-            {properties.length} {properties.length === 1 ? 'PG' : 'PGs'}
+          <span className="text-xs font-bold text-[#2C3E36] bg-[#D9D3B8] border border-[#C7BF9E] px-3 py-1 rounded-full">
+            {properties.length} {properties.length === 1 ? 'Stay' : 'Stays'}
           </span>
         </div>
 
         {properties.length === 0 ? (
-          <div className="bg-[#0e1424] rounded-2xl p-12 border border-slate-800 text-center shadow-xl space-y-3">
-            <Compass className="mx-auto text-slate-600" size={48} />
-            <h2 className="text-lg font-bold text-white">No saved accommodations yet</h2>
-            <p className="text-slate-400 text-xs max-w-sm mx-auto leading-relaxed">
+          <div className="bg-white rounded-2xl p-12 border border-[#E4E1D6] text-center shadow-sm space-y-3">
+            <Compass className="mx-auto text-[#6B6B63]" size={48} />
+            <h2 className="text-lg font-serif font-bold text-[#2A2A2A]">No saved accommodations yet</h2>
+            <p className="text-[#6B6B63] text-xs max-w-sm mx-auto leading-relaxed">
               Click the heart icon on any PG card to bookmark it for quick access.
             </p>
             <div className="pt-2">
               <Link
                 href="/seeker"
-                className="inline-flex bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold py-2.5 px-6 rounded-xl text-xs transition-all shadow-md shadow-emerald-500/20"
+                className="inline-flex bg-[#2C3E36] hover:bg-[#22312B] text-[#F3F1E7] font-semibold py-2.5 px-6 rounded-xl text-xs transition-all shadow-sm"
               >
-                Browse Listings
+                Browse Stays
               </Link>
             </div>
           </div>

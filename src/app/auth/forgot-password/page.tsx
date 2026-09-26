@@ -21,21 +21,18 @@ export default function ForgotPasswordPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#090d16] py-12 px-4 sm:px-6 lg:px-8">
-      {/* Background ambient lighting */}
-      <div className="fixed top-1/4 left-1/2 -translate-x-1/2 w-[450px] h-[350px] bg-emerald-500/10 blur-[120px] rounded-full pointer-events-none" />
-
-      <div className="max-w-md w-full space-y-6 bg-[#0e1424]/90 backdrop-blur-xl p-8 rounded-2xl shadow-2xl border border-slate-800 text-slate-100 relative z-10">
+    <div className="min-h-screen flex items-center justify-center bg-[#F3F1E7] py-12 px-4 sm:px-6 lg:px-8 selection:bg-[#2C3E36] selection:text-[#F3F1E7]">
+      <div className="max-w-md w-full space-y-6 bg-white p-8 sm:p-10 rounded-2xl shadow-sm border border-[#E4E1D6] text-[#2A2A2A] relative z-10">
         <div className="text-center">
           <Link href="/" className="inline-block group mb-3">
             <img
               src="/logo.png"
               alt="Shel Logo"
-              className="w-16 h-16 rounded-full mx-auto p-1 bg-white border-2 border-slate-700 shadow-lg group-hover:scale-105 transition-transform"
+              className="w-14 h-14 rounded-full mx-auto p-1 bg-white border border-[#E4E1D6] shadow-sm group-hover:scale-105 transition-transform"
             />
           </Link>
-          <h2 className="text-2xl font-black text-white tracking-tight">Reset Password</h2>
-          <p className="mt-1 text-xs text-slate-400">
+          <h2 className="text-2xl sm:text-3xl font-serif font-bold text-[#2A2A2A] tracking-tight">Reset Password</h2>
+          <p className="mt-1.5 text-xs text-[#6B6B63]">
             {success
               ? 'Password reset instructions sent'
               : 'Enter your email to receive recovery instructions'}
@@ -44,15 +41,15 @@ export default function ForgotPasswordPage() {
 
         {success ? (
           <div className="space-y-6">
-            <div className="p-4 bg-emerald-950/70 text-emerald-300 text-xs rounded-xl border border-emerald-700">
-              <p className="font-bold text-sm text-emerald-200">Reset Link Sent!</p>
+            <div className="p-4 bg-[#D9D3B8]/60 text-[#2C3E36] text-xs rounded-xl border border-[#D9D3B8]">
+              <p className="font-serif font-bold text-sm text-[#2C3E36]">Reset Link Sent!</p>
               <p className="mt-1 leading-relaxed">
                 We have generated a mock password reset link to <strong>{email}</strong>. 
               </p>
             </div>
             <Link
               href="/auth/login"
-              className="w-full flex justify-center py-2.5 px-4 rounded-xl text-slate-950 font-bold bg-emerald-500 hover:bg-emerald-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 transition-all shadow-md shadow-emerald-500/20 text-sm"
+              className="w-full flex justify-center py-2.5 px-4 rounded-xl text-[#F3F1E7] font-semibold bg-[#2C3E36] hover:bg-[#22312B] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#2C3E36] transition-all shadow-sm text-sm"
             >
               Back to Sign In
             </Link>
@@ -60,11 +57,11 @@ export default function ForgotPasswordPage() {
         ) : (
           <form className="mt-6 space-y-5" onSubmit={handleSubmit}>
             <div>
-              <label htmlFor="email" className="block text-xs font-semibold text-slate-300 mb-1">
+              <label htmlFor="email" className="block text-xs font-semibold text-[#2A2A2A] mb-1">
                 Email Address
               </label>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-[#6B6B63]">
                   <Mail size={16} />
                 </div>
                 <input
@@ -73,7 +70,7 @@ export default function ForgotPasswordPage() {
                   type="email"
                   required
                   disabled={loading}
-                  className="rounded-xl block w-full pl-9 pr-3 py-2.5 bg-slate-900/90 border border-slate-700/80 placeholder-slate-500 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-sm transition-all"
+                  className="rounded-xl block w-full pl-9 pr-3 py-2.5 bg-[#FAF9F5] border border-[#E4E1D6] placeholder-[#6B6B63]/60 text-[#2A2A2A] focus:outline-none focus:ring-2 focus:ring-[#2C3E36] focus:border-transparent text-sm transition-all"
                   placeholder="name@email.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -85,14 +82,14 @@ export default function ForgotPasswordPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full flex justify-center py-2.5 px-4 rounded-xl text-slate-950 font-bold bg-emerald-500 hover:bg-emerald-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 transition-all disabled:opacity-50 shadow-md shadow-emerald-500/20 text-sm"
+                className="w-full flex justify-center py-2.5 px-4 rounded-xl text-[#F3F1E7] font-semibold bg-[#2C3E36] hover:bg-[#22312B] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#2C3E36] transition-all disabled:opacity-50 shadow-sm text-sm"
               >
                 {loading ? 'Sending...' : 'Send Reset Link'}
               </button>
 
               <Link
                 href="/auth/login"
-                className="flex items-center justify-center text-xs font-semibold text-slate-400 hover:text-white gap-1.5 py-2 transition-colors"
+                className="flex items-center justify-center text-xs font-semibold text-[#6B6B63] hover:text-[#2A2A2A] gap-1.5 py-2 transition-colors"
               >
                 <ArrowLeft size={14} /> Back to Sign In
               </Link>
