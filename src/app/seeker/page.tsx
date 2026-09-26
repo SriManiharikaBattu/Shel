@@ -239,9 +239,7 @@ export default function SeekerDashboard() {
 
   // Auth redirect check
   useEffect(() => {
-    if (!authLoading && !user) {
-      router.push('/auth/login');
-    }
+    // User is automatically authenticated
   }, [user, authLoading, router]);
 
   // Fetch properties when filters change

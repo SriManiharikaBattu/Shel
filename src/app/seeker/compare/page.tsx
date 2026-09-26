@@ -14,7 +14,7 @@ export default function ComparePage() {
 
   useEffect(() => {
     if (!authLoading && !user) {
-      router.push('/auth/login');
+      router.push('/seeker');
     }
   }, [user, authLoading, router]);
 

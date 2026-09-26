@@ -32,7 +32,7 @@ export default function WishlistPage() {
 
   useEffect(() => {
     if (!authLoading && !user) {
-      router.push('/auth/login');
+      router.push('/seeker');
     }
   }, [user, authLoading, router]);
 
@@ -59,7 +59,7 @@ export default function WishlistPage() {
 
   const handleOpenChat = async (property: PropertyData) => {
     if (!user) {
-      router.push('/auth/login');
+      router.push('/seeker');
       return;
     }
     try {

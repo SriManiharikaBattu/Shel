@@ -3,10 +3,10 @@
 import React from 'react';
 import Link from 'next/link';
 import { useAuth } from '@/components/AuthProvider';
-import { User, LogOut, Heart, Columns, MessageSquare, Building2, ShieldCheck, Search } from 'lucide-react';
+import { User, Heart, Columns, MessageSquare, Building2, ShieldCheck, Search, ArrowRightLeft } from 'lucide-react';
 
 export default function Navbar() {
-  const { user, logout } = useAuth();
+  const { user, switchRole } = useAuth();
 
   if (!user) return null;
 
@@ -106,6 +106,40 @@ export default function Navbar() {
           </div>
 
           <div className="flex items-center space-x-3">
+            {/* Direct Dashboard Role Switcher */}
+            <div className="flex items-center bg-[#1E2B25] p-1 rounded-xl border border-[#3D5349]">
+              <button
+                onClick={() => switchRole('SEEKER')}
+                className={`px-2.5 py-1 rounded-lg text-xs font-semibold transition-all ${
+                  user.role === 'SEEKER'
+                    ? 'bg-[#D9D3B8] text-[#2C3E36] shadow-sm'
+                    : 'text-[#A9B3AA] hover:text-[#F3F1E7]'
+                }`}
+              >
+                Seeker
+              </button>
+              <button
+                onClick={() => switchRole('OWNER')}
+                className={`px-2.5 py-1 rounded-lg text-xs font-semibold transition-all ${
+                  user.role === 'OWNER'
+                    ? 'bg-[#D9D3B8] text-[#2C3E36] shadow-sm'
+                    : 'text-[#A9B3AA] hover:text-[#F3F1E7]'
+                }`}
+              >
+                Owner
+              </button>
+              <button
+                onClick={() => switchRole('ADMIN')}
+                className={`px-2.5 py-1 rounded-lg text-xs font-semibold transition-all ${
+                  user.role === 'ADMIN'
+                    ? 'bg-[#D9D3B8] text-[#2C3E36] shadow-sm'
+                    : 'text-[#A9B3AA] hover:text-[#F3F1E7]'
+                }`}
+              >
+                Admin
+              </button>
+            </div>
+
             <Link
               href="/profile"
               className="flex items-center space-x-2 text-[#F3F1E7] bg-[#3D5349]/70 hover:bg-[#3D5349] border border-[#A9B3AA]/30 px-3 py-1.5 rounded-xl text-sm font-medium transition-all"
@@ -115,15 +149,6 @@ export default function Navbar() {
               </div>
               <span className="hidden md:inline font-semibold">{user.name}</span>
             </Link>
-
-            <button
-              onClick={logout}
-              className="flex items-center space-x-1.5 text-[#E8E4CF] hover:text-white bg-[#1E2B25] hover:bg-[#15201B] border border-[#3D5349] text-xs font-semibold py-1.5 px-3 rounded-xl transition-all"
-              title="Logout"
-            >
-              <LogOut size={15} />
-              <span className="hidden sm:inline">Logout</span>
-            </button>
           </div>
         </div>
       </div>

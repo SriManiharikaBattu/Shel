@@ -32,7 +32,7 @@ export default function OwnerEnquiriesPage() {
 
   useEffect(() => {
     if (!authLoading && (!user || user.role !== 'OWNER')) {
-      router.push('/auth/login');
+      router.push('/seeker');
     }
   }, [user, authLoading, router]);
 

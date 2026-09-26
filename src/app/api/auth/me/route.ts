@@ -6,25 +6,56 @@ import { getUserFromRequest, signToken } from '@/lib/auth';
 export async function GET(request: NextRequest) {
   try {
     const payload = getUserFromRequest(request);
-    if (!payload) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    let user = null;
+
+    if (payload) {
+      user = await prisma.user.findUnique({
+        where: { id: payload.userId },
+        select: {
+          id: true,
+          name: true,
+          email: true,
+          phone: true,
+          role: true,
+          gender: true,
+          createdAt: true,
+        },
+      });
     }
 
-    const user = await prisma.user.findUnique({
-      where: { id: payload.userId },
-      select: {
-        id: true,
-        name: true,
-        email: true,
-        phone: true,
-        role: true,
-        gender: true,
-        createdAt: true,
-      },
-    });
-
     if (!user) {
-      return NextResponse.json({ error: 'User not found' }, { status: 404 });
+      // Auto-authenticate as default Seeker user
+      user = await prisma.user.findFirst({
+        where: { role: 'SEEKER' },
+        select: {
+          id: true,
+          name: true,
+          email: true,
+          phone: true,
+          role: true,
+          gender: true,
+          createdAt: true,
+        },
+      });
+
+      if (user) {
+        const token = signToken({
+          userId: user.id,
+          email: user.email,
+          role: user.role,
+          gender: user.gender,
+          name: user.name,
+        });
+
+        const response = NextResponse.json({ user });
+        response.cookies.set('auth_token', token, {
+          httpOnly: true,
+          secure: process.env.NODE_ENV === 'production',
+          maxAge: 7 * 24 * 60 * 60,
+          path: '/',
+        });
+        return response;
+      }
     }
 
     return NextResponse.json({ user });

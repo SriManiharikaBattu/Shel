@@ -24,7 +24,7 @@ export default function ProfilePage() {
 
   useEffect(() => {
     if (!loading && !user) {
-      router.push('/auth/login');
+      router.push('/seeker');
     } else if (user) {
       setName(user.name);
       setEmail(user.email);

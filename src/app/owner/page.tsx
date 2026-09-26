@@ -108,7 +108,11 @@ export default function OwnerDashboard() {
 
   useEffect(() => {
     if (!authLoading && (!user || user.role !== 'OWNER')) {
-      router.push('/auth/login');
+      fetch('/api/auth/switch-role', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ role: 'OWNER' }),
+      }).then(() => window.location.reload());
     }
   }, [user, authLoading, router]);
 

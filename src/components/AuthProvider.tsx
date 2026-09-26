@@ -20,6 +20,7 @@ interface AuthContextType {
   logout: () => Promise<void>;
   refreshUser: () => Promise<void>;
   updateProfile: (userData: any) => Promise<void>;
+  switchRole: (role: 'SEEKER' | 'OWNER' | 'ADMIN') => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -49,6 +50,25 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     refreshUser();
   }, []);
+
+  const switchRole = async (targetRole: 'SEEKER' | 'OWNER' | 'ADMIN') => {
+    try {
+      const res = await fetch('/api/auth/switch-role', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ role: targetRole }),
+      });
+      if (res.ok) {
+        const data = await res.json();
+        setUser(data.user);
+        if (targetRole === 'ADMIN') router.push('/admin');
+        else if (targetRole === 'OWNER') router.push('/owner');
+        else router.push('/seeker');
+      }
+    } catch (err) {
+      console.error('Error switching role:', err);
+    }
+  };
 
   // Standard Login (Password / OTP)
   const login = async (
@@ -94,8 +114,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     } catch (error) {
       console.error('Logout error:', error);
     } finally {
-      setUser(null);
-      window.location.href = '/';
+      await refreshUser();
+      router.push('/seeker');
     }
   };
 
@@ -121,6 +141,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         logout,
         refreshUser,
         updateProfile,
+        switchRole,
       }}
     >
       {children}

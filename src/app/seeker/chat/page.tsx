@@ -41,7 +41,7 @@ export default function SeekerChatPage() {
 
   useEffect(() => {
     if (!authLoading && (!user || user.role !== 'SEEKER')) {
-      router.push('/auth/login');
+      router.push('/seeker');
     }
   }, [user, authLoading, router]);
 
